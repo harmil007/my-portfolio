@@ -14,7 +14,9 @@ export default function Contact() {
 
       <div className="flex flex-wrap gap-4">
         <Button asChild>
-          <a href="mailto:harmilgoti0@gmail.com">Email Me</a>
+          <a href="mailto:harmilgoti0@gmail.com" target="_blank">
+            Email Me
+          </a>
         </Button>
 
         <Button variant="outline" asChild>

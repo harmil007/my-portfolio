@@ -1,6 +1,5 @@
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import type { Metadata } from "next";
 
 export const metadata = {
   title: "Harmil Goti | Frontend Developer",

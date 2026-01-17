@@ -27,7 +27,7 @@ export default function Hero() {
         </Button>
         <Button size="lg" variant="outline">
           <a href="/Harmil_Goti_Resume.pdf" target="_blank">
-            Download Resume
+            View Resume
           </a>
         </Button>
       </div>
