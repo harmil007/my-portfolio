@@ -7,13 +7,21 @@ const projects = [
   {
     title: "Rukkorverse",
     description:
-      "A collaborative workspace platform inspired by Slack, Infinity, and WhatsApp, featuring real-time communication and AI assistance.",
+      "A collaborative workspace platform inspired by Slack, Infinity, google meet, and WhatsApp, featuring real-time communication and AI assistance.",
     highlights: [
       "Hybrid REST + WebSocket communication for real-time updates",
       "Redux Toolkit for scalable state management",
       "Complex UI workflows with Ant Design & LESS",
     ],
-    tech: ["React", "Redux Toolkit", "WebSockets", "Ant Design", "i18n"],
+    tech: [
+      "React",
+      "typescript",
+      "Redux Toolkit",
+      "WebSockets",
+      "Ant Design",
+      "LESS",
+      "i18n",
+    ],
     projectLink: "https://app.rukkor.com",
   },
   {
@@ -24,7 +32,14 @@ const projects = [
       "Enhanced UI for 2D/PDF & 3D/BIM takeoff workflows",
       "Improved usability for construction professionals",
     ],
-    tech: ["React", "JavaScript", "UI Optimization", "reflux", "i18n"],
+    tech: [
+      "React",
+      "JavaScript",
+      "UI Optimization",
+      "Ant Design",
+      "reflux",
+      "i18n",
+    ],
     projectLink: "https://geometra.rukkor.io",
   },
   {
