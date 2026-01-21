@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "../ui/button";
 
 const projects = [
   {
@@ -12,7 +13,8 @@ const projects = [
       "Redux Toolkit for scalable state management",
       "Complex UI workflows with Ant Design & LESS",
     ],
-    tech: ["React", "Redux Toolkit", "WebSockets", "Ant Design"],
+    tech: ["React", "Redux Toolkit", "WebSockets", "Ant Design", "i18n"],
+    projectLink: "https://app.rukkor.com",
   },
   {
     title: "Geometra",
@@ -22,7 +24,8 @@ const projects = [
       "Enhanced UI for 2D/PDF & 3D/BIM takeoff workflows",
       "Improved usability for construction professionals",
     ],
-    tech: ["React", "JavaScript", "UI Optimization"],
+    tech: ["React", "JavaScript", "UI Optimization", "reflux", "i18n"],
+    projectLink: "https://geometra.rukkor.io",
   },
   {
     title: "USP.ai",
@@ -32,7 +35,7 @@ const projects = [
       "Designed and developed the user dashboard",
       "Improved navigation and performance across pages",
     ],
-    tech: ["React", "Next.js", "UI Design"],
+    tech: ["Next.js", "SCSS", "Oauth"],
   },
 ];
 
@@ -45,7 +48,7 @@ export default function Projects() {
       <div className="grid md:grid-cols-2 gap-6">
         {projects.map((project) => (
           <Card key={project.title}>
-            <CardContent className="p-6 space-y-4">
+            <CardContent className="p-6 space-y-4 h-full flex flex-col">
               <h3 className="text-xl font-semibold">{project.title}</h3>
 
               <p className="text-muted-foreground">{project.description}</p>
@@ -63,6 +66,13 @@ export default function Projects() {
                   </Badge>
                 ))}
               </div>
+              {project?.projectLink && (
+                <Button className="mt-auto w-max">
+                  <a href={project?.projectLink} target="_blank">
+                    Visit the project
+                  </a>
+                </Button>
+              )}
             </CardContent>
           </Card>
         ))}
