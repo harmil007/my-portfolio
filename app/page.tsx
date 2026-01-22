@@ -12,9 +12,11 @@ export default function Home() {
       <Navbar />
       <main className="mx-auto max-w-6xl px-4">
         <Hero />
-        <About />
-        <Skills />
-        <Experience />
+      </main>
+      <About />
+      <Skills />
+      <Experience />
+      <main className="mx-auto max-w-6xl px-4">
         <Projects />
         <Contact />
       </main>

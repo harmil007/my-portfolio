@@ -6,7 +6,7 @@ import { InteractiveCube } from "@/components/sections/Hero";
 
 export default function Hero() {
   return (
-    <section className="flex min-h-[90vh] flex-col items-center justify-between gap-12 md:flex-row">
+    <section className="flex min-h-[90vh] flex-col items-center justify-between gap-12 md:flex-row mt-8 md:mt-0">
       <div className="flex flex-col gap-6">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
