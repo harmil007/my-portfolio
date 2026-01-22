@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section
       className="
-        mt-8 md:mt-0 object-cover bg-cover bg-center
+         object-cover bg-cover bg-center
         bg-[url('/hero-bg.png')] dark:bg-[url('/hero-bg-dark.png')]
       "
     >
@@ -18,7 +18,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl font-bold md:text-6xl"
+            className="text-4xl font-bold md:text-6xl mt-8 md:mt-0"
           >
             Hi, I’m{" "}
             <span className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
