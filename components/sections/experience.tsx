@@ -10,10 +10,8 @@ export default function Experience() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-10 sm:mb-12">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
-            Experience
-          </h2>
-          <Separator className="mt-4 w-16 sm:w-20 bg-primary" />
+          <h2 className="text-3xl font-bold tracking-tight mb-4">Experience</h2>
+          <Separator className="mb-8" />
         </div>
 
         <div className="relative border-l border-border pl-6 sm:pl-8">

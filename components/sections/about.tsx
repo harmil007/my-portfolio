@@ -16,10 +16,8 @@ export default function About() {
         className="mx-auto max-w-6xl px-4 sm:px-6"
       >
         <div className="mb-8 sm:mb-10">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
-            About Me
-          </h2>
-          <Separator className="mt-4 w-16 sm:w-20 bg-primary" />
+          <h2 className="text-3xl font-bold tracking-tight mb-4">About Me</h2>
+          <Separator className="mb-8" />
         </div>
 
         <div className="rounded-xl border bg-card p-5 sm:p-6 md:p-8 shadow-sm">
