@@ -40,11 +40,9 @@ const item = {
 export default function Skills() {
   return (
     <section id="skills" className="relative py-20 sm:py-24 lg:py-28">
-      {/* background accent */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent" />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        {/* Header */}
         <div className="mb-10 sm:mb-12">
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
             Skills
@@ -52,7 +50,6 @@ export default function Skills() {
           <Separator className="mt-4 w-16 sm:w-20 bg-primary" />
         </div>
 
-        {/* Skills Grid */}
         <motion.div
           variants={container}
           initial="hidden"

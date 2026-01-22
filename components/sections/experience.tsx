@@ -6,11 +6,9 @@ import { Separator } from "@/components/ui/separator";
 export default function Experience() {
   return (
     <section id="experience" className="relative py-20 sm:py-24 lg:py-28">
-      {/* background accent */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent" />
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
-        {/* Header */}
         <div className="mb-10 sm:mb-12">
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
             Experience
@@ -18,9 +16,7 @@ export default function Experience() {
           <Separator className="mt-4 w-16 sm:w-20 bg-primary" />
         </div>
 
-        {/* Timeline */}
         <div className="relative border-l border-border pl-6 sm:pl-8">
-          {/* Timeline Dot */}
           <span className="absolute -left-[7px] sm:-left-[9px] top-2 h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-primary" />
 
           <motion.div

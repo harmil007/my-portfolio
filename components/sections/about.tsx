@@ -6,7 +6,6 @@ import { Separator } from "@/components/ui/separator";
 export default function About() {
   return (
     <section id="about" className="relative py-20 sm:py-24 lg:py-28">
-      {/* subtle background accent */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent" />
 
       <motion.div
@@ -16,7 +15,6 @@ export default function About() {
         transition={{ duration: 0.6 }}
         className="mx-auto max-w-4xl px-4 sm:px-6"
       >
-        {/* Section Header */}
         <div className="mb-8 sm:mb-10">
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
             About Me
@@ -24,7 +22,6 @@ export default function About() {
           <Separator className="mt-4 w-16 sm:w-20 bg-primary" />
         </div>
 
-        {/* Content Card */}
         <div className="rounded-xl border bg-card p-5 sm:p-6 md:p-8 shadow-sm">
           <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
             I’m a{" "}
