@@ -39,17 +39,17 @@ const item = {
 
 export default function Skills() {
   return (
-    <section id="skills" className="relative py-28">
+    <section id="skills" className="relative py-20 sm:py-24 lg:py-28">
       {/* background accent */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent" />
 
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Header */}
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+        <div className="mb-10 sm:mb-12">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
             Skills
           </h2>
-          <Separator className="mt-4 w-20 bg-primary" />
+          <Separator className="mt-4 w-16 sm:w-20 bg-primary" />
         </div>
 
         {/* Skills Grid */}
@@ -58,22 +58,41 @@ export default function Skills() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid gap-8 md:grid-cols-2"
+          className="
+            grid gap-6
+            sm:gap-8
+            md:grid-cols-2
+            lg:grid-cols-3
+          "
         >
           {Object.entries(skills).map(([category, items]) => (
             <motion.div
               key={category}
               variants={item}
-              className="rounded-xl border bg-card p-6 shadow-sm transition hover:shadow-md"
+              className="
+                rounded-xl border bg-card
+                p-4 sm:p-6
+                shadow-sm
+                transition
+                hover:shadow-md
+              "
             >
-              <h3 className="mb-4 text-lg font-semibold">{category}</h3>
+              <h3 className="mb-3 text-base sm:text-lg font-semibold">
+                {category}
+              </h3>
 
               <div className="flex flex-wrap gap-2">
                 {items.map((skill) => (
                   <Badge
                     key={skill}
                     variant="secondary"
-                    className="cursor-default transition hover:bg-primary hover:text-primary-foreground"
+                    className="
+                      text-xs sm:text-sm
+                      cursor-default
+                      transition
+                      hover:bg-primary
+                      hover:text-primary-foreground
+                    "
                   >
                     {skill}
                   </Badge>
