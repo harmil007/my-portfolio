@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section
       className="
-         object-cover bg-cover bg-center
+         object-cover bg-cover bg-center bg-fixed
         bg-[url('/hero-bg.png')] dark:bg-[url('/hero-bg-dark.png')]
       "
     >
