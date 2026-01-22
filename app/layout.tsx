@@ -1,29 +1,22 @@
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
+const siteUrl = "https://harmil-portfolio.netlify.app";
+
 export const metadata = {
   title: "Harmil Goti | Frontend Developer",
   description:
     "Harmil Goti is a Frontend Developer with 3+ years of experience in React.js and Next.js, building scalable and high-performance web applications.",
-  keywords: [
-    "Harmil Goti",
-    "Frontend Developer",
-    "React.js",
-    "Next.js",
-    "Portfolio",
-  ],
-  authors: [
-    { name: "Harmil Goti", url: "https://harmil-portfolio.netlify.app" },
-  ],
+
   openGraph: {
     title: "Harmil Goti | Frontend Developer",
     description:
       "React & Next.js developer focused on building scalable, high-quality web applications.",
-    url: "https://harmil-portfolio.netlify.app",
+    url: siteUrl,
     siteName: "Harmil Goti Portfolio",
     images: [
       {
-        url: "/og.png",
+        url: `${siteUrl}/og.png`,
         width: 1200,
         height: 630,
         alt: "Harmil Goti Portfolio",
@@ -31,13 +24,13 @@ export const metadata = {
     ],
     type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
     title: "Harmil Goti | Frontend Developer",
     description:
       "Frontend Developer with expertise in React.js & Next.js, creating high-performance web apps.",
-    images: ["/og.png"],
-    creator: "@harmilgoti",
+    images: [`${siteUrl}/og.png`], // ✅ ABSOLUTE URL
   },
 };
 
