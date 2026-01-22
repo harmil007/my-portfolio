@@ -8,7 +8,7 @@ export default function Experience() {
     <section id="experience" className="relative py-20 sm:py-24 lg:py-28">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent" />
 
-      <div className="mx-auto max-w-4xl px-4 sm:px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-10 sm:mb-12">
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
             Experience
