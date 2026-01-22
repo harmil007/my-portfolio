@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { InteractiveCube } from "@/components/sections/Hero";
 
 export default function Hero() {
   return (
@@ -37,42 +38,7 @@ export default function Hero() {
           </Button>
         </div>
       </div>
-
-      <div className="relative size-28 [perspective:800px] m-auto">
-        <motion.div
-          className="absolute inset-0 [transform-style:preserve-3d]"
-          animate={{ rotateX: 360, rotateY: 360 }}
-          transition={{
-            repeat: Infinity,
-            duration: 10,
-            ease: "linear",
-          }}
-        >
-          <div className="absolute inset-0 flex items-center justify-center bg-sky-400/80 text-white font-semibold translate-z-14">
-            React
-          </div>
-
-          <div className="absolute inset-0 flex items-center justify-center bg-sky-300/80 text-white font-semibold -translate-z-14 rotate-y-180">
-            Next
-          </div>
-
-          <div className="absolute inset-0 flex items-center justify-center bg-sky-500/80 text-white font-semibold translate-x-14 rotate-y-90">
-            JS
-          </div>
-
-          <div className="absolute inset-0 flex items-center justify-center bg-sky-200/80 text-white font-semibold -translate-x-14 -rotate-y-90">
-            TS
-          </div>
-
-          <div className="absolute inset-0 flex items-center justify-center bg-sky-600/80 text-white font-semibold -translate-y-14 rotate-x-90">
-            UI
-          </div>
-
-          <div className="absolute inset-0 flex items-center justify-center bg-sky-100/80 text-black font-semibold translate-y-14 -rotate-x-90">
-            Redux
-          </div>
-        </motion.div>
-      </div>
+      <InteractiveCube />
     </section>
   );
 }
