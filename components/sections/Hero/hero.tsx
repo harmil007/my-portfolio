@@ -1,54 +1,12 @@
 "use client";
 
-import { motion, useMotionValueEvent } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { InteractiveCube } from "@/components/sections/Hero";
-import { useScrollFrames } from "@/app/hooks/useScrollFrames";
-
-const TOTAL_FRAMES = 200;
 
 export default function Hero() {
-  const [currentFrame, setCurrentFrame] = useState(1);
-  const { ref, frame } = useScrollFrames(TOTAL_FRAMES);
-  const targetFrame = useRef(1);
-
-  useMotionValueEvent(frame, "change", (latest) => {
-    targetFrame.current = Math.min(
-      TOTAL_FRAMES,
-      Math.max(1, Math.round(latest)),
-    );
-  });
-
-  useEffect(() => {
-    let rafId: number;
-
-    const animate = () => {
-      setCurrentFrame((prev) => {
-        if (prev === targetFrame.current) return prev;
-        return prev + (targetFrame.current > prev ? 1 : -1);
-      });
-
-      rafId = requestAnimationFrame(animate);
-    };
-
-    rafId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
-
   return (
-    <section
-      ref={ref}
-      className="relative bg-cover bg-center"
-      style={{
-        backgroundImage: `url(/landing_animation/ezgif-frame-${String(
-          currentFrame,
-        ).padStart(3, "0")}.jpg)`,
-      }}
-    >
-      {/* Overlay for readability */}
-      <div className="absolute inset-0 bg-black/30" />
-
+    <section className="relative bg-cover bg-center bg-fixed bg-[url(/hero_bg_1.png)] dark:bg-[url(/hero_bg_1_dark.png)]">
       <div className="relative mx-auto max-w-6xl flex min-h-[90vh] flex-col items-center justify-between gap-12 md:flex-row px-4">
         <div className="flex flex-col gap-6">
           <motion.h1
