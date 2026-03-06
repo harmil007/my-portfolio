@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 const projects = [
   {
     title: "Rukkorverse",
+    img: "./images/rukkor_ss.png",
     description:
       "A collaborative workspace platform inspired by Slack, Infinity, google meet, and WhatsApp, featuring real-time communication and AI assistance.",
     highlights: [
@@ -26,6 +27,7 @@ const projects = [
   },
   {
     title: "Geometra",
+    img: "./images/geometra_ss.webp",
     description:
       "Construction management platform focused on cost estimation, project tracking, and takeoff measurements.",
     highlights: [
@@ -66,6 +68,9 @@ export default function Projects() {
           {projects.map((project) => (
             <Card key={project.title}>
               <CardContent className="p-6 space-y-4 h-full flex flex-col">
+                {project.img && (
+                  <img src={project.img} alt="banner" className="aspect-auto" />
+                )}
                 <h3 className="text-xl font-semibold">{project.title}</h3>
 
                 <p className="text-muted-foreground">{project.description}</p>
