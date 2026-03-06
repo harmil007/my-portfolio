@@ -5,8 +5,14 @@ import { Separator } from "@/components/ui/separator";
 
 export default function About() {
   return (
-    <section id="about" className="relative py-20 sm:py-24 lg:py-28">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent" />
+    <section
+      id="about"
+      className="relative py-20 sm:py-24 lg:py-28 overflow-clip"
+    >
+      <div
+        className="absolute inset-0 top-0 scale-[400%] origin-top -z-10 shadow-inner 
+bg-bg"
+      />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}

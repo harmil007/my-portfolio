@@ -14,10 +14,8 @@ export default function Home() {
       <About />
       <Skills />
       <Experience />
-      <main className="mx-auto max-w-6xl px-4">
-        <Projects />
-        <Contact />
-      </main>
+      <Projects />
+      <Contact />
     </>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
 
 const navItems = [
+  { label: "Home", href: "#home", id: "home" },
   { label: "About", href: "#about", id: "about" },
   { label: "Skills", href: "#skills", id: "skills" },
   { label: "Projects", href: "#projects", id: "projects" },
@@ -11,7 +12,7 @@ const navItems = [
 ];
 
 export function Navbar() {
-  const [active, setActive] = useState("about");
+  const [active, setActive] = useState("home");
 
   useEffect(() => {
     const observer = new IntersectionObserver(

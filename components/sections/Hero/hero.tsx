@@ -6,7 +6,10 @@ import { InteractiveCube } from "@/components/sections/Hero";
 
 export default function Hero() {
   return (
-    <section className="relative bg-cover bg-center bg-fixed bg-[url(/hero_bg_1.png)] dark:bg-[url(/hero_bg_1_dark.png)]">
+    <section
+      id="home"
+      className="relative bg-cover bg-center bg-fixed bg-[url(/hero_bg_1.png)] dark:bg-[url(/hero_bg_1_dark.png)]"
+    >
       <div className="relative mx-auto max-w-6xl flex min-h-[90vh] flex-col items-center justify-between gap-12 md:flex-row px-4">
         <div className="flex flex-col gap-6">
           <motion.h1
