@@ -1,2 +1,2 @@
-export { default as Hero } from "./hero";
+export { default as Hero } from "./Hero";
 export { InteractiveCube } from "./components";

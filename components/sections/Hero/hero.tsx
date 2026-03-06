@@ -35,7 +35,12 @@ export default function Hero() {
             <Button size="lg" asChild>
               <a href="#projects">View Projects</a>
             </Button>
-            <Button size="lg" variant="outline" asChild>
+            <Button
+              size="lg"
+              variant="outline"
+              asChild
+              className="backdrop-blur"
+            >
               <a href="/Harmil_Goti_Resume.pdf" target="_blank">
                 View Resume
               </a>
