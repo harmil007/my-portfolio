@@ -71,7 +71,7 @@ export default function Skills() {
               variants={item}
               className="
       relative
-      rounded-[30%_70%_70%_30%/30%_30%_70%_70%]
+      rounded-[30%_50%_70%_30%/30%_30%_70%_70%]
       bg-card/80
       backdrop-blur
       transition-all duration-300
@@ -83,7 +83,8 @@ export default function Skills() {
       w-full
       max-w-100
       h-max
-      py-12
+      pb-12
+      pt-8
     "
             >
               {/* Glow gradient */}
@@ -105,7 +106,7 @@ export default function Skills() {
                 {category}
               </h3>
 
-              <div className="flex flex-wrap gap-2 justify-center px-8">
+              <div className="flex flex-wrap gap-2 justify-center px-10">
                 {items.map((skill) => (
                   <Badge
                     key={skill}
