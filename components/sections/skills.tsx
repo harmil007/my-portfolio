@@ -62,7 +62,7 @@ export default function Skills() {
           whileInView="show"
           viewport={{ once: true }}
           className="
-            flex flex-wrap justify-center gap-6
+            flex flex-wrap justify-center gap-6 md:gap-12
           "
         >
           {Object.entries(skills).map(([category, items]) => (

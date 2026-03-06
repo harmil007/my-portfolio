@@ -7,7 +7,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative py-20 sm:py-24 lg:py-28 overflow-clip"
+      className="relative py-20 sm:py-24 lg:py-28 overflow-clip bg-accent"
     >
       <div
         className="absolute inset-0 top-0 scale-[400%] origin-top -z-10 shadow-inner 
