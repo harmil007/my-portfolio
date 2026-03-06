@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 const projects = [
   {
@@ -69,7 +70,12 @@ export default function Projects() {
             <Card key={project.title}>
               <CardContent className="p-6 space-y-4 h-full flex flex-col">
                 {project.img && (
-                  <img src={project.img} alt="banner" className="aspect-auto" />
+                  <Image
+                    loading="lazy"
+                    src={project.img}
+                    alt="banner"
+                    className="aspect-auto"
+                  />
                 )}
                 <h3 className="text-xl font-semibold">{project.title}</h3>
 
