@@ -25,7 +25,7 @@ export function Navbar() {
         });
       },
       {
-        rootMargin: "-40% 0px -50% 0px", // triggers near center
+        rootMargin: "-40% 0px -50% 0px",
       },
     );
 
