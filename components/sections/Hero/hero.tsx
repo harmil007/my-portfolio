@@ -19,11 +19,22 @@ export default function Hero() {
             className="text-4xl font-bold md:text-6xl mt-8 md:mt-0"
           >
             Hi, I’m{" "}
-            <span className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+            <span className="inline-block bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
               Harmil Goti
             </span>{" "}
             <span className="inline-block animate-bounce">👋</span>
             <span className="block text-primary">Frontend Developer</span>
+            <span className="block mt-4 text-2xl md:text-3xl font-medium text-muted-foreground">
+              Creator of{" "}
+              <a
+                href="https://tailwindthememaker.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground hover:text-primary hover:underline underline-offset-4 transition-colors"
+              >
+                TailwindThemeMaker
+              </a>
+            </span>
           </motion.h1>
 
           <p className="max-w-xl text-lg text-muted-foreground">

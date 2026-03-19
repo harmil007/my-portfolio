@@ -46,14 +46,16 @@ const projects = [
     projectLink: "https://geometra.rukkor.io",
   },
   {
-    title: "USP.ai",
+    title: "TailwindThemeMaker",
+    img: "/images/tailwindthememaker_ss.png", // You can add the image path here
     description:
-      "AI image generation platform with a dashboard to manage and download generated images.",
+      "Developed Tailwind Theme Maker, a web app that helps developers and designers create, preview, and export custom Tailwind CSS theme variables quickly. It simplifies theme generation by offering real-time visual updates, making design decisions faster and more consistent before starting development.",
     highlights: [
-      "Designed and developed the user dashboard",
-      "Improved navigation and performance across pages",
+      "Real-time custom Tailwind CSS theme generation and preview",
+      "Export ready-to-use theme variables to speed up setup",
     ],
-    tech: ["Next.js", "SCSS", "Oauth"],
+    tech: ["Next.js", "Tailwind CSS", "TypeScript", "shadcn/ui", "Vercel"],
+    projectLink: "https://tailwindthememaker.com",
   },
 ];
 
