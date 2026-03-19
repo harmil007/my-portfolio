@@ -59,6 +59,40 @@ const projects = [
   },
 ];
 
+const additionalProjects = [
+  {
+    title: "USP.ai",
+    description: "AI Image Generation Platform",
+  },
+  {
+    title: "Frank Porter",
+    description:
+      "Frontend feature development and UI enhancements for arabic language",
+  },
+  {
+    title: "Yoga Studio Platform",
+    description: "Responsive UI components and page structure using Chakra UI",
+  },
+  {
+    title: "Ozzo",
+    description:
+      "Implemented dark mode and geolocation features to recommend nearby restaurants based on user location",
+  },
+  {
+    title: "Insurance Platform",
+    description: "Dashboard and workflow UI improvements",
+  },
+  {
+    title: "Dignizant Website",
+    description: "Frontend development and UI updates",
+  },
+  {
+    title: "Deque Project",
+    description:
+      "Authentication and navigation system development and accessibility improvements",
+  },
+];
+
 export default function Projects() {
   return (
     <section id="projects" className="py-24 relative">
@@ -109,6 +143,26 @@ export default function Projects() {
               </CardContent>
             </Card>
           ))}
+        </div>
+        
+        <div className="mt-24">
+          <h2 className="text-3xl font-bold mb-4">Additional Projects & Contributions</h2>
+          <Separator className="mb-8" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {additionalProjects.map((project, i) => (
+              <Card
+                key={i}
+                className="hover:border-primary/50 transition-colors bg-secondary/10 hover:shadow-sm"
+              >
+                <CardContent className="p-5 flex flex-col justify-center h-full">
+                  <h3 className="font-semibold text-lg mb-2 text-foreground/90">{project.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {project.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </section>
