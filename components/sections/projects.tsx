@@ -47,12 +47,14 @@ const projects = [
   },
   {
     title: "TailwindThemeMaker",
-    img: "/images/tailwindthememaker_ss.png", // You can add the image path here
+    img: "/images/newtailwindthememaker_ss.png",
     description:
       "Developed Tailwind Theme Maker, a web app that helps developers and designers create, preview, and export custom Tailwind CSS theme variables quickly. It simplifies theme generation by offering real-time visual updates, making design decisions faster and more consistent before starting development.",
     highlights: [
       "Real-time custom Tailwind CSS theme generation and preview",
       "Export ready-to-use theme variables to speed up setup",
+      "Generate your custom palettes from image using AI",
+      "Generate dark mode variables from light mode variables",
     ],
     tech: ["Next.js", "Tailwind CSS", "TypeScript", "shadcn/ui", "Vercel"],
     projectLink: "https://tailwindthememaker.com",
@@ -144,7 +146,7 @@ export default function Projects() {
             </Card>
           ))}
         </div>
-        
+
         <div className="mt-24">
           <h2 className="text-3xl font-bold mb-4">Additional Projects & Contributions</h2>
           <Separator className="mb-8" />

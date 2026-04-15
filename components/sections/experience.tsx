@@ -15,7 +15,7 @@ export default function Experience() {
         </div>
 
         <div className="relative border-l border-border pl-6 sm:pl-8">
-          <span className="absolute -left-[7px] sm:-left-[9px] top-2 h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-primary" />
+          <span className="absolute -left-[7px] sm:-left-[9px] top-0 h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-primary" />
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
