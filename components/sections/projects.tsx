@@ -51,8 +51,7 @@ const projects = [
     description:
       "Developed Tailwind Theme Maker, a web app that helps developers and designers create, preview, and export custom Tailwind CSS theme variables quickly. It simplifies theme generation by offering real-time visual updates, making design decisions faster and more consistent before starting development.",
     highlights: [
-      "Real-time custom Tailwind CSS theme generation and preview",
-      "Export ready-to-use theme variables to speed up setup",
+      "CSS theme generation, preview and export the code",
       "Generate your custom palettes from image using AI",
       "Generate dark mode variables from light mode variables",
     ],
