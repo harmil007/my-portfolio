@@ -12,7 +12,7 @@ const projects = [
       "A collaborative workspace platform inspired by Slack, Infinity, google meet, and WhatsApp, featuring real-time communication and AI assistance.",
     highlights: [
       "Hybrid REST + WebSocket communication for real-time updates",
-      "Redux Toolkit for scalable state management",
+      "Implimentation of LiveKit for real-time video and audio calls",
       "Complex UI workflows with Ant Design & LESS",
     ],
     tech: [
@@ -23,6 +23,7 @@ const projects = [
       "Ant Design",
       "LESS",
       "i18n",
+      "LiveKit"
     ],
     projectLink: "https://app.rukkor.com",
   },
@@ -34,6 +35,8 @@ const projects = [
     highlights: [
       "Enhanced UI for 2D/PDF & 3D/BIM takeoff workflows",
       "Improved usability for construction professionals",
+      "Calculate estimation of cost of construction from PDF",
+      "Impliment the tools from PDF tron"
     ],
     tech: [
       "React",
@@ -90,7 +93,7 @@ const additionalProjects = [
   {
     title: "Deque Project",
     description:
-      "Authentication and navigation system development and accessibility improvements",
+      "Authentication and navigation system development, Map integration and accessibility improvements",
   },
 ];
 
