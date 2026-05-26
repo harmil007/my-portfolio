@@ -38,14 +38,14 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b backdrop-blur">
+    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/10 shadow-sm">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <span className="font-semibold text-lg">
-          Harmil<span className="text-primary">.</span>
+        <span className="font-semibold text-lg tracking-tight select-none">
+          Harmil<span className="text-primary font-bold">.</span>
         </span>
 
         <div className="flex items-center gap-4">
-          <nav className="hidden md:flex gap-6 text-sm">
+          <nav className="hidden md:flex gap-2 text-sm bg-sunken/40 p-1 rounded-xl border border-border/10 shadow-inset-sm">
             {navItems.map((item) => {
               const isActive = active === item.id;
 
@@ -53,33 +53,23 @@ export function Navbar() {
                 <a
                   key={item.id}
                   href={item.href}
-                  className={`relative pb-1 transition-colors
+                  className={`px-3 py-1.5 rounded-lg font-medium transition-all duration-250 select-none
                     ${
                       isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "text-primary shadow-inset-sm bg-secondary/80 border border-border/10"
+                        : "text-muted-foreground hover:text-foreground hover:bg-background/40"
                     }
                   `}
                 >
                   {item.label}
-                  <span
-                    className={`
-                      absolute left-0 -bottom-0.5 h-[2px] w-full rounded-full
-                      bg-primary transition-all duration-300
-                      ${
-                        isActive
-                          ? "scale-x-100 opacity-100"
-                          : "scale-x-0 opacity-0"
-                      }
-                      origin-left
-                    `}
-                  />
                 </a>
               );
             })}
           </nav>
 
-          <ThemeToggle />
+          <div className="shadow-sm border border-border/20 rounded-lg bg-background hover:shadow-md hover:-translate-y-0.5 active:shadow-inset-sm transition-all duration-200">
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </header>

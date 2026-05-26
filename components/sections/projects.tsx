@@ -46,7 +46,7 @@ const projects = [
       "reflux",
       "i18n",
     ],
-    projectLink: "https://geometra.rukkor.io",
+    projectLink: "https://geometra.rukkor.com",
   },
   {
     title: "TailwindThemeMaker",
@@ -139,7 +139,7 @@ export default function Projects() {
                 </div>
                 {project?.projectLink && (
                   <Button className="mt-auto w-max">
-                    <a href={project?.projectLink} target="_blank">
+                    <a href={project?.projectLink} target="_blank" className="text-primary-foreground">
                       Visit the project
                     </a>
                   </Button>
@@ -156,7 +156,7 @@ export default function Projects() {
             {additionalProjects.map((project, i) => (
               <Card
                 key={i}
-                className="hover:border-primary/50 transition-colors bg-secondary/10 hover:shadow-sm"
+                className="bg-secondary/40 border border-border/10 shadow-inset-sm hover:shadow-md hover:bg-card hover:-translate-y-1 transition-all duration-300 ease-out"
               >
                 <CardContent className="p-5 flex flex-col justify-center h-full">
                   <h3 className="font-semibold text-lg mb-2 text-foreground/90">{project.title}</h3>

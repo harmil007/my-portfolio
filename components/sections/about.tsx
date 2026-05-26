@@ -7,12 +7,8 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative py-20 sm:py-24 lg:py-28 overflow-clip bg-accent"
+      className="relative py-20 sm:py-24 lg:py-28 overflow-clip"
     >
-      <div
-        className="absolute inset-0 top-0 scale-[400%] origin-top -z-10 shadow-inner 
-bg-bg"
-      />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -26,7 +22,7 @@ bg-bg"
           <Separator className="mb-8" />
         </div>
 
-        <div className="rounded-xl border bg-card p-5 sm:p-6 md:p-8 shadow-sm">
+        <div className="rounded-2xl bg-card p-6 sm:p-8 md:p-10 shadow-md hover:shadow-lg transition-all duration-300 ease-out border border-border/10">
           <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
             I’m a{" "}
             <span className="font-medium text-foreground">

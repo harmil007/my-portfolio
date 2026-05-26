@@ -72,12 +72,12 @@ export default function Skills() {
               className="
       relative
       rounded-[30%_50%_70%_30%/30%_30%_70%_70%]
-      bg-card/80
-      backdrop-blur
-      transition-all duration-300
-      hover:shadow-md
-      hover:border-primary/40
-      hover:scale-[1.02]
+      bg-card
+      border border-border/10
+      shadow-md
+      transition-all duration-300 ease-out
+      hover:shadow-lg
+      hover:-translate-y-1.5
       overflow-hidden
       flex flex-col items-center
       w-full
