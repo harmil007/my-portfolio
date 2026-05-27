@@ -116,9 +116,9 @@ export default function Projects() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h2 className="text-3xl font-bold mb-4">Projects</h2>
         <Separator className="mb-8" />
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-10">
           {projects.map((project) => (
-            <Card key={project.title} className="shadow-sm">
+            <Card key={project.title} className="shadow-inset-md">
               <CardContent className="p-6 space-y-4 h-full flex flex-col">
                 {project.img && (
                   <div className="relative aspect-video">
@@ -149,7 +149,7 @@ export default function Projects() {
                   ))}
                 </div>
                 {project?.projectLink && (
-                  <Button className="mt-auto w-max">
+                  <Button className="mt-auto w-max shadow-none">
                     <a
                       href={project?.projectLink}
                       target="_blank"
@@ -173,7 +173,7 @@ export default function Projects() {
             {additionalProjects.map((project, i) => (
               <Card
                 key={i}
-                className="bg-secondary/40 border border-border/10 shadow-none hover:shadow-sm hover:bg-card transition-all duration-300 ease-out"
+                className="bg-secondary/40 border border-border/10 shadow-inset-md transition-all duration-300 ease-out hover:border-accent/30"
               >
                 <CardContent className="p-5 flex flex-col justify-center h-full">
                   <h3 className="font-semibold text-lg mb-2 text-foreground/90">

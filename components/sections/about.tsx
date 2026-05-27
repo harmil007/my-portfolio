@@ -9,7 +9,6 @@ export default function About() {
       id="about"
       className="relative py-20 sm:py-24 lg:py-28 overflow-clip"
     >
-
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -22,7 +21,7 @@ export default function About() {
           <Separator className="mb-8" />
         </div>
 
-        <div className="rounded-2xl bg-card p-6 sm:p-8 md:p-10 shadow-md hover:shadow-lg transition-all duration-300 ease-out border border-border/10">
+        <div className="rounded-2xl bg-card p-6 sm:p-8 md:p-10 shadow-inset-md transition-all duration-300 ease-out border border-border/10">
           <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
             I’m a{" "}
             <span className="font-medium text-foreground">

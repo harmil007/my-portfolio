@@ -5,7 +5,7 @@ export default function Contact() {
   return (
     <section id="contact" className="py-24 relative overflow-clip">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="bg-card border border-border/10 p-8 sm:p-12 rounded-3xl shadow-md hover:shadow-lg transition-all duration-300">
+        <div className="bg-card border border-border/10 p-8 sm:p-12 rounded-3xl shadow-inset-md transition-all duration-300">
           <h2 className="text-3xl font-bold mb-4">Contact</h2>
           <Separator className="mb-6" />
 

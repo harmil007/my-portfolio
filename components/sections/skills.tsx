@@ -73,10 +73,8 @@ export default function Skills() {
       relative
       rounded-[30%_50%_70%_30%/30%_30%_70%_70%]
       bg-card
-      border border-border/10
-      shadow-md
-      transition-all duration-300 ease-out
-      hover:shadow-lg
+      shadow-inset-md
+      transition-all duration-500 ease-out
       hover:-translate-y-1.5
       overflow-hidden
       flex flex-col items-center
@@ -85,6 +83,7 @@ export default function Skills() {
       h-max
       pb-12
       pt-8
+      group
     "
             >
               {/* Glow gradient */}
@@ -102,7 +101,7 @@ export default function Skills() {
       "
               />
 
-              <h3 className="mb-4 text-base sm:text-lg font-semibold tracking-tight border-b-2">
+              <h3 className="mb-4 group-hover:text-brand transition-colors duration-300 text-base sm:text-lg font-semibold tracking-tight border-b-2">
                 {category}
               </h3>
 

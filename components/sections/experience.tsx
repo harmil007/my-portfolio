@@ -15,8 +15,6 @@ export default function Experience() {
         </div>
 
         <div className="relative border-l border-border pl-6 sm:pl-8">
-          <span className="absolute -left-[7px] sm:-left-[9px] top-0 h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-primary" />
-
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -25,7 +23,7 @@ export default function Experience() {
             className="
               rounded-xl border bg-card
               p-4 sm:p-6
-              shadow-sm
+              shadow-inset-md
             "
           >
             <h3 className="text-base sm:text-lg font-semibold">

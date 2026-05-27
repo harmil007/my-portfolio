@@ -49,9 +49,11 @@ export default function Services() {
               transition={{
                 delay: index * 0.1,
               }}
-              className="group relative p-6 rounded-2xl bg-card border border-border/10 shadow-md hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 ease-out"
+              className="group relative p-6 rounded-2xl bg-card border border-border/10 shadow-inset-md transition-all duration-300 ease-out"
             >
-              <h3 className="text-lg font-semibold mb-3">{service.title}</h3>
+              <h3 className="text-lg font-semibold mb-3 group-hover:text-brand transition">
+                {service.title}
+              </h3>
 
               <p className="text-muted-foreground leading-relaxed">
                 {service.description}
