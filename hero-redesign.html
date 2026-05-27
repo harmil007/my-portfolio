@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harmil Goti | Neumorphic Hero Redesign</title>
+
+  <!-- Google Fonts: Syne & DM Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Syne:wght@400..800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Neumorphic Clay Theme variables */
+    :root {
+      --bg-page: #e0e5ec;
+      --foreground: #242323;
+      --muted-foreground: #6c6c6c;
+      --primary: #c35729;
+
+      /* Neumorphic Shadows */
+      --shadow-light: -6px -6px 14px #ffffff;
+      --shadow-dark: 6px 6px 14px #babecc;
+      --shadow-inset-light: inset -4px -4px 10px #ffffff;
+      --shadow-inset-dark: inset 4px 4px 10px #babecc;
+
+      --glow-color: #61dafb;
+      --card-size: clamp(180px, 24vw, 220px);
+    }
+
+    /* Core Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--foreground);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Typography families */
+    .font-display {
+      font-family: "Syne", sans-serif;
+    }
+
+    .font-terminal {
+      font-family: "DM Mono", monospace;
+    }
+
+    /* Redesigned Hero Section Layout */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-page);
+      overflow: hidden;
+      padding: 3rem 1.5rem;
+    }
+
+    /* Subtle Noise Grain Overlay */
+    .noise-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.045;
+      pointer-events: none;
+      z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3.5rem;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        flex-direction: row;
+        gap: 2rem;
+      }
+    }
+
+    .content-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+    }
+
+    /* Typography adjustments */
+    .intro-greet {
+      display: block;
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #8a9bb0;
+      margin-bottom: 0.5rem;
+      font-variant: small-caps;
+    }
+
+    .hand-wave {
+      display: inline-block;
+      animation: wave 2.5s infinite;
+      transform-origin: 70% 70%;
+      margin-left: 0.25rem;
+    }
+
+    @keyframes wave {
+      0% { transform: rotate( 0.0deg) }
+      10% { transform: rotate(14.0deg) }
+      20% { transform: rotate(-8.0deg) }
+      30% { transform: rotate(14.0deg) }
+      40% { transform: rotate(-4.0deg) }
+      50% { transform: rotate(10.0deg) }
+      60% { transform: rotate( 0.0deg) }
+      100% { transform: rotate( 0.0deg) }
+    }
+
+    .hero-title {
+      font-size: clamp(3.2rem, 7.5vw, 5.8rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    /* Glowing Name styles with transition sync and high readability */
+    .glowing-name {
+      display: inline-block;
+      color: color-mix(in oklab, var(--glow-color) 40%, var(--foreground));
+      text-shadow: 
+        0 0 12px color-mix(in oklab, var(--glow-color) 35%, transparent),
+        0 0 30px color-mix(in oklab, var(--glow-color) 15%, transparent),
+        0 0 60px color-mix(in oklab, var(--glow-color) 8%, transparent);
+      transition: color 0.6s ease, text-shadow 0.6s ease;
+      user-select: none;
+    }
+
+    .developer-role {
+      display: block;
+      margin-top: 1rem;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--primary);
+      font-variant: small-caps;
+    }
+
+    .maker-subtitle {
+      display: block;
+      margin-top: 1rem;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--muted-foreground);
+    }
+
+    .maker-link {
+      color: var(--foreground);
+      text-decoration: none;
+      font-weight: 550;
+      transition: color 0.2s ease;
+      border-bottom: 1px dashed rgba(108, 108, 108, 0.4);
+    }
+
+    .maker-link:hover {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .hero-desc {
+      max-width: 540px;
+      font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+      line-height: 1.6;
+      color: var(--muted-foreground);
+    }
+
+    /* CTA Pill Neumorphic Buttons */
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1.1rem 2.2rem;
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      border-radius: 50px;
+      border: none;
+      transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      outline: none;
+      box-shadow: var(--shadow-light), var(--shadow-dark);
+      user-select: none;
+    }
+
+    .btn-primary {
+      background-color: color-mix(in oklab, var(--primary) 12%, var(--bg-page));
+      color: var(--primary);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-page);
+      color: var(--foreground);
+    }
+
+    .btn:hover {
+      box-shadow: var(--shadow-inset-light), var(--shadow-inset-dark);
+    }
+
+    .btn-icon {
+      width: 1.1rem;
+      height: 1.1rem;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5px;
+    }
+
+    /* SLIDING NEUMORPHIC CARD SURFACE */
+    .cube-block {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .card-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(var(--card-size) + 60px);
+      height: calc(var(--card-size) + 60px);
+    }
+
+    .neo-card {
+      width: var(--card-size);
+      height: var(--card-size);
+      border-radius: 36px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 500ms ease-out;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(2px);
+      cursor: pointer;
+    }
+
+    .neo-card:active {
+      transform: scale(0.96);
+    }
+
+    .neo-card.raised {
+      box-shadow: var(--shadow-light), var(--shadow-dark);
+      transform: scale(1);
+    }
+
+    .neo-card.sunken {
+      box-shadow: var(--shadow-inset-light), var(--shadow-inset-dark);
+      transform: scale(0.98);
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 1.5rem;
+      will-change: transform;
+    }
+
+    .face-label {
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    .face-svg {
+      width: 5rem;
+      height: 5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Neumorphic Hero section container -->
+  <section class="hero-section">
+    <!-- Faint Noise Grain Layer -->
+    <div class="noise-overlay"></div>
+
+    <div class="container">
+      
+      <!-- Content Panel -->
+      <div class="content-block">
+        <div>
+          <span class="intro-greet font-terminal">Hi, I’m <span class="hand-wave">👋</span></span>
+          <h1 class="hero-title font-display">
+            <!-- Glowing Name -->
+            <span id="name-glow" class="glowing-name">Harmil Goti</span>
+            <!-- Developer Role -->
+            <span class="developer-role font-terminal">Frontend Developer</span>
+            <!-- Projects Creator link -->
+            <span class="maker-subtitle font-terminal">
+              Creator of 
+              <a href="https://tailwindthememaker.com" target="_blank" rel="noopener noreferrer" class="maker-link">TailwindThemeMaker</a>
+            </span>
+          </h1>
+        </div>
+
+        <p class="hero-desc font-terminal">
+          Frontend Developer with 3+ years of experience building scalable, high-performance web applications using React.js and Next.js.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="btn-group">
+          <a href="#projects" class="btn btn-primary font-terminal">
+            <svg class="btn-icon" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+            View Projects
+          </a>
+          
+          <a href="/Harmil_Goti_Resume.pdf" target="_blank" class="btn btn-secondary font-terminal">
+            <svg class="btn-icon" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            View Resume
+          </a>
+        </div>
+      </div>
+
+      <!-- 3D Skill Sliding Card Panel -->
+      <div class="cube-block">
+        <div class="card-wrapper">
+          <div id="skill-card" class="neo-card raised" style="background-color: rgba(97, 218, 251, 0.08);">
+            <!-- Sliding Content Layer -->
+            <div id="card-content" class="card-content" style="transition: all 0.5s ease;">
+              <!-- React content initially -->
+              <svg viewBox="0 0 100 100" class="face-svg fill-none stroke-[#61dafb]" style="filter: drop-shadow(0 0 8px rgba(97,218,251,0.4))" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="8" fill="#61dafb"/>
+                <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4"/>
+                <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4" transform="rotate(60 50 50)"/>
+                <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4" transform="rotate(120 50 50)"/>
+              </svg>
+              <span class="face-label font-display" style="color: #61dafb;">React</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- JS sliding card controller -->
+  <script>
+    const card = document.getElementById("skill-card");
+    const content = document.getElementById("card-content");
+    let currentIndex = 0;
+
+    const brandColors = [
+      "#61dafb", // React (Cyan)
+      "#f7df1e", // JS (Yellow)
+      "#0070f3", // Next.js (Blue)
+      "#3178c6", // TS (Blue)
+      "#a855f7", // UI/CSS (Purple)
+      "#764abc"  // Redux (Purple)
+    ];
+
+    const skillNames = ["React", "JS", "Next.js", "TS", "UI", "Redux"];
+
+    // Render SVGs inline dynamically
+    const skillSvgs = [
+      // React
+      `<svg viewBox="0 0 100 100" class="face-svg fill-none stroke-[#61dafb]" style="filter: drop-shadow(0 0 8px rgba(97,218,251,0.4))" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="8" fill="#61dafb"/>
+        <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4"/>
+        <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4" transform="rotate(60 50 50)"/>
+        <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4" transform="rotate(120 50 50)"/>
+      </svg>`,
+      // JS
+      `<svg viewBox="0 0 100 100" class="face-svg fill-[#f7df1e]" style="filter: drop-shadow(0 0 8px rgba(247,223,30,0.4))" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 5h90v90H5z"/>
+        <path d="M59.5 80.3c1.5 2.7 4.1 4.5 7.8 4.5 3.9 0 6.2-2 6.2-7.8V42.5h11v34.3c0 11.5-6.8 17.2-17 17.2-10 0-14.8-5.3-17.5-10.7l9.5-3zM31 80.5c1.8 3 4.8 4.3 8.3 4.3 4.3 0 7-2 7-6.2 0-4.3-3.2-5.8-8.5-8.1l-3-1.3c-7-3-11.8-6.7-11.8-14.8 0-8.5 7.2-14.3 16.5-14.3 8 0 13.5 3.8 16 9.5l-9.3 5.4c-1.5-3-3.8-4.3-6.7-4.3-3.2 0-5.3 2-5.3 4.8 0 3.3 2 4.6 6.7 6.7l3 1.3c8.5 3.7 13.8 7.3 13.8 16.2 0 9.8-7.7 15.6-18.3 15.6-11 0-17.5-5.3-20.5-11.7l9.5-5.5z" fill="#000000"/>
+      </svg>`,
+      // Next.js
+      `<svg viewBox="0 0 180 180" class="face-svg fill-current text-foreground" style="filter: drop-shadow(0 0 8px rgba(255,255,255,0.2))" xmlns="http://www.w3.org/2000/svg">
+        <mask id="mask_standalone">
+          <circle cx="90" cy="90" r="90" fill="white"/>
+        </mask>
+        <g mask="url(#mask_standalone)">
+          <circle cx="90" cy="90" r="90" fill="black"/>
+          <path d="M149.508 157.52L69.142 54H54v72h12.142V69.742l68.783 87.778zM126 54h12v72h-12z" fill="url(#paint0_standalone)"/>
+        </g>
+        <defs>
+          <linearGradient id="paint0_standalone" x1="109" y1="116.5" x2="144.5" y2="160.5" gradientUnits="userSpaceOnUse">
+            <stop stop-color="white"/>
+            <stop offset="1" stop-color="white" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>`,
+      // TS
+      `<svg viewBox="0 0 100 100" class="face-svg fill-[#3178c6]" style="filter: drop-shadow(0 0 8px rgba(49,120,198,0.4))" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 5h90v90H5z"/>
+        <path d="M48.2 60.1H41v18h-6.2v-18h-7.2v-5.2h20.6v5.2zm20.8 10.4c0 3.6-2.5 5.5-6.2 5.5-3.5 0-5.6-1.5-6.4-4l-5.2 2.6c1.6 4.6 6 6.9 11.6 6.9 7 0 11.4-3.8 11.4-10.1 0-11-13.8-10-13.8-15.1 0-1.8 1.5-2.7 3.8-2.7 2.6 0 4.3 1.1 5 3.1l5-2.5c-1.6-3.8-5-5.8-10-5.8-6.1 0-10 3.3-10 8.6 0 9.8 13.8 9.2 13.8 15.6z" fill="white"/>
+      </svg>`,
+      // UI
+      `<svg viewBox="0 0 24 24" class="face-svg fill-[#a855f7]" style="filter: drop-shadow(0 0 8px rgba(168,85,247,0.4))" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.5 0h21l-1.9 21.2L12 24l-8.6-2.8L1.5 0zm17.3 6.1H8.2l.2 2.5h10.2l-.5 5.7-3.9 1.1-3.9-1.1-.3-2.9H7.6l.5 5.5 3.9 1.1 3.9-1.1 1.2-12.8z"/>
+      </svg>`,
+      // Redux
+      `<svg viewBox="0 0 100 100" class="face-svg fill-[#764abc]" style="filter: drop-shadow(0 0 8px rgba(118,74,188,0.4))" xmlns="http://www.w3.org/2000/svg">
+        <path d="M68.5 25.5a20.4 20.4 0 0 0-14.8-6.1A19.8 19.8 0 0 0 39.5 25a19.7 19.7 0 0 0-5.7 13.9c0 8.3 5 15.6 12.6 18.3A19.8 19.8 0 0 0 61.2 52a19.7 19.7 0 0 0 5.7-13.9 19.7 19.7 0 0 0-1.6-7.8l6.3-5.2c1.7 3.3 2.6 7 2.6 10.9 0 12.7-10.3 23-23 23a22.9 22.9 0 0 1-21-14.6l-6.3 5.2A29.4 29.4 0 0 0 49.8 77c16 0 29-13 29-29a28.8 28.8 0 0 0-3.9-14.6z"/>
+        <path d="M49.8 21.6c-7.3 0-13.8 3.5-17.8 8.8l-6.3-5.2A29 29 0 0 1 49.8 11.5c16.1 0 29.1 13 29.1 29.1l-8.3-.1c0-10.4-8.4-18.9-18.9-18.9z"/>
+      </svg>`
+    ];
+
+    let isTransitioning = false;
+    let timerId = null;
+
+    function resetAutoSlide() {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+      timerId = setTimeout(triggerSlide, 4500); // 4.5s floating rest
+    }
+
+    function triggerSlide() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      // 1. SINK: pressed
+      card.className = "neo-card sunken";
+      
+      // Determine random direction for exit
+      const directions = ["left", "right", "up", "down"];
+      const dir = directions[Math.floor(Math.random() * directions.length)];
+
+      let exitTransform = "translate(0px, 0px)";
+      let enterTransform = "translate(0px, 0px)";
+
+      if (dir === "left") {
+        exitTransform = "translate(-130%, 0px) scale(0.85)";
+        enterTransform = "translate(130%, 0px) scale(0.85)";
+      } else if (dir === "right") {
+        exitTransform = "translate(130%, 0px) scale(0.85)";
+        enterTransform = "translate(-130%, 0px) scale(0.85)";
+      } else if (dir === "up") {
+        exitTransform = "translate(0px, -130%) scale(0.85)";
+        enterTransform = "translate(0px, 130%) scale(0.85)";
+      } else if (dir === "down") {
+        exitTransform = "translate(0px, 130%) scale(0.85)";
+        enterTransform = "translate(0px, -130%) scale(0.85)";
+      }
+
+      // Tint card slightly less when sunken
+      card.style.backgroundColor = `color-mix(in oklab, ${brandColors[currentIndex]} 4%, var(--bg-page))`;
+
+      // WAIT 500ms BEFORE SLIDING: Simulates physical visual weight
+      setTimeout(() => {
+        // 2. SLIDE OUT
+        content.style.transition = "all 0.35s cubic-bezier(0.25, 1, 0.5, 1)";
+        content.style.transform = exitTransform;
+        content.style.opacity = 0;
+
+        setTimeout(() => {
+          // Swap indices
+          currentIndex = (currentIndex + 1) % skillNames.length;
+          const color = brandColors[currentIndex];
+
+          // Sync name glow color
+          document.documentElement.style.setProperty("--glow-color", color);
+
+          // Update card inner HTML
+          content.innerHTML = `
+            ${skillSvgs[currentIndex]}
+            <span class="face-label font-display" style="color: ${color};">${skillNames[currentIndex]}</span>
+          `;
+
+          // Snap to enter boundary
+          content.style.transition = "none";
+          content.style.transform = enterTransform;
+          content.style.opacity = 0;
+
+          setTimeout(() => {
+            // Slide in to center
+            content.style.transition = "all 0.45s cubic-bezier(0.25, 1, 0.5, 1)";
+            content.style.transform = "translate(0px, 0px) scale(1)";
+            content.style.opacity = 1;
+
+            // 3. RISE
+            setTimeout(() => {
+              card.className = "neo-card raised";
+              card.style.backgroundColor = `color-mix(in oklab, ${color} 8%, var(--bg-page))`;
+              isTransitioning = false;
+              resetAutoSlide(); // Re-schedule next auto slide
+            }, 350);
+
+          }, 50);
+
+        }, 350);
+
+      }, 500); // 500ms delay
+    }
+
+    // Attach click listener for immediate manual slide
+    card.addEventListener("click", () => {
+      if (isTransitioning) return;
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+      triggerSlide();
+    });
+
+    // Set initial glow color and card background
+    document.documentElement.style.setProperty("--glow-color", brandColors[0]);
+    card.style.backgroundColor = `color-mix(in oklab, ${brandColors[0]} 8%, var(--bg-page))`;
+
+    // Start auto-slide timer
+    resetAutoSlide();
+  </script>
+</body>
+</html>

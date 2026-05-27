@@ -201,15 +201,15 @@ html {
   --text-link: #c35729;
 
   /* BACKGROUND */
-  --bg-page: #f9f8f8;
-  --bg-surface: #f9f8f8;
-  --bg-elevated: #f9f8f8;
-  --bg-sunken: #e4e3e3;
+  --bg-page: #e0e5ec;
+  --bg-surface: #e0e5ec;
+  --bg-elevated: #e0e5ec;
+  --bg-sunken: #cbd2db;
 
   /* BORDER */
-  --border-default: rgba(0, 0, 0, 0.05);
-  --border-strong: rgba(0, 0, 0, 0.15);
-  --border-subtle: rgba(0, 0, 0, 0.02);
+  --border-default: transparent;
+  --border-strong: rgba(0, 0, 0, 0.05);
+  --border-subtle: rgba(0, 0, 0, 0.01);
   --border-focus: #c35729;
 
   /* STATUS */
@@ -226,16 +226,16 @@ html {
   --gradient-brand: linear-gradient(135deg, #a74013 0%, #6d2300 100%);
   --gradient-accent: linear-gradient(135deg, #6d2300 0%, #a14e2b 100%);
   --gradient-hero: linear-gradient(135deg, #a74013 0%, #c35729 50%, #6d2300 100%);
-  --gradient-surface: linear-gradient(to bottom, #ffffff 0%, #f9f8f8 100%);
+  --gradient-surface: linear-gradient(to bottom, #e0e5ec 0%, #e0e5ec 100%);
   --gradient-card: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
 
   /* NEUMORPHIC SHADOWS (LIGHT MODE) */
-  --shadow-sm: 2px 2px 5px rgb(218 217 217), -2px -2px 5px rgb(255 255 255);
-  --shadow-md: 5px 5px 10px rgb(218 217 217), -5px -5px 10px rgb(255 255 255);
-  --shadow-lg: 10px 10px 20px rgb(218 217 217), -10px -10px 20px rgb(255 255 255);
-  --shadow-xl: 15px 15px 30px rgb(218 217 217), -15px -15px 30px rgb(255 255 255);
-  --shadow-inset-sm: inset 2px 2px 5px rgb(218 217 217), inset -2px -2px 5px rgb(255 255 255);
-  --shadow-inset-md: inset 5px 5px 10px rgb(218 217 217), inset -5px -5px 10px rgb(255 255 255);
+  --shadow-sm: -3px -3px 8px #ffffff, 3px 3px 8px #babecc;
+  --shadow-md: -6px -6px 14px #ffffff, 6px 6px 14px #babecc;
+  --shadow-lg: -10px -10px 20px #ffffff, 10px 10px 20px #babecc;
+  --shadow-xl: -15px -15px 30px #ffffff, 15px 15px 30px #babecc;
+  --shadow-inset-sm: inset -2px -2px 6px #ffffff, inset 2px 2px 6px #babecc;
+  --shadow-inset-md: inset -4px -4px 10px #ffffff, inset 4px 4px 10px #babecc;
   --shadow-brand: 0 0 20px rgb(195 87 41 / 0.2);
 
   /* RADIUS */
@@ -249,8 +249,8 @@ html {
   --radius: 0.625rem;
 
   /* TYPOGRAPHY */
-  --font-family-sans: var(--font-geist-sans), Inter, system-ui, -apple-system, sans-serif;
-  --font-family-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-family-sans: var(--font-syne), var(--font-geist-sans), Inter, system-ui, -apple-system, sans-serif;
+  --font-family-mono: var(--font-dm-mono), var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --font-size-xs: 12px;
   --font-size-sm: 14px;
   --font-size-base: 16px;
@@ -350,43 +350,43 @@ html {
   --text-link: #f07d4c;
 
   /* BACKGROUND */
-  --bg-page: #0d0c0c;
-  --bg-surface: #141313;
-  --bg-elevated: #1e1d1d;
-  --bg-sunken: #050505;
+  --bg-page: #1e222b;
+  --bg-surface: #1e222b;
+  --bg-elevated: #1e222b;
+  --bg-sunken: #11141a;
 
   /* BORDER */
-  --border-default: rgba(255, 255, 255, 0.04);
-  --border-strong: rgba(255, 255, 255, 0.12);
-  --border-subtle: rgba(255, 255, 255, 0.02);
+  --border-default: transparent;
+  --border-strong: rgba(255, 255, 255, 0.05);
+  --border-subtle: rgba(255, 255, 255, 0.01);
   --border-focus: #d96a3a;
 
   /* NEUTRAL */
-  --neutral-50: #0d0c0c;
-  --neutral-100: #232323;
-  --neutral-200: #393939;
-  --neutral-300: #515050;
-  --neutral-400: #696969;
-  --neutral-500: #838282;
-  --neutral-600: #9e9d9d;
-  --neutral-700: #bab9b9;
-  --neutral-800: #d6d5d5;
-  --neutral-900: #f3f2f2;
+  --neutral-50: #1e222b;
+  --neutral-100: #2a2f3a;
+  --neutral-200: #3f4758;
+  --neutral-300: #556076;
+  --neutral-400: #6f7d95;
+  --neutral-500: #8a9bb0;
+  --neutral-600: #a5b6ca;
+  --neutral-700: #c1cedd;
+  --neutral-800: #dde5ed;
+  --neutral-900: #faebd7;
 
   /* COMMON */
   --selection-background: #d96a3a66;
   --selection-foreground: #ffffff;
   --overlay: #00000099;
   --ring: #d96a3a80;
-  --skeleton: #232323;
+  --skeleton: #2a2f3a;
 
   /* NEUMORPHIC SHADOWS (DARK MODE) */
-  --shadow-sm: 2px 2px 5px rgba(0, 0, 0, 0.65), -2px -2px 5px rgba(255, 255, 255, 0.04);
-  --shadow-md: 5px 5px 10px rgba(0, 0, 0, 0.7), -5px -5px 10px rgba(255, 255, 255, 0.04);
-  --shadow-lg: 10px 10px 20px rgba(0, 0, 0, 0.75), -10px -10px 20px rgba(255, 255, 255, 0.04);
-  --shadow-xl: 15px 15px 30px rgba(0, 0, 0, 0.8), -15px -15px 30px rgba(255, 255, 255, 0.04);
-  --shadow-inset-sm: inset 2px 2px 5px rgba(0, 0, 0, 0.65), inset -2px -2px 5px rgba(255, 255, 255, 0.04);
-  --shadow-inset-md: inset 5px 5px 10px rgba(0, 0, 0, 0.7), inset -5px -5px 10px rgba(255, 255, 255, 0.04);
+  --shadow-sm: -3px -3px 8px rgba(255, 255, 255, 0.04), 3px 3px 8px rgba(0, 0, 0, 0.45);
+  --shadow-md: -6px -6px 14px rgba(255, 255, 255, 0.04), 6px 6px 14px rgba(0, 0, 0, 0.5);
+  --shadow-lg: -10px -10px 20px rgba(255, 255, 255, 0.04), 10px 10px 20px rgba(0, 0, 0, 0.55);
+  --shadow-xl: -15px -15px 30px rgba(255, 255, 255, 0.04), 15px 15px 30px rgba(0, 0, 0, 0.6);
+  --shadow-inset-sm: inset -2px -2px 6px rgba(255, 255, 255, 0.04), inset 2px 2px 6px rgba(0, 0, 0, 0.45);
+  --shadow-inset-md: inset -4px -4px 10px rgba(255, 255, 255, 0.04), inset 4px 4px 10px rgba(0, 0, 0, 0.5);
   --shadow-brand: 0 0 20px rgb(217 106 58 / 0.35);
 
   /* DARK BRAND SHADES */
@@ -453,6 +453,14 @@ html {
   .bg-sunken { background-color: var(--color-bg-sunken); }
   .shadow-brand { box-shadow: var(--shadow-brand); }
 
+  /* Font classes */
+  .font-display {
+    font-family: "Syne", var(--font-family-sans);
+  }
+  .font-terminal {
+    font-family: "DM Mono", var(--font-family-mono);
+  }
+
   /* Tactile hover lift and press helpers */
   .neo-interactive {
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -464,5 +472,124 @@ html {
   .neo-interactive:active {
     transform: translateY(0);
     box-shadow: var(--shadow-inset-sm);
+  }
+
+  /* Neumorphic shadow helpers */
+  .shadow-neo-raised {
+    box-shadow: var(--shadow-md);
+  }
+  .shadow-neo-inset {
+    box-shadow: var(--shadow-inset-md);
+  }
+
+  /* Neumorphic Pill Buttons */
+  .btn-neumorphic {
+    border-radius: 50px !important;
+    background-color: var(--color-bg-page) !important;
+    box-shadow: var(--shadow-md) !important;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: none !important;
+    color: var(--color-foreground) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-neumorphic:hover {
+    box-shadow: var(--shadow-inset-md) !important;
+    transform: translateY(0) !important;
+  }
+  
+  .btn-neumorphic-primary {
+    border-radius: 50px !important;
+    background-color: color-mix(in oklab, var(--color-primary) 12%, var(--color-bg-page)) !important;
+    box-shadow: var(--shadow-md) !important;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: none !important;
+    color: var(--color-primary) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600 !important;
+  }
+  .btn-neumorphic-primary:hover {
+    box-shadow: var(--shadow-inset-md) !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Subtle Noise Grain Overlay */
+  .noise-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.045;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  /* Cube Lift -> Flip -> Land bounce container animation */
+  .animate-cube-bounce {
+    animation: cubeBounce 3.5s infinite;
+  }
+
+  /* Cube shadow syncing animation */
+  .animate-cube-shadow {
+    animation: shadowFade 3.5s infinite;
+  }
+}
+
+@keyframes cubeBounce {
+  0%, 80% {
+    /* Kept exactly in place during resting and flipping phases */
+    transform: translateY(0) scaleX(1) scaleY(1);
+    animation-timing-function: cubic-bezier(0.34, 1.1, 0.64, 1);
+  }
+  91.4% {
+    /* Settling from rotation */
+    transform: translateY(0) scaleX(1) scaleY(1);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  95.7% {
+    /* Very subtle landing squish to show visual settle impact */
+    transform: translateY(0) scaleX(1.03) scaleY(0.97);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  100% {
+    /* Spring back to rest */
+    transform: translateY(0) scaleX(1) scaleY(1);
+  }
+}
+
+@keyframes shadowFade {
+  0%, 42.8% {
+    /* Grounded: 100% size, 100% opacity */
+    transform: scale(1);
+    opacity: 0.8;
+    filter: blur(8px);
+    animation-timing-function: cubic-bezier(0.34, 1.1, 0.64, 1);
+  }
+  57.1%, 80% {
+    /* Lifted: shrinks to 40% size + fades */
+    transform: scale(0.35);
+    opacity: 0.15;
+    filter: blur(16px);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  91.4% {
+    /* Grounded again */
+    transform: scale(1);
+    opacity: 0.8;
+    filter: blur(8px);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  95.7% {
+    /* Squish in sync with land */
+    transform: scaleX(1.08) scaleY(0.93);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
   }
 }
