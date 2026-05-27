@@ -25,7 +25,7 @@
       --shadow-inset-dark: inset 4px 4px 10px #babecc;
 
       --glow-color: #61dafb;
-      --cube-size: clamp(130px, 16vw, 170px);
+      --card-size: clamp(180px, 24vw, 220px);
     }
 
     /* Core Styles */
@@ -66,7 +66,7 @@
       padding: 3rem 1.5rem;
     }
 
-    /* Subtle Noise Grain Overlay ( fractalNoise base64 SVG) */
+    /* Subtle Noise Grain Overlay */
     .noise-overlay {
       position: absolute;
       inset: 0;
@@ -241,7 +241,7 @@
       stroke-width: 2.5px;
     }
 
-    /* 3D SKILL CUBE WRAPPER */
+    /* SLIDING NEUMORPHIC CARD SURFACE */
     .cube-block {
       flex: 1;
       display: flex;
@@ -250,130 +250,60 @@
       width: 100%;
     }
 
-    .cube-wrapper {
+    .card-wrapper {
       position: relative;
       display: flex;
-      flex-direction: center;
       align-items: center;
       justify-content: center;
-      height: calc(var(--cube-size) + 120px);
-      width: calc(var(--cube-size) + 120px);
+      width: calc(var(--card-size) + 60px);
+      height: calc(var(--card-size) + 60px);
     }
 
-    /* Cube bounce container animation (Lift -> Descend -> Squish -> Land) */
-    .cube-bounce {
-      transform-style: preserve-3d;
-      animation: cubeBounce 3.5s infinite;
+    .neo-card {
+      width: var(--card-size);
+      height: var(--card-size);
+      border-radius: 36px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 500ms ease-out;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(2px);
     }
 
-    /* Cube rotation container */
-    .cube-rotation {
-      position: relative;
-      width: var(--cube-size);
-      height: var(--cube-size);
-      transform-style: preserve-3d;
-      will-change: transform;
-      transition: transform 1.0s linear;
+    .neo-card.raised {
+      box-shadow: var(--shadow-light), var(--shadow-dark);
+      transform: scale(1);
     }
 
-    /* Reusable Face elements */
-    .cube-face {
-      position: absolute;
-      inset: 0;
+    .neo-card.sunken {
+      box-shadow: var(--shadow-inset-light), var(--shadow-inset-dark);
+      transform: scale(0.98);
+    }
+
+    .card-content {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border-radius: 24px;
-      box-shadow: var(--shadow-light), var(--shadow-dark);
-      backface-visibility: hidden;
+      width: 100%;
+      height: 100%;
+      padding: 1.5rem;
       will-change: transform;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(1px);
     }
 
     .face-label {
-      margin-top: 0.75rem;
-      font-size: 0.75rem;
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
     }
 
     .face-svg {
-      width: 2.8rem;
-      height: 2.8rem;
-    }
-
-    /* Ground Shadow sync with lift */
-    .cube-shadow {
-      position: absolute;
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(var(--cube-size) * 0.85);
-      height: 16px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.12);
-      filter: blur(8px);
-      z-index: -1;
-      animation: shadowFade 3.5s infinite;
-    }
-
-    /* KEYFRAMES FOR DRIFT-FREE SYNC */
-    @keyframes cubeBounce {
-      0%, 80% {
-        /* Kept exactly in place during resting and flipping phases */
-        transform: translateY(0) scaleX(1) scaleY(1);
-        animation-timing-function: cubic-bezier(0.34, 1.1, 0.64, 1);
-      }
-      91.4% {
-        /* Settling from rotation */
-        transform: translateY(0) scaleX(1) scaleY(1);
-        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      95.7% {
-        /* Very subtle landing squish to show visual settle impact */
-        transform: translateY(0) scaleX(1.03) scaleY(0.97);
-        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      100% {
-        /* Spring back to rest */
-        transform: translateY(0) scaleX(1) scaleY(1);
-      }
-    }
-
-    @keyframes shadowFade {
-      0%, 42.8% {
-        /* Grounded */
-        transform: scale(1);
-        opacity: 0.8;
-        filter: blur(8px);
-        animation-timing-function: cubic-bezier(0.34, 1.1, 0.64, 1);
-      }
-      57.1%, 80% {
-        /* Lifted, shrink to 40% + fade */
-        transform: scale(0.35);
-        opacity: 0.15;
-        filter: blur(16px);
-        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      91.4% {
-        /* Grounded again */
-        transform: scale(1);
-        opacity: 0.8;
-        filter: blur(8px);
-        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-      }
-      95.7% {
-        /* Squish */
-        transform: scaleX(1.08) scaleY(0.93);
-        opacity: 0.85;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 0.8;
-      }
+      width: 5rem;
+      height: 5rem;
     }
   </style>
 </head>
@@ -425,96 +355,33 @@
         </div>
       </div>
 
-      <!-- 3D Skill Cube Panel -->
+      <!-- 3D Skill Sliding Card Panel -->
       <div class="cube-block">
-        <div class="cube-wrapper">
-          <!-- Bounce/Lift layer -->
-          <div class="cube-bounce">
-            
-            <!-- Rotate layer -->
-            <div id="skill-cube" class="cube-rotation">
-              
-              <!-- Face 1: React (Front) -->
-              <div class="cube-face" style="transform: rotateY(0deg) translateZ(calc(var(--cube-size) / 2)); background-color: rgba(97, 218, 251, 0.13);">
-                <svg viewBox="0 0 100 100" class="face-svg fill-none stroke-[#61dafb]" style="filter: drop-shadow(0 0 8px rgba(97,218,251,0.5))" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="8" fill="#61dafb"/>
-                  <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4"/>
-                  <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4" transform="rotate(60 50 50)"/>
-                  <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4" transform="rotate(120 50 50)"/>
-                </svg>
-                <span class="face-label font-display" style="color: #61dafb;">React</span>
-              </div>
-
-              <!-- Face 2: JavaScript (Right) -->
-              <div class="cube-face" style="transform: rotateY(90deg) translateZ(calc(var(--cube-size) / 2)); background-color: rgba(247, 223, 30, 0.12);">
-                <svg viewBox="0 0 100 100" class="face-svg fill-[#f7df1e]" style="filter: drop-shadow(0 0 8px rgba(247,223,30,0.5))" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 5h90v90H5z"/>
-                  <path d="M59.5 80.3c1.5 2.7 4.1 4.5 7.8 4.5 3.9 0 6.2-2 6.2-7.8V42.5h11v34.3c0 11.5-6.8 17.2-17 17.2-10 0-14.8-5.3-17.5-10.7l9.5-3zM31 80.5c1.8 3 4.8 4.3 8.3 4.3 4.3 0 7-2 7-6.2 0-4.3-3.2-5.8-8.5-8.1l-3-1.3c-7-3-11.8-6.7-11.8-14.8 0-8.5 7.2-14.3 16.5-14.3 8 0 13.5 3.8 16 9.5l-9.3 5.4c-1.5-3-3.8-4.3-6.7-4.3-3.2 0-5.3 2-5.3 4.8 0 3.3 2 4.6 6.7 6.7l3 1.3c8.5 3.7 13.8 7.3 13.8 16.2 0 9.8-7.7 15.6-18.3 15.6-11 0-17.5-5.3-20.5-11.7l9.5-5.5z" fill="#000000"/>
-                </svg>
-                <span class="face-label font-display" style="color: #f7df1e;">JS</span>
-              </div>
-
-              <!-- Face 3: Next.js (Back) -->
-              <div class="cube-face" style="transform: rotateY(180deg) translateZ(calc(var(--cube-size) / 2)); background-color: rgba(0, 112, 243, 0.12);">
-                <svg viewBox="0 0 180 180" class="face-svg fill-current text-foreground" style="filter: drop-shadow(0 0 8px rgba(0,0,0,0.3))" xmlns="http://www.w3.org/2000/svg">
-                  <mask id="mask_standalone">
-                    <circle cx="90" cy="90" r="90" fill="white"/>
-                  </mask>
-                  <g mask="url(#mask_standalone)">
-                    <circle cx="90" cy="90" r="90" fill="black"/>
-                    <path d="M149.508 157.52L69.142 54H54v72h12.142V69.742l68.783 87.778zM126 54h12v72h-12z" fill="url(#paint0_standalone)"/>
-                  </g>
-                  <defs>
-                    <linearGradient id="paint0_standalone" x1="109" y1="116.5" x2="144.5" y2="160.5" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="white"/>
-                      <stop offset="1" stop-color="white" stop-opacity="0"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <span class="face-label font-display" style="color: #242323;">Next.js</span>
-              </div>
-
-              <!-- Face 4: TypeScript (Left) -->
-              <div class="cube-face" style="transform: rotateY(-90deg) translateZ(calc(var(--cube-size) / 2)); background-color: rgba(49, 120, 198, 0.13);">
-                <svg viewBox="0 0 100 100" class="face-svg fill-[#3178c6]" style="filter: drop-shadow(0 0 8px rgba(49,120,198,0.5))" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 5h90v90H5z"/>
-                  <path d="M48.2 60.1H41v18h-6.2v-18h-7.2v-5.2h20.6v5.2zm20.8 10.4c0 3.6-2.5 5.5-6.2 5.5-3.5 0-5.6-1.5-6.4-4l-5.2 2.6c1.6 4.6 6 6.9 11.6 6.9 7 0 11.4-3.8 11.4-10.1 0-11-13.8-10-13.8-15.1 0-1.8 1.5-2.7 3.8-2.7 2.6 0 4.3 1.1 5 3.1l5-2.5c-1.6-3.8-5-5.8-10-5.8-6.1 0-10 3.3-10 8.6 0 9.8 13.8 9.2 13.8 15.6z" fill="white"/>
-                </svg>
-                <span class="face-label font-display" style="color: #3178c6;">TS</span>
-              </div>
-
-              <!-- Face 5: UI / CSS (Top) -->
-              <div class="cube-face" style="transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2)); background-color: rgba(168, 85, 247, 0.13);">
-                <svg viewBox="0 0 24 24" class="face-svg fill-[#a855f7]" style="filter: drop-shadow(0 0 8px rgba(168,85,247,0.5))" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1.5 0h21l-1.9 21.2L12 24l-8.6-2.8L1.5 0zm17.3 6.1H8.2l.2 2.5h10.2l-.5 5.7-3.9 1.1-3.9-1.1-.3-2.9H7.6l.5 5.5 3.9 1.1 3.9-1.1 1.2-12.8z"/>
-                </svg>
-                <span class="face-label font-display" style="color: #a855f7;">UI</span>
-              </div>
-
-              <!-- Face 6: Redux (Bottom) -->
-              <div class="cube-face" style="transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2)); background-color: rgba(118, 74, 188, 0.13);">
-                <svg viewBox="0 0 100 100" class="face-svg fill-[#764abc]" style="filter: drop-shadow(0 0 8px rgba(118,74,188,0.5))" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M68.5 25.5a20.4 20.4 0 0 0-14.8-6.1A19.8 19.8 0 0 0 39.5 25a19.7 19.7 0 0 0-5.7 13.9c0 8.3 5 15.6 12.6 18.3A19.8 19.8 0 0 0 61.2 52a19.7 19.7 0 0 0 5.7-13.9 19.7 19.7 0 0 0-1.6-7.8l6.3-5.2c1.7 3.3 2.6 7 2.6 10.9 0 12.7-10.3 23-23 23a22.9 22.9 0 0 1-21-14.6l-6.3 5.2A29.4 29.4 0 0 0 49.8 77c16 0 29-13 29-29a28.8 28.8 0 0 0-3.9-14.6z"/>
-                  <path d="M49.8 21.6c-7.3 0-13.8 3.5-17.8 8.8l-6.3-5.2A29 29 0 0 1 49.8 11.5c16.1 0 29.1 13 29.1 29.1l-8.3-.1c0-10.4-8.4-18.9-18.9-18.9z"/>
-                </svg>
-                <span class="face-label font-display" style="color: #764abc;">Redux</span>
-              </div>
+        <div class="card-wrapper">
+          <div id="skill-card" class="neo-card raised" style="background-color: rgba(97, 218, 251, 0.08);">
+            <!-- Sliding Content Layer -->
+            <div id="card-content" class="card-content" style="transition: all 0.5s ease;">
+              <!-- React content initially -->
+              <svg viewBox="0 0 100 100" class="face-svg fill-none stroke-[#61dafb]" style="filter: drop-shadow(0 0 8px rgba(97,218,251,0.4))" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="8" fill="#61dafb"/>
+                <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4"/>
+                <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4" transform="rotate(60 50 50)"/>
+                <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4" transform="rotate(120 50 50)"/>
+              </svg>
+              <span class="face-label font-display" style="color: #61dafb;">React</span>
             </div>
           </div>
-
-          <!-- Shadow element -->
-          <div class="cube-shadow"></div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- JS continuous rotation and glow color synchronization -->
+  <!-- JS sliding card controller -->
   <script>
-    const cube = document.getElementById("skill-cube");
-    const nameGlow = document.getElementById("name-glow");
-    let step = 0;
+    const card = document.getElementById("skill-card");
+    const content = document.getElementById("card-content");
+    let currentIndex = 0;
 
     const brandColors = [
       "#61dafb", // React (Cyan)
@@ -525,39 +392,133 @@
       "#764abc"  // Redux (Purple)
     ];
 
-    function getRotation(currentStep) {
-      const face = currentStep % 6;
-      const cycle = Math.floor(currentStep / 6);
-      const baseOffsetY = -360 * cycle;
+    const skillNames = ["React", "JS", "Next.js", "TS", "UI", "Redux"];
 
-      switch (face) {
-        case 0: return { x: 0, y: baseOffsetY + 0 };
-        case 1: return { x: 0, y: baseOffsetY - 90 };
-        case 2: return { x: 0, y: baseOffsetY - 180 };
-        case 3: return { x: 0, y: baseOffsetY - 270 };
-        case 4: return { x: -90, y: baseOffsetY - 360 };
-        case 5: return { x: 90, y: baseOffsetY - 360 };
-        default: return { x: 0, y: 0 };
+    // Render SVGs inline dynamically
+    const skillSvgs = [
+      // React
+      `<svg viewBox="0 0 100 100" class="face-svg fill-none stroke-[#61dafb]" style="filter: drop-shadow(0 0 8px rgba(97,218,251,0.4))" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="8" fill="#61dafb"/>
+        <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4"/>
+        <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4" transform="rotate(60 50 50)"/>
+        <ellipse cx="50" cy="50" rx="38" ry="14" stroke-width="4" transform="rotate(120 50 50)"/>
+      </svg>`,
+      // JS
+      `<svg viewBox="0 0 100 100" class="face-svg fill-[#f7df1e]" style="filter: drop-shadow(0 0 8px rgba(247,223,30,0.4))" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 5h90v90H5z"/>
+        <path d="M59.5 80.3c1.5 2.7 4.1 4.5 7.8 4.5 3.9 0 6.2-2 6.2-7.8V42.5h11v34.3c0 11.5-6.8 17.2-17 17.2-10 0-14.8-5.3-17.5-10.7l9.5-3zM31 80.5c1.8 3 4.8 4.3 8.3 4.3 4.3 0 7-2 7-6.2 0-4.3-3.2-5.8-8.5-8.1l-3-1.3c-7-3-11.8-6.7-11.8-14.8 0-8.5 7.2-14.3 16.5-14.3 8 0 13.5 3.8 16 9.5l-9.3 5.4c-1.5-3-3.8-4.3-6.7-4.3-3.2 0-5.3 2-5.3 4.8 0 3.3 2 4.6 6.7 6.7l3 1.3c8.5 3.7 13.8 7.3 13.8 16.2 0 9.8-7.7 15.6-18.3 15.6-11 0-17.5-5.3-20.5-11.7l9.5-5.5z" fill="#000000"/>
+      </svg>`,
+      // Next.js
+      `<svg viewBox="0 0 180 180" class="face-svg fill-current text-foreground" style="filter: drop-shadow(0 0 8px rgba(255,255,255,0.2))" xmlns="http://www.w3.org/2000/svg">
+        <mask id="mask_standalone">
+          <circle cx="90" cy="90" r="90" fill="white"/>
+        </mask>
+        <g mask="url(#mask_standalone)">
+          <circle cx="90" cy="90" r="90" fill="black"/>
+          <path d="M149.508 157.52L69.142 54H54v72h12.142V69.742l68.783 87.778zM126 54h12v72h-12z" fill="url(#paint0_standalone)"/>
+        </g>
+        <defs>
+          <linearGradient id="paint0_standalone" x1="109" y1="116.5" x2="144.5" y2="160.5" gradientUnits="userSpaceOnUse">
+            <stop stop-color="white"/>
+            <stop offset="1" stop-color="white" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>`,
+      // TS
+      `<svg viewBox="0 0 100 100" class="face-svg fill-[#3178c6]" style="filter: drop-shadow(0 0 8px rgba(49,120,198,0.4))" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 5h90v90H5z"/>
+        <path d="M48.2 60.1H41v18h-6.2v-18h-7.2v-5.2h20.6v5.2zm20.8 10.4c0 3.6-2.5 5.5-6.2 5.5-3.5 0-5.6-1.5-6.4-4l-5.2 2.6c1.6 4.6 6 6.9 11.6 6.9 7 0 11.4-3.8 11.4-10.1 0-11-13.8-10-13.8-15.1 0-1.8 1.5-2.7 3.8-2.7 2.6 0 4.3 1.1 5 3.1l5-2.5c-1.6-3.8-5-5.8-10-5.8-6.1 0-10 3.3-10 8.6 0 9.8 13.8 9.2 13.8 15.6z" fill="white"/>
+      </svg>`,
+      // UI
+      `<svg viewBox="0 0 24 24" class="face-svg fill-[#a855f7]" style="filter: drop-shadow(0 0 8px rgba(168,85,247,0.4))" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.5 0h21l-1.9 21.2L12 24l-8.6-2.8L1.5 0zm17.3 6.1H8.2l.2 2.5h10.2l-.5 5.7-3.9 1.1-3.9-1.1-.3-2.9H7.6l.5 5.5 3.9 1.1 3.9-1.1 1.2-12.8z"/>
+      </svg>`,
+      // Redux
+      `<svg viewBox="0 0 100 100" class="face-svg fill-[#764abc]" style="filter: drop-shadow(0 0 8px rgba(118,74,188,0.4))" xmlns="http://www.w3.org/2000/svg">
+        <path d="M68.5 25.5a20.4 20.4 0 0 0-14.8-6.1A19.8 19.8 0 0 0 39.5 25a19.7 19.7 0 0 0-5.7 13.9c0 8.3 5 15.6 12.6 18.3A19.8 19.8 0 0 0 61.2 52a19.7 19.7 0 0 0 5.7-13.9 19.7 19.7 0 0 0-1.6-7.8l6.3-5.2c1.7 3.3 2.6 7 2.6 10.9 0 12.7-10.3 23-23 23a22.9 22.9 0 0 1-21-14.6l-6.3 5.2A29.4 29.4 0 0 0 49.8 77c16 0 29-13 29-29a28.8 28.8 0 0 0-3.9-14.6z"/>
+        <path d="M49.8 21.6c-7.3 0-13.8 3.5-17.8 8.8l-6.3-5.2A29 29 0 0 1 49.8 11.5c16.1 0 29.1 13 29.1 29.1l-8.3-.1c0-10.4-8.4-18.9-18.9-18.9z"/>
+      </svg>`
+    ];
+
+    function runSlideCycle() {
+      // 1. SINK: pressed
+      card.className = "neo-card sunken";
+      
+      // Determine random direction for exit
+      const directions = ["left", "right", "up", "down"];
+      const dir = directions[Math.floor(Math.random() * directions.length)];
+
+      let exitTransform = "translate(0px, 0px)";
+      let enterTransform = "translate(0px, 0px)";
+
+      if (dir === "left") {
+        exitTransform = "translate(-130%, 0px) scale(0.85)";
+        enterTransform = "translate(130%, 0px) scale(0.85)";
+      } else if (dir === "right") {
+        exitTransform = "translate(130%, 0px) scale(0.85)";
+        enterTransform = "translate(-130%, 0px) scale(0.85)";
+      } else if (dir === "up") {
+        exitTransform = "translate(0px, -130%) scale(0.85)";
+        enterTransform = "translate(0px, 130%) scale(0.85)";
+      } else if (dir === "down") {
+        exitTransform = "translate(0px, 130%) scale(0.85)";
+        enterTransform = "translate(0px, -130%) scale(0.85)";
       }
+
+      // Tint card slightly less when sunken
+      card.style.backgroundColor = `color-mix(in oklab, ${brandColors[currentIndex]} 4%, var(--bg-page))`;
+
+      // WAIT 500ms BEFORE SLIDING: Simulates physical latency/loading visual weight
+      setTimeout(() => {
+        // 2. SLIDE OUT
+        content.style.transition = "all 0.35s cubic-bezier(0.25, 1, 0.5, 1)";
+        content.style.transform = exitTransform;
+        content.style.opacity = 0;
+
+        setTimeout(() => {
+          // Swap indices
+          currentIndex = (currentIndex + 1) % skillNames.length;
+          const color = brandColors[currentIndex];
+
+          // Sync name glow color
+          document.documentElement.style.setProperty("--glow-color", color);
+
+          // Update card inner HTML
+          content.innerHTML = `
+            ${skillSvgs[currentIndex]}
+            <span class="face-label font-display" style="color: ${color};">${skillNames[currentIndex]}</span>
+          `;
+
+          // Snap to enter boundary
+          content.style.transition = "none";
+          content.style.transform = enterTransform;
+          content.style.opacity = 0;
+
+          setTimeout(() => {
+            // Slide in to center
+            content.style.transition = "all 0.45s cubic-bezier(0.25, 1, 0.5, 1)";
+            content.style.transform = "translate(0px, 0px) scale(1)";
+            content.style.opacity = 1;
+
+            // 3. RISE
+            setTimeout(() => {
+              card.className = "neo-card raised";
+              card.style.backgroundColor = `color-mix(in oklab, ${color} 8%, var(--bg-page))`;
+            }, 350);
+
+          }, 50);
+
+        }, 350);
+
+      }, 500); // 500ms delay
     }
 
-    function runCycle() {
-      step += 1;
-      const activeFace = step % 6;
-
-      // 1. Sync glow color property
-      document.documentElement.style.setProperty("--glow-color", brandColors[activeFace]);
-
-      // 2. Rotate the cube continuously
-      const rot = getRotation(step);
-      cube.style.transform = `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`;
-    }
-
-    // Set initial active color
+    // Set initial glow color and card background
     document.documentElement.style.setProperty("--glow-color", brandColors[0]);
+    card.style.backgroundColor = `color-mix(in oklab, ${brandColors[0]} 8%, var(--bg-page))`;
 
-    // Flip cycle every 3.5s
-    setInterval(runCycle, 3500);
+    // Slide cycle loop every 3.5s
+    setInterval(runSlideCycle, 3500);
   </script>
 </body>
 </html>

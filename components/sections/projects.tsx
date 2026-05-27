@@ -17,13 +17,15 @@ const projects = [
     ],
     tech: [
       "React",
+      "node",
       "typescript",
       "Redux Toolkit",
       "WebSockets",
       "Ant Design",
       "LESS",
       "i18n",
-      "LiveKit"
+      "LiveKit",
+      "GitHub",
     ],
     projectLink: "https://app.rukkor.com",
   },
@@ -36,7 +38,7 @@ const projects = [
       "Enhanced UI for 2D/PDF & 3D/BIM takeoff workflows",
       "Improved usability for construction professionals",
       "Calculate estimation of cost of construction from PDF",
-      "Impliment the tools from PDF tron"
+      "Impliment the tools from PDF tron",
     ],
     tech: [
       "React",
@@ -45,6 +47,7 @@ const projects = [
       "Ant Design",
       "reflux",
       "i18n",
+      "GitHub",
     ],
     projectLink: "https://geometra.rukkor.com",
   },
@@ -58,7 +61,15 @@ const projects = [
       "Generate your custom palettes from image using AI",
       "Generate dark mode variables from light mode variables",
     ],
-    tech: ["Next.js", "Tailwind CSS", "TypeScript", "shadcn/ui", "Vercel"],
+    tech: [
+      "Next.js",
+      "supabase",
+      "Tailwind CSS",
+      "TypeScript",
+      "shadcn/ui",
+      "Vercel",
+      "GitHub",
+    ],
     projectLink: "https://tailwindthememaker.com",
   },
 ];
@@ -107,7 +118,7 @@ export default function Projects() {
         <Separator className="mb-8" />
         <div className="grid md:grid-cols-2 gap-6">
           {projects.map((project) => (
-            <Card key={project.title}>
+            <Card key={project.title} className="shadow-sm">
               <CardContent className="p-6 space-y-4 h-full flex flex-col">
                 {project.img && (
                   <div className="relative aspect-video">
@@ -116,7 +127,7 @@ export default function Projects() {
                       fill
                       src={project.img}
                       alt="banner"
-                      className="aspect-auto"
+                      className="aspect-auto shadow-inset-sm"
                     />
                   </div>
                 )}
@@ -130,7 +141,7 @@ export default function Projects() {
                   ))}
                 </ul>
 
-                <div className="flex flex-wrap gap-2 pt-2">
+                <div className="flex flex-wrap gap-3 pt-2">
                   {project.tech.map((tech) => (
                     <Badge key={tech} variant="outline">
                       {tech}
@@ -139,7 +150,11 @@ export default function Projects() {
                 </div>
                 {project?.projectLink && (
                   <Button className="mt-auto w-max">
-                    <a href={project?.projectLink} target="_blank" className="text-primary-foreground">
+                    <a
+                      href={project?.projectLink}
+                      target="_blank"
+                      className="text-primary-foreground"
+                    >
                       Visit the project
                     </a>
                   </Button>
@@ -150,16 +165,20 @@ export default function Projects() {
         </div>
 
         <div className="mt-24">
-          <h2 className="text-3xl font-bold mb-4">Additional Projects & Contributions</h2>
+          <h2 className="text-3xl font-bold mb-4">
+            Additional Projects & Contributions
+          </h2>
           <Separator className="mb-8" />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {additionalProjects.map((project, i) => (
               <Card
                 key={i}
-                className="bg-secondary/40 border border-border/10 shadow-inset-sm hover:shadow-md hover:bg-card hover:-translate-y-1 transition-all duration-300 ease-out"
+                className="bg-secondary/40 border border-border/10 shadow-none hover:shadow-sm hover:bg-card transition-all duration-300 ease-out"
               >
                 <CardContent className="p-5 flex flex-col justify-center h-full">
-                  <h3 className="font-semibold text-lg mb-2 text-foreground/90">{project.title}</h3>
+                  <h3 className="font-semibold text-lg mb-2 text-foreground/90">
+                    {project.title}
+                  </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {project.description}
                   </p>

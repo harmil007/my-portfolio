@@ -67,7 +67,7 @@ export function Navbar() {
             })}
           </nav>
 
-          <div className="shadow-sm border border-border/20 rounded-lg bg-background hover:shadow-md hover:-translate-y-0.5 active:shadow-inset-sm transition-all duration-200">
+          <div className="shadow-sm border border-border/20 rounded-lg bg-background hover:shadow-md active:shadow-inset-sm transition-all duration-200">
             <ThemeToggle />
           </div>
         </div>
