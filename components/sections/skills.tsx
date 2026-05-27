@@ -111,7 +111,7 @@ export default function Skills() {
                     key={skill}
                     variant="secondary"
                     className="
-            text-xs sm:text-sm
+            text-sm
             cursor-default
             transition-all
             duration-200
