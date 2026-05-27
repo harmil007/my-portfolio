@@ -270,6 +270,11 @@
       transition: all 500ms ease-out;
       border: 1px solid rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(2px);
+      cursor: pointer;
+    }
+
+    .neo-card:active {
+      transform: scale(0.96);
     }
 
     .neo-card.raised {
@@ -440,7 +445,20 @@
       </svg>`
     ];
 
-    function runSlideCycle() {
+    let isTransitioning = false;
+    let timerId = null;
+
+    function resetAutoSlide() {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+      timerId = setTimeout(triggerSlide, 4500); // 4.5s floating rest
+    }
+
+    function triggerSlide() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
       // 1. SINK: pressed
       card.className = "neo-card sunken";
       
@@ -468,7 +486,7 @@
       // Tint card slightly less when sunken
       card.style.backgroundColor = `color-mix(in oklab, ${brandColors[currentIndex]} 4%, var(--bg-page))`;
 
-      // WAIT 500ms BEFORE SLIDING: Simulates physical latency/loading visual weight
+      // WAIT 500ms BEFORE SLIDING: Simulates physical visual weight
       setTimeout(() => {
         // 2. SLIDE OUT
         content.style.transition = "all 0.35s cubic-bezier(0.25, 1, 0.5, 1)";
@@ -504,6 +522,8 @@
             setTimeout(() => {
               card.className = "neo-card raised";
               card.style.backgroundColor = `color-mix(in oklab, ${color} 8%, var(--bg-page))`;
+              isTransitioning = false;
+              resetAutoSlide(); // Re-schedule next auto slide
             }, 350);
 
           }, 50);
@@ -513,12 +533,21 @@
       }, 500); // 500ms delay
     }
 
+    // Attach click listener for immediate manual slide
+    card.addEventListener("click", () => {
+      if (isTransitioning) return;
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+      triggerSlide();
+    });
+
     // Set initial glow color and card background
     document.documentElement.style.setProperty("--glow-color", brandColors[0]);
     card.style.backgroundColor = `color-mix(in oklab, ${brandColors[0]} 8%, var(--bg-page))`;
 
-    // Slide cycle loop every 3.5s
-    setInterval(runSlideCycle, 3500);
+    // Start auto-slide timer
+    resetAutoSlide();
   </script>
 </body>
 </html>

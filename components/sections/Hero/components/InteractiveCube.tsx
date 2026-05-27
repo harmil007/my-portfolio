@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 export function InteractiveCube() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -10,6 +10,8 @@ export function InteractiveCube() {
     opacity: 1,
     transition: "all 0.5s cubic-bezier(0.25, 1, 0.5, 1)",
   });
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const skills = [
     {
@@ -126,84 +128,109 @@ export function InteractiveCube() {
     },
   ];
 
-  // Set initial brand color on mount
+  // Set initial brand color on mount and trigger first timer
   useEffect(() => {
     document.documentElement.style.setProperty("--glow-color", skills[0].color);
+    resetAutoSlide();
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // 1. SINK: Set card to sunken state
-      setCardState("sunken");
+  // Schedules the next automatic slide event (drift-free conflict resolution)
+  const resetAutoSlide = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      triggerSlide();
+    }, 4500); // 4.5 seconds of floating active rest
+  };
 
-      // Pick a random exit direction
-      const directions = ["left", "right", "up", "down"];
-      const dir = directions[Math.floor(Math.random() * directions.length)];
+  const triggerSlide = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
 
-      let exitTransform = "translate(0px, 0px)";
-      let enterTransform = "translate(0px, 0px)";
+    // 1. SINK: Set card to sunken state
+    setCardState("sunken");
 
-      if (dir === "left") {
-        exitTransform = "translate(-130%, 0px) scale(0.85)";
-        enterTransform = "translate(130%, 0px) scale(0.85)";
-      } else if (dir === "right") {
-        exitTransform = "translate(130%, 0px) scale(0.85)";
-        enterTransform = "translate(-130%, 0px) scale(0.85)";
-      } else if (dir === "up") {
-        exitTransform = "translate(0px, -130%) scale(0.85)";
-        enterTransform = "translate(0px, 130%) scale(0.85)";
-      } else if (dir === "down") {
-        exitTransform = "translate(0px, 130%) scale(0.85)";
-        enterTransform = "translate(0px, -130%) scale(0.85)";
-      }
+    // Pick a random exit direction
+    const directions = ["left", "right", "up", "down"];
+    const dir = directions[Math.floor(Math.random() * directions.length)];
 
-      // WAIT 500ms BEFORE SLIDING: Simulates physical latency/loading visual weight
+    let exitTransform = "translate(0px, 0px)";
+    let enterTransform = "translate(0px, 0px)";
+
+    if (dir === "left") {
+      exitTransform = "translate(-130%, 0px) scale(0.85)";
+      enterTransform = "translate(130%, 0px) scale(0.85)";
+    } else if (dir === "right") {
+      exitTransform = "translate(130%, 0px) scale(0.85)";
+      enterTransform = "translate(-130%, 0px) scale(0.85)";
+    } else if (dir === "up") {
+      exitTransform = "translate(0px, -130%) scale(0.85)";
+      enterTransform = "translate(0px, 130%) scale(0.85)";
+    } else if (dir === "down") {
+      exitTransform = "translate(0px, 130%) scale(0.85)";
+      enterTransform = "translate(0px, -130%) scale(0.85)";
+    }
+
+    // WAIT 500ms BEFORE SLIDING: Simulates visual mechanical hold
+    setTimeout(() => {
+      // 2. SLIDE OUT: Slide current content out smoothly
+      setContentStyle({
+        transform: exitTransform,
+        opacity: 0,
+        transition: "all 0.35s cubic-bezier(0.25, 1, 0.5, 1)",
+      });
+
+      // 3. SWAP & SNAP PRE-POSITION: Snap next content to entering boundary
       setTimeout(() => {
-        // 2. SLIDE OUT: Slide current content out smoothly
-        setContentStyle({
-          transform: exitTransform,
-          opacity: 0,
-          transition: "all 0.35s cubic-bezier(0.25, 1, 0.5, 1)",
-        });
-
-        // 3. SWAP & SNAP PRE-POSITION: Snap next content to entering boundary
-        setTimeout(() => {
-          const nextIndex = (currentIndex + 1) % skills.length;
-          setCurrentIndex(nextIndex);
-
+        let nextIndex = 0;
+        setCurrentIndex((prevIndex) => {
+          nextIndex = (prevIndex + 1) % skills.length;
           // Sync name glow color property on swap
           document.documentElement.style.setProperty("--glow-color", skills[nextIndex].color);
+          return nextIndex;
+        });
 
-          // Snap without transition
+        // Snap without transition
+        setContentStyle({
+          transform: enterTransform,
+          opacity: 0,
+          transition: "none",
+        });
+
+        // 4. SLIDE IN: Slide next content into center
+        setTimeout(() => {
           setContentStyle({
-            transform: enterTransform,
-            opacity: 0,
-            transition: "none",
+            transform: "translate(0px, 0px) scale(1)",
+            opacity: 1,
+            transition: "all 0.45s cubic-bezier(0.25, 1, 0.5, 1)",
           });
 
-          // 4. SLIDE IN: Slide next content into center
+          // 5. RISE: Restore card to raised floating state
           setTimeout(() => {
-            setContentStyle({
-              transform: "translate(0px, 0px) scale(1)",
-              opacity: 1,
-              transition: "all 0.45s cubic-bezier(0.25, 1, 0.5, 1)",
-            });
+            setCardState("raised");
+            setIsTransitioning(false);
+            resetAutoSlide(); // Re-schedule next slide from here
+          }, 350);
 
-            // 5. RISE: Restore card to raised floating state
-            setTimeout(() => {
-              setCardState("raised");
-            }, 350);
+        }, 50);
 
-          }, 50);
+      }, 350);
 
-        }, 350);
+    }, 500);
+  };
 
-      }, 500); // 500ms delay
-
-    }, 3500);
-
-    return () => clearInterval(interval);
-  }, [currentIndex]);
+  // Handles click to manual slide immediately
+  const handleCardClick = () => {
+    if (isTransitioning) return;
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    triggerSlide();
+  };
 
   return (
     <div
@@ -216,11 +243,13 @@ export function InteractiveCube() {
     >
       {/* Outer Neumorphic Card Surface */}
       <div
+        onClick={handleCardClick}
         className={`
           w-[var(--card-size)] h-[var(--card-size)]
           rounded-[36px] overflow-hidden flex items-center justify-center
           transition-all duration-500 ease-out border border-white/5 backdrop-blur-[2px]
-          ${cardState === "raised" ? "shadow-neo-raised scale-100" : "shadow-neo-inset scale-[0.98]"}
+          cursor-pointer active:scale-[0.96]
+          ${cardState === "raised" ? "shadow-neo-raised" : "shadow-neo-inset"}
         `}
         style={{
           backgroundColor: cardState === "raised"
