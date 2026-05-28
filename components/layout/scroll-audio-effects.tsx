@@ -28,9 +28,10 @@ const SCALES: Record<string, string[]> = {
 };
 
 export default function ScrollAudioEffects() {
-  const [isMuted, setIsMuted] = useState(true); // Muted by default to match browser autoplay standards
+  const [isMuted, setIsMuted] = useState(true); // Muted by default on load
   const [isInitialized, setIsInitialized] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [soundRegister, setSoundRegister] = useState<"deep" | "warm" | "light">("warm"); // Warm (Mid) default
 
   // Web Audio Context & Node Refs
   const toneRef = useRef<any>(null);
@@ -40,6 +41,7 @@ export default function ScrollAudioEffects() {
   // Interaction & Tracking Refs to avoid stale closure lags
   const activeSectionRef = useRef("home");
   const isMutedRef = useRef(true);
+  const soundRegisterRef = useRef<"deep" | "warm" | "light">("warm");
 
   // Scroll Tracking State Refs
   const lastScrollTopRef = useRef(0);
@@ -61,6 +63,10 @@ export default function ScrollAudioEffects() {
     isMutedRef.current = isMuted;
   }, [isMuted]);
 
+  useEffect(() => {
+    soundRegisterRef.current = soundRegister;
+  }, [soundRegister]);
+
   // Client-side initialization of premium Tone.js Audio Engine
   useEffect(() => {
     let active = true;
@@ -74,9 +80,9 @@ export default function ScrollAudioEffects() {
 
         // 1. Lush Cinematic Reverb Tail
         const reverb = new Tone.Reverb({
-          decay: 5.2, // Expansive concert-hall tail
-          preDelay: 0.12, // Separation transient delay
-          wet: 0.58, // Balanced mix of wet tail and pluck
+          decay: 5.2,      // Expansive concert-hall tail
+          preDelay: 0.12,  // Separation transient delay
+          wet: 0.58,       // Balanced mix of wet tail and pluck
         }).toDestination();
 
         await reverb.ready;
@@ -88,12 +94,12 @@ export default function ScrollAudioEffects() {
             type: "triangle", // Soft triangle waves for warm, organic pluck
           },
           envelope: {
-            attack: 0.02, // Snappy strike/pluck attack
+            attack: 0.02,    // Snappy strike/pluck attack
             decay: 1.4,
             sustain: 0.15,
-            release: 2.8, // Long blend ringout
+            release: 2.8,    // Long blend ringout
           },
-          volume: -24, // Soft baseline volume
+          volume: -24,       // Soft baseline volume
         }).connect(reverb);
 
         polySynthRef.current = polySynth;
@@ -114,6 +120,26 @@ export default function ScrollAudioEffects() {
       if (reverbRef.current) reverbRef.current.dispose();
     };
   }, []);
+
+  // Dynamic helper function to shift scales by octaves on-the-fly
+  const getActiveScale = (section: string, register: "deep" | "warm" | "light") => {
+    const baseScale = SCALES[section] || SCALES["home"];
+    const shiftAmount = register === "deep" ? -2 : register === "warm" ? -1 : 0;
+    if (shiftAmount === 0) return baseScale;
+
+    return baseScale.map((note) => {
+      // Split accidental string from octave number (e.g. "C#4" -> "C#", "4")
+      const match = note.match(/^([A-G]#?|b?)(\d)$/);
+      if (match) {
+        const pitchClass = match[1];
+        const octave = parseInt(match[2], 10);
+        // Ensure we never shift octave below 1 for synthesizer safety
+        const newOctave = Math.max(1, octave + shiftAmount);
+        return `${pitchClass}${newOctave}`;
+      }
+      return note;
+    });
+  };
 
   // Section observer to modulate scale and active root note environment
   useEffect(() => {
@@ -182,7 +208,7 @@ export default function ScrollAudioEffects() {
         // Cap note triggers to at least 85ms apart for elegant musicality
         if (now - lastPlayTimeRef.current > 85) {
           const section = activeSectionRef.current;
-          const scale = SCALES[section] || SCALES["home"];
+          const scale = getActiveScale(section, soundRegisterRef.current);
           const isScrollingDown = scrollTop > lastScrollTopRef.current;
 
           // Increment note index upwards if scrolling down, downwards if scrolling up
@@ -228,12 +254,13 @@ export default function ScrollAudioEffects() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col sm:flex-row items-end sm:items-center gap-3">
+      
       {/* Visual Status & Instrument Pill */}
       {!isMuted && (
         <div className="flex flex-col items-end px-3 py-1.5 rounded-2xl bg-bg-page/60 dark:bg-bg-page/40 border border-white/20 dark:border-white/5 backdrop-blur-md shadow-md animate-fade-in text-[10px]">
           <span className="font-terminal font-semibold uppercase tracking-wider text-brand-light dark:text-brand text-[8px] flex items-center gap-1">
             <Music className="h-2.5 w-2.5" />
-            Playing Ambient Piano
+            Ambient Piano ({soundRegister})
           </span>
           <span className="font-semibold text-text-heading capitalize text-[11px] mt-0.5">
             {activeSection === "home" || activeSection === "hero"
@@ -246,6 +273,26 @@ export default function ScrollAudioEffects() {
 
       {/* Control Deck Container */}
       <div className="flex items-center rounded-full bg-bg-page/60 dark:bg-bg-page/40 border border-white/20 dark:border-white/5 p-1 backdrop-blur-md shadow-md">
+        
+        {/* Aesthetic Pitch Preset Selector Segment Deck */}
+        {!isMuted && (
+          <div className="flex items-center bg-bg-page/80 dark:bg-bg-page/60 border border-white/10 dark:border-white/5 rounded-full p-0.5 mr-1">
+            {(["deep", "warm", "light"] as const).map((reg) => (
+              <button
+                key={reg}
+                onClick={() => setSoundRegister(reg)}
+                className={`px-2.5 py-1.5 rounded-full text-[9px] font-semibold capitalize transition-all duration-300 cursor-pointer ${
+                  soundRegister === reg
+                    ? "bg-brand/20 text-brand dark:text-brand-light shadow-sm font-bold"
+                    : "text-text-muted hover:text-text-heading"
+                }`}
+              >
+                {reg}
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* Floating Mute/Unmute Action Toggle */}
         <button
           onClick={toggleMute}
@@ -273,6 +320,7 @@ export default function ScrollAudioEffects() {
             {isMuted ? "Enable Soundscapes" : "Mute Soundscapes"}
           </span>
         </button>
+
       </div>
     </div>
   );
