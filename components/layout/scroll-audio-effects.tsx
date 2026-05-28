@@ -8,7 +8,10 @@ const NOTE_MAP: Record<string, string> = {
   home: "C4",
   hero: "C4",
   about: "E4",
-  projects: "G4",
+  services: "A4",
+  skills: "F4",
+  experience: "G4",
+  projects: "D4",
   contact: "B4",
 };
 
@@ -17,12 +20,15 @@ const SCALES: Record<string, string[]> = {
   home: ["C4", "D4", "E4", "G4", "A4", "C5", "D5", "E5", "G5", "A5"],
   hero: ["C4", "D4", "E4", "G4", "A4", "C5", "D5", "E5", "G5", "A5"],
   about: ["E4", "G4", "A4", "B4", "D5", "E5", "G5", "A5", "B5", "D6"],
-  projects: ["G4", "A4", "B4", "D5", "E5", "G5", "A5", "B5", "D6", "E6"],
+  services: ["A3", "C4", "D4", "E4", "G4", "A4", "C5", "D5", "E5", "G5"],
+  skills: ["F4", "G4", "A4", "C5", "D5", "F5", "G5", "A5", "C6", "D6"],
+  experience: ["G4", "A4", "B4", "D5", "E5", "G5", "A5", "B5", "D6", "E6"],
+  projects: ["D4", "F4", "G4", "A4", "C5", "D5", "F5", "G5", "A5", "C6"],
   contact: ["B4", "D5", "E5", "F#5", "A5", "B5", "D6", "E6", "F#6", "A6"],
 };
 
 export default function ScrollAudioEffects() {
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true); // Muted by default to match browser autoplay standards
   const [isInitialized, setIsInitialized] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
@@ -33,14 +39,13 @@ export default function ScrollAudioEffects() {
 
   // Interaction & Tracking Refs to avoid stale closure lags
   const activeSectionRef = useRef("home");
-  const isMutedRef = useRef(false);
+  const isMutedRef = useRef(true);
 
   // Scroll Tracking State Refs
   const lastScrollTopRef = useRef(0);
   const accumulatedScrollRef = useRef(0);
   const lastPlayTimeRef = useRef(0);
   const noteIndexRef = useRef(0);
-  const firstScrollRef = useRef(true);
 
   // Sync scroll position on mount
   useEffect(() => {
@@ -71,7 +76,7 @@ export default function ScrollAudioEffects() {
         const reverb = new Tone.Reverb({
           decay: 5.2, // Expansive concert-hall tail
           preDelay: 0.12, // Separation transient delay
-          wet: 0.58, // Balanced mix of wet tail and crisp pluck
+          wet: 0.58, // Balanced mix of wet tail and pluck
         }).toDestination();
 
         await reverb.ready;
@@ -129,7 +134,16 @@ export default function ScrollAudioEffects() {
       threshold: 0.1,
     });
 
-    const targetIds = ["home", "hero", "about", "projects", "contact"];
+    const targetIds = [
+      "home",
+      "hero",
+      "about",
+      "services",
+      "skills",
+      "experience",
+      "projects",
+      "contact",
+    ];
     targetIds.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -143,6 +157,7 @@ export default function ScrollAudioEffects() {
     if (!isInitialized) return;
 
     const handleScrollInstrument = () => {
+      // Do nothing if muted or not ready
       if (isMutedRef.current || !toneRef.current || !polySynthRef.current)
         return;
 
@@ -154,19 +169,6 @@ export default function ScrollAudioEffects() {
       // Ensure AudioContext is actively running
       if (Tone.context.state !== "running") {
         Tone.start();
-      }
-
-      // Trigger a soft note on the very first scroll tick to provide instant feedback!
-      if (firstScrollRef.current) {
-        firstScrollRef.current = false;
-        const section = activeSectionRef.current;
-        const scale = SCALES[section] || SCALES["home"];
-        const noteToPlay = scale[0];
-        
-        polySynthRef.current.triggerAttackRelease(noteToPlay, "2n");
-        lastPlayTimeRef.current = now;
-        accumulatedScrollRef.current = 0;
-        lastScrollTopRef.current = scrollTop;
         return;
       }
 
@@ -208,46 +210,11 @@ export default function ScrollAudioEffects() {
     };
   }, [isInitialized]);
 
-  // Autoplay pre-warming on first interaction (click, mousedown, touch, keypress)
-  useEffect(() => {
-    const warmUpAudio = async () => {
-      if (toneRef.current) {
-        const Tone = toneRef.current;
-        if (Tone.context.state !== "running") {
-          try {
-            await Tone.start();
-            console.log("[Scroll Audio] Audio context successfully unlocked via capture phase gesture!");
-            removeInteractionListeners();
-          } catch (error) {
-            console.error("[Scroll Audio] Failed to start Tone.js:", error);
-          }
-        } else {
-          removeInteractionListeners();
-        }
-      }
-    };
-
-    const removeInteractionListeners = () => {
-      window.removeEventListener("click", warmUpAudio, { capture: true });
-      window.removeEventListener("mousedown", warmUpAudio, { capture: true });
-      window.removeEventListener("touchstart", warmUpAudio, { capture: true });
-      window.removeEventListener("keydown", warmUpAudio, { capture: true });
-    };
-
-    window.addEventListener("click", warmUpAudio, { capture: true });
-    window.addEventListener("mousedown", warmUpAudio, { capture: true });
-    window.addEventListener("touchstart", warmUpAudio, { capture: true });
-    window.addEventListener("keydown", warmUpAudio, { capture: true });
-
-    return () => {
-      removeInteractionListeners();
-    };
-  }, [isInitialized]);
-
   const toggleMute = async () => {
     if (!toneRef.current) return;
     const Tone = toneRef.current;
 
+    // Direct click handles AudioContext startup perfectly
     if (Tone.context.state !== "running") {
       await Tone.start();
     }
@@ -285,7 +252,7 @@ export default function ScrollAudioEffects() {
           aria-label={
             isMuted ? "Unmute soundscape chimes" : "Mute soundscape chimes"
           }
-          className={`group relative flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 ease-out active:scale-95 ${
+          className={`group cursor-pointer relative flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 ease-out active:scale-95 ${
             isMuted
               ? "bg-bg-page/80 dark:bg-bg-page/60 text-text-muted hover:text-text-heading shadow-sm"
               : "bg-brand/20 dark:bg-brand/10 border border-brand/20 text-brand dark:text-brand-light shadow-brand shadow-sm"
