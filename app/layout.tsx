@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { Syne, DM_Mono } from "next/font/google";
+import ScrollAudioEffects from "@/components/layout/scroll-audio-effects";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -94,6 +95,7 @@ export default function RootLayout({
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+          <ScrollAudioEffects />
         </ThemeProvider>
       </body>
     </html>
