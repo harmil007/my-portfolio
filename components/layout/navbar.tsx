@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
+import { Button } from "@/components/ui/button";
+import { FileText } from "lucide-react";
 
 const navItems = [
   { label: "Home", href: "#home", id: "home" },
@@ -67,6 +69,23 @@ export function Navbar() {
             })}
           </nav>
 
+          <Button
+            variant="outline"
+            size="sm"
+            asChild
+            className="cursor-pointer font-medium"
+          >
+            <a
+              href="/Harmil_Goti_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2"
+            >
+              <FileText className="size-4 text-primary" />
+              <span>Resume</span>
+            </a>
+          </Button>
+
           <div className="shadow-sm border border-border/20 rounded-lg bg-background hover:shadow-md active:shadow-inset-sm transition-all duration-200">
             <ThemeToggle />
           </div>
@@ -75,3 +94,4 @@ export function Navbar() {
     </header>
   );
 }
+

@@ -22,17 +22,22 @@ export default function Hero() {
             className="flex flex-col gap-6"
           >
             <h1 className="text-4xl font-bold md:text-6xl mt-8 md:mt-0 leading-tight">
-              <span className="block text-2xl md:text-3xl font-terminal tracking-[0.2em] text-[#8a9bb0] uppercase mb-4" style={{ fontVariant: "small-caps" }}>
-                Hi, I’m <span className="inline-block animate-bounce ml-1">👋</span>
+              <span
+                className="block text-2xl md:text-3xl font-terminal tracking-[0.2em] text-[#8a9bb0] uppercase mb-4"
+                style={{ fontVariant: "small-caps" }}
+              >
+                Hi, I’m{" "}
+                <span className="inline-block animate-bounce ml-1">👋</span>
               </span>
-              
+
               {/* Glowing Name synced to active brand color with optimized readability */}
               <span
                 className="inline-block font-display font-extrabold tracking-tighter my-2 transition-all duration-700 ease-out"
                 style={{
                   fontSize: "clamp(3.5rem, 8vw, 6.5rem)",
                   lineHeight: "0.95",
-                  color: "color-mix(in oklab, var(--glow-color, #61dafb) 40%, var(--color-text-heading, #242323))",
+                  color:
+                    "color-mix(in oklab, var(--glow-color, #61dafb) 40%, var(--color-text-heading, #242323))",
                   textShadow: `
                     0 0 12px color-mix(in oklab, var(--glow-color, #61dafb) 35%, transparent),
                     0 0 30px color-mix(in oklab, var(--glow-color, #61dafb) 15%, transparent),
@@ -44,7 +49,7 @@ export default function Hero() {
               </span>
 
               {/* Terminal Subtitle */}
-              <span 
+              <span
                 className="block font-terminal uppercase tracking-[0.3em] text-primary text-sm md:text-base mt-4 font-semibold"
                 style={{ fontVariant: "small-caps" }}
               >
@@ -65,8 +70,9 @@ export default function Hero() {
             </h1>
 
             <p className="max-w-xl text-base md:text-lg text-muted-foreground font-terminal leading-relaxed tracking-wide">
-              Frontend Developer with 3+ years of experience building scalable,
-              high-performance web applications using React.js and Next.js.
+              Frontend Developer with over 3 years of experience building
+              scalable, high-performance web applications using React.js and
+              Next.js.
             </p>
           </motion.div>
 
@@ -107,7 +113,11 @@ export default function Hero() {
               asChild
               className="btn-neumorphic px-8 py-6 text-sm md:text-base tracking-wider h-auto font-terminal"
             >
-              <a href="/Harmil_Goti_Resume.pdf" target="_blank" className="flex items-center gap-2">
+              <a
+                href="/Harmil_Goti_Resume.pdf"
+                target="_blank"
+                className="flex items-center gap-2"
+              >
                 {/* Elegant File Icon */}
                 <svg
                   className="w-4 h-4 stroke-current"
