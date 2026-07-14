@@ -4,6 +4,8 @@ import About from "@/components/sections/about";
 import Skills from "@/components/sections/skills";
 import Experience from "@/components/sections/experience";
 import Projects from "@/components/sections/projects";
+import MobileApps from "@/components/sections/mobile-apps";
+import DeveloperContact from "@/components/sections/developer-contact";
 import Contact from "@/components/sections/contact";
 import Services from "@/components/sections/service";
 
@@ -17,6 +19,8 @@ export default function Home() {
       <Skills />
       <Experience />
       <Projects />
+      <MobileApps />
+      <DeveloperContact />
       <Contact />
     </>
   );
