@@ -5,13 +5,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const PRIVACY_POLICY_URL = "https://ocensoft.blogspot.com/p/privacy-policy.html";
-const GOOGLE_PLAY_URL = ""; // Paste the Google Play URL here when approved
+const GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=com.ocensoft.lightthelamp&pcampaignid=web_share";
 
 const apps = [
   {
     title: "Light the Lamp: Puzzle Game",
+    img: "/images/light_the_lamp_banner.png",
     description:
       "A relaxing neon logic puzzle game where players rotate wires, connect circuits, and light every lamp. Features handcrafted puzzles, endless procedural levels, daily challenges, offline gameplay, and Google Play achievements.",
     features: [
@@ -53,6 +55,17 @@ export default function MobileApps() {
             >
               <CardContent className="p-6 flex flex-col justify-between h-full space-y-6">
                 <div className="space-y-4">
+                  {app.img && (
+                    <div className="relative aspect-video rounded-md overflow-hidden">
+                      <Image
+                        loading="lazy"
+                        fill
+                        src={app.img}
+                        alt={app.title}
+                        className="object-cover shadow-inset-sm"
+                      />
+                    </div>
+                  )}
                   <div className="flex items-center justify-between gap-4">
                     <h3 className="text-xl font-bold tracking-tight text-foreground/90">
                       {app.title}
