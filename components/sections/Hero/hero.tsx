@@ -70,7 +70,7 @@ export default function Hero() {
             </h1>
 
             <p className="max-w-xl text-base md:text-lg text-muted-foreground font-terminal leading-relaxed tracking-wide">
-              Frontend Developer with over 3 years of experience building
+              Frontend Developer with over 4 years of experience building
               scalable, high-performance web applications using React.js and
               Next.js.
             </p>
