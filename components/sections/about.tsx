@@ -25,22 +25,26 @@ export default function About() {
           <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
             I’m a{" "}
             <span className="font-medium text-foreground">
-              Frontend Web Developer
+              Frontend & React Native Developer
             </span>{" "}
-            with <span className="font-medium text-foreground">3+ years</span>{" "}
-            of professional experience building scalable, high-performance web
-            applications using{" "}
+            with <span className="font-medium text-foreground">4 years</span> of
+            professional experience building scalable, high-performance web
+            applications with{" "}
             <span className="font-medium text-foreground">React.js</span> and{" "}
-            <span className="font-medium text-foreground">Next.js</span>. I
-            specialize in translating complex business requirements into clean,
-            intuitive, and responsive user interfaces.
+            <span className="font-medium text-foreground">Next.js</span>, while
+            also developing cross-platform mobile applications using{" "}
+            <span className="font-medium text-foreground">React Native</span>. I
+            specialize in turning complex business requirements into clean,
+            intuitive, responsive, and maintainable user experiences.
           </p>
 
           <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-relaxed text-muted-foreground">
             I’ve worked closely with designers, backend engineers, and product
             teams in remote and cross-functional environments. I enjoy solving
-            UI/UX challenges, optimizing performance, and building products that
-            users genuinely enjoy using.
+            UI/UX challenges, improving application performance, designing
+            scalable frontend architecture, and using modern tools and
+            AI-assisted workflows to build products faster without compromising
+            quality.
           </p>
         </div>
       </motion.div>

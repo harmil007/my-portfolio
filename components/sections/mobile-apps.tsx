@@ -7,9 +7,6 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-const PRIVACY_POLICY_URL = "https://ocensoft.blogspot.com/p/privacy-policy.html";
-const GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=com.ocensoft.lightthelamp&pcampaignid=web_share";
-
 const apps = [
   {
     title: "Light the Lamp: Puzzle Game",
@@ -23,13 +20,40 @@ const apps = [
       "♾️ Infinite Levels",
       "💡 Smart Hint System",
     ],
+    tech: ["React Native", "Expo", "TypeScript"],
     platform: "Android",
+    googlePlayUrl:
+      "https://play.google.com/store/apps/details?id=com.ocensoft.lightthelamp&pcampaignid=web_share",
+    privacyPolicyUrl:
+      "https://github.com/harmil007/light-the-lamp-config/blob/main/privacy_policy_light_the_lamp.md",
+  },
+  {
+    title: "Word Search Legends",
+    img: "/images/word_search.png",
+    description:
+      "A relaxing word search puzzle game centered around historical legends and pioneers. Search through soft neumorphic letter grids to unlock collectible Discovery Cards with biographical insights, quotes, and achievements. Features daily challenge streaks, customizable themes, and offline play.",
+    features: [
+      "🔍 Word Search",
+      "📜 Discovery Cards",
+      "📶 Offline Play",
+      "📅 Daily Challenges",
+      "🎨 Theme Shop",
+    ],
+    tech: ["React Native", "Expo", "TypeScript"],
+    platform: "Android",
+    googlePlayUrl:
+      "https://play.google.com/store/apps/details?id=com.ocensoft.wordsearchlegends",
+    privacyPolicyUrl:
+      "https://github.com/harmil007/word-search-legends/blob/main/privacy_policy.md",
   },
 ];
 
 export default function MobileApps() {
   return (
-    <section id="apps" className="relative py-20 sm:py-24 lg:py-28 overflow-clip">
+    <section
+      id="apps"
+      className="relative py-20 sm:py-24 lg:py-28 overflow-clip"
+    >
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent" />
 
       <motion.div
@@ -40,7 +64,9 @@ export default function MobileApps() {
         className="mx-auto max-w-6xl px-4 sm:px-6"
       >
         <div className="mb-8 sm:mb-10">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">Mobile Apps</h2>
+          <h2 className="text-3xl font-bold tracking-tight mb-4">
+            Mobile Apps
+          </h2>
           <Separator className="mb-4" />
           <p className="text-muted-foreground text-sm sm:text-base">
             Games & Apps published by OcenSoft. More titles coming soon.
@@ -70,7 +96,10 @@ export default function MobileApps() {
                     <h3 className="text-xl font-bold tracking-tight text-foreground/90">
                       {app.title}
                     </h3>
-                    <Badge variant="outline" className="border-primary/30 text-primary">
+                    <Badge
+                      variant="outline"
+                      className="border-primary/30 text-primary"
+                    >
                       {app.platform}
                     </Badge>
                   </div>
@@ -95,12 +124,33 @@ export default function MobileApps() {
                       ))}
                     </div>
                   </div>
+
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold text-foreground/70 uppercase tracking-wider">
+                      Tech Stack
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {app.tech.map((tech) => (
+                        <Badge
+                          key={tech}
+                          variant="outline"
+                          className="text-xs border-primary/20 text-foreground/80 px-2 py-0.5"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  {GOOGLE_PLAY_URL ? (
+                  {app.googlePlayUrl ? (
                     <Button asChild className="shadow-none">
-                      <a href={GOOGLE_PLAY_URL} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={app.googlePlayUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         Get it on Google Play
                       </a>
                     </Button>
@@ -110,11 +160,17 @@ export default function MobileApps() {
                     </Button>
                   )}
 
-                  <Button variant="outline" asChild className="shadow-none">
-                    <a href={PRIVACY_POLICY_URL} target="_blank" rel="noopener noreferrer">
-                      Privacy Policy
-                    </a>
-                  </Button>
+                  {app.privacyPolicyUrl && (
+                    <Button variant="outline" asChild className="shadow-none">
+                      <a
+                        href={app.privacyPolicyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Privacy Policy
+                      </a>
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>
