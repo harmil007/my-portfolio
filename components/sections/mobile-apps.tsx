@@ -46,6 +46,25 @@ const apps = [
     privacyPolicyUrl:
       "https://github.com/harmil007/word-search-legends/blob/main/privacy_policy.md",
   },
+  {
+    title: "Fill the Box: Puzzle Game",
+    img: "/images/fill_the_box.png",
+    description:
+      "A colorful and satisfying path-finding puzzle game where players connect numbered tiles and draw continuous lines to fill every box on the board. Features chapter-based level maps, locked tile mechanics, daily challenges, and Hall of Fame achievements.",
+    features: [
+      "🧩 Path Puzzle",
+      "🗺️ Level Map",
+      "📶 Offline Play",
+      "📅 Daily Challenges",
+      "🏆 Hall of Fame",
+    ],
+    tech: ["React Native", "Expo", "TypeScript"],
+    platform: "Android",
+    googlePlayUrl:
+      "https://play.google.com/store/apps/details?id=com.ocensoft.fillthebox",
+    privacyPolicyUrl:
+      "https://github.com/harmil007/config-fill-the-box/blob/main/PRIVACY_POLICY.md",
+  },
 ];
 
 export default function MobileApps() {
@@ -69,11 +88,12 @@ export default function MobileApps() {
           </h2>
           <Separator className="mb-4" />
           <p className="text-muted-foreground text-sm sm:text-base">
-            Games & Apps published by OcenSoft. More titles coming soon.
+            Games & Apps published by OcenSoft - designed & developed by{" "}
+            <b className="text-foreground">Harmil Goti</b>
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {apps.map((app) => (
             <Card
               key={app.title}
@@ -143,9 +163,9 @@ export default function MobileApps() {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 pt-2">
                   {app.googlePlayUrl ? (
-                    <Button asChild className="shadow-none">
+                    <Button asChild className="shadow-none flex-1">
                       <a
                         href={app.googlePlayUrl}
                         target="_blank"
@@ -155,13 +175,17 @@ export default function MobileApps() {
                       </a>
                     </Button>
                   ) : (
-                    <Button disabled className="shadow-none opacity-60">
+                    <Button disabled className="shadow-none opacity-60 flex-1">
                       Listing Pending
                     </Button>
                   )}
 
                   {app.privacyPolicyUrl && (
-                    <Button variant="outline" asChild className="shadow-none">
+                    <Button
+                      variant="outline"
+                      asChild
+                      className="shadow-none flex-1"
+                    >
                       <a
                         href={app.privacyPolicyUrl}
                         target="_blank"
