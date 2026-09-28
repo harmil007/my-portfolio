@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -68,21 +69,23 @@ const apps = [
 ];
 
 export default function MobileApps() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section
       id="apps"
       className="relative py-20 sm:py-24 lg:py-28 overflow-clip"
     >
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-transparent to-primary/5" />
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="mx-auto max-w-6xl px-4 sm:px-6"
-      >
-        <div className="mb-8 sm:mb-10">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6 }}
+          className="mb-8 sm:mb-10"
+        >
           <h2 className="text-3xl font-bold tracking-tight mb-4">
             Mobile Apps
           </h2>
@@ -91,116 +94,149 @@ export default function MobileApps() {
             Games & Apps published by OcenSoft - designed & developed by{" "}
             <b className="text-foreground">Harmil Goti</b>
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {apps.map((app) => (
-            <Card
-              key={app.title}
-              className="bg-card border border-border/10 shadow-inset-md transition-all duration-300 ease-out hover:border-primary/20"
-            >
-              <CardContent className="p-6 flex flex-col justify-between h-full space-y-6">
-                <div className="space-y-4">
-                  {app.img && (
-                    <div className="relative aspect-video rounded-md overflow-hidden">
-                      <Image
-                        loading="lazy"
-                        fill
-                        src={app.img}
-                        alt={app.title}
-                        className="object-cover shadow-inset-sm"
-                      />
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between gap-4">
-                    <h3 className="text-xl font-bold tracking-tight text-foreground/90">
-                      {app.title}
-                    </h3>
-                    <Badge
-                      variant="outline"
-                      className="border-primary/30 text-primary"
-                    >
-                      {app.platform}
-                    </Badge>
-                  </div>
-
-                  <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
-                    {app.description}
-                  </p>
-
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-semibold text-foreground/70 uppercase tracking-wider">
-                      Key Features
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {app.features.map((feature) => (
-                        <Badge
-                          key={feature}
-                          variant="secondary"
-                          className="text-xs bg-secondary/50 text-muted-foreground px-2 py-0.5 border border-border/5"
-                        >
-                          {feature}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-semibold text-foreground/70 uppercase tracking-wider">
-                      Tech Stack
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {app.tech.map((tech) => (
-                        <Badge
-                          key={tech}
-                          variant="outline"
-                          className="text-xs border-primary/20 text-foreground/80 px-2 py-0.5"
-                        >
-                          {tech}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 pt-2">
-                  {app.googlePlayUrl ? (
-                    <Button asChild className="shadow-none flex-1">
-                      <a
-                        href={app.googlePlayUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Get it on Google Play
-                      </a>
-                    </Button>
-                  ) : (
-                    <Button disabled className="shadow-none opacity-60 flex-1">
-                      Listing Pending
-                    </Button>
-                  )}
-
-                  {app.privacyPolicyUrl && (
-                    <Button
-                      variant="outline"
-                      asChild
-                      className="shadow-none flex-1"
-                    >
-                      <a
-                        href={app.privacyPolicyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Privacy Policy
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+          {apps.map((app, index) => (
+            <MobileAppCard key={app.title} app={app} index={index} shouldReduceMotion={!!shouldReduceMotion} />
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
+  );
+}
+
+function MobileAppCard({
+  app,
+  index,
+  shouldReduceMotion,
+}: {
+  app: (typeof apps)[0];
+  index: number;
+  shouldReduceMotion: boolean;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"],
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], [15, -15]);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 35, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false }}
+      transition={{ duration: 0.6, delay: index * 0.12, ease: [0.25, 1, 0.5, 1] as const }}
+      whileHover={{ translateY: -6 }}
+    >
+      <Card className="bg-card border border-border/10 shadow-inset-md transition-all duration-300 ease-out hover:border-primary/30 hover:shadow-2xl h-full flex flex-col group">
+        <CardContent className="p-6 flex flex-col justify-between h-full space-y-6">
+          <div className="space-y-4">
+            {app.img && (
+              <div className="relative aspect-video rounded-xl overflow-hidden border border-border/10">
+                <motion.div
+                  style={{ y: shouldReduceMotion ? 0 : imageY }}
+                  className="relative w-full h-full"
+                >
+                  <Image
+                    loading="lazy"
+                    fill
+                    src={app.img}
+                    alt={app.title}
+                    className="object-cover shadow-inset-sm transition-transform duration-500 group-hover:scale-105"
+                  />
+                </motion.div>
+              </div>
+            )}
+            <div className="flex items-center justify-between gap-4">
+              <h3 className="text-xl font-bold tracking-tight text-foreground/90 group-hover:text-primary transition-colors">
+                {app.title}
+              </h3>
+              <Badge
+                variant="outline"
+                className="border-primary/30 text-primary font-mono text-xs"
+              >
+                {app.platform}
+              </Badge>
+            </div>
+
+            <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
+              {app.description}
+            </p>
+
+            <div className="space-y-2">
+              <h4 className="text-xs font-semibold text-foreground/70 uppercase tracking-wider">
+                Key Features
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {app.features.map((feature) => (
+                  <Badge
+                    key={feature}
+                    variant="secondary"
+                    className="text-xs bg-secondary/50 text-muted-foreground px-2 py-0.5 border border-border/5"
+                  >
+                    {feature}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="text-xs font-semibold text-foreground/70 uppercase tracking-wider">
+                Tech Stack
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {app.tech.map((tech) => (
+                  <Badge
+                    key={tech}
+                    variant="outline"
+                    className="text-xs border-primary/20 text-foreground/80 px-2 py-0.5"
+                  >
+                    {tech}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 pt-2 mt-auto">
+            {app.googlePlayUrl ? (
+              <Button asChild className="shadow-none flex-1 font-terminal text-xs">
+                <a
+                  href={app.googlePlayUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Get it on Google Play ↗
+                </a>
+              </Button>
+            ) : (
+              <Button disabled className="shadow-none opacity-60 flex-1 font-terminal text-xs">
+                Listing Pending
+              </Button>
+            )}
+
+            {app.privacyPolicyUrl && (
+              <Button
+                variant="outline"
+                asChild
+                className="shadow-none flex-1 font-terminal text-xs"
+              >
+                <a
+                  href={app.privacyPolicyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Privacy Policy
+                </a>
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }

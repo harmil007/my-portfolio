@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
@@ -25,103 +26,147 @@ const skills = {
   ],
 };
 
-const container = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-};
-
 export default function Skills() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const floatY = useSpring(useTransform(scrollYProgress, [0, 1], [30, -30]), {
+    stiffness: 80,
+    damping: 20,
+  });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 35, scale: 0.94 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 1, 0.5, 1] as const,
+      },
+    },
+  };
+
   return (
     <section
       id="skills"
+      ref={sectionRef}
       className="relative py-20 sm:py-24 lg:py-28 overflow-clip"
     >
       <div
         className="absolute inset-0 top-0 scale-[350%] origin-top rounded-t-full -z-10 
- bg-gradient-to-b from-primary/5 to-transparent"
+ bg-gradient-to-b from-primary/5 via-transparent to-transparent"
       />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-10 sm:mb-12">
           <h2 className="text-3xl font-bold tracking-tight mb-4 text-center">
-            Skills
+            Skills & Competencies
           </h2>
           <Separator className="mb-8" />
         </div>
 
         <motion.div
-          variants={container}
+          variants={containerVariants}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true }}
-          className="
-            flex flex-wrap justify-center gap-6 md:gap-12
-          "
+          viewport={{ once: false }}
+          style={{ y: shouldReduceMotion ? 0 : floatY }}
+          className="flex flex-wrap justify-center gap-6 md:gap-10"
         >
-          {Object.entries(skills).map(([category, items]) => (
+          {Object.entries(skills).map(([category, items], idx) => (
             <motion.div
               key={category}
-              variants={item}
+              variants={cardVariants}
+              whileHover={{ scale: 1.03, translateY: -6 }}
+              transition={{ duration: 0.3 }}
               className="
-      relative
-      rounded-[30%_50%_70%_30%/30%_30%_70%_70%]
-      bg-card
-      shadow-inset-md
-      transition-all duration-500 ease-out
-      hover:-translate-y-1.5
-      overflow-hidden
-      flex flex-col items-center
-      w-full
-      max-w-100
-      h-max
-      pb-12
-      pt-8
-      group
-    "
+                relative
+                rounded-[30%_50%_70%_30%/30%_30%_70%_70%]
+                bg-card/90
+                backdrop-blur-sm
+                shadow-inset-md
+                border border-border/20
+                overflow-hidden
+                flex flex-col items-center
+                w-full
+                max-w-100
+                h-max
+                pb-10
+                pt-8
+                group
+                transition-all duration-300
+                hover:border-primary/40
+                hover:shadow-2xl
+              "
             >
               {/* Glow gradient */}
               <div
                 className="
-        pointer-events-none
-        absolute inset-0
-        opacity-0
-        transition-opacity duration-300
-        group-hover:opacity-100
-        bg-gradient-to-br
-        from-primary/10
-        via-transparent
-        to-secondary/10
-      "
+                  pointer-events-none
+                  absolute inset-0
+                  opacity-0
+                  transition-opacity duration-300
+                  group-hover:opacity-100
+                  bg-gradient-to-br
+                  from-primary/10
+                  via-transparent
+                  to-secondary/10
+                "
               />
 
-              <h3 className="mb-4 group-hover:text-brand transition-colors duration-300 text-base sm:text-lg font-semibold tracking-tight border-b-2">
-                {category}
-              </h3>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-xs font-mono font-bold text-primary px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20">
+                  0{idx + 1}
+                </span>
+                <h3 className="group-hover:text-primary transition-colors duration-300 text-base sm:text-lg font-bold tracking-tight">
+                  {category}
+                </h3>
+              </div>
 
-              <div className="flex flex-wrap gap-2 justify-center px-10">
-                {items.map((skill) => (
-                  <Badge
+              <div className="flex flex-wrap gap-2.5 justify-center px-8">
+                {items.map((skill, skillIdx) => (
+                  <motion.div
                     key={skill}
-                    variant="secondary"
-                    className="
-            text-sm
-            cursor-default
-            transition-all
-            duration-200
-            hover:bg-primary
-            hover:text-primary-foreground
-            hover:scale-105
-          "
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: false }}
+                    transition={{ duration: 0.3, delay: skillIdx * 0.05 }}
                   >
-                    {skill}
-                  </Badge>
+                    <Badge
+                      variant="secondary"
+                      className="
+                        text-xs sm:text-sm
+                        px-3 py-1
+                        cursor-default
+                        transition-all
+                        duration-200
+                        bg-secondary/60
+                        hover:bg-primary
+                        hover:text-primary-foreground
+                        hover:scale-105
+                        hover:shadow-md
+                      "
+                    >
+                      {skill}
+                    </Badge>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>

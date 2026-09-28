@@ -1,19 +1,39 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "framer-motion";
 import { Separator } from "@/components/ui/separator";
 
 export default function About() {
+  const ref = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const bgY = useSpring(useTransform(scrollYProgress, [0, 1], [-20, 20]), {
+    stiffness: 80,
+    damping: 20,
+  });
+
   return (
     <section
       id="about"
+      ref={ref}
       className="relative py-20 sm:py-24 lg:py-28 overflow-clip"
     >
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        style={{ y: shouldReduceMotion ? 0 : bgY }}
+        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-transparent to-primary/5"
+      />
+
+      <motion.div
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        viewport={{ once: false }}
+        transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] as const }}
         className="mx-auto max-w-6xl px-4 sm:px-6"
       >
         <div className="mb-8 sm:mb-10">
@@ -21,7 +41,7 @@ export default function About() {
           <Separator className="mb-8" />
         </div>
 
-        <div className="rounded-2xl bg-card p-6 sm:p-8 md:p-10 shadow-inset-md transition-all duration-300 ease-out border border-border/10">
+        <div className="rounded-2xl bg-card/90 backdrop-blur-md p-6 sm:p-8 md:p-10 shadow-inset-md transition-all duration-300 ease-out border border-border/20 hover:border-primary/30">
           <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
             I’m a{" "}
             <span className="font-medium text-foreground">

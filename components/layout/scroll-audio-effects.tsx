@@ -34,8 +34,11 @@ export default function ScrollAudioEffects() {
   const [soundRegister, setSoundRegister] = useState<"deep" | "warm" | "light">("warm"); // Warm (Mid) default
 
   // Web Audio Context & Node Refs
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const toneRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const polySynthRef = useRef<any>(null); // For Piano/Harp cascading notes
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const reverbRef = useRef<any>(null);
 
   // Interaction & Tracking Refs to avoid stale closure lags
