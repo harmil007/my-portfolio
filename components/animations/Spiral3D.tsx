@@ -31,8 +31,8 @@ export default function Spiral3D({ items, sectionTitle = "Services" }: Spiral3DP
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 25,
+    stiffness: 90,
+    damping: 24,
     restDelta: 0.001,
   });
 
@@ -40,12 +40,12 @@ export default function Spiral3D({ items, sectionTitle = "Services" }: Spiral3DP
     <section
       ref={containerRef}
       id="services"
-      className="relative min-h-[260vh] bg-transparent"
+      className="relative min-h-[280vh] bg-transparent"
     >
       {/* Sticky Viewport */}
       <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden px-4">
         {/* Ambient Glow background */}
-        <div className="pointer-events-none absolute -z-10 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[120px]" />
+        <div className="pointer-events-none absolute -z-10 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[130px]" />
 
         {/* Section Header */}
         <div className="absolute top-12 z-20 mx-auto w-full max-w-6xl px-4 sm:px-6 text-center md:text-left">
@@ -68,18 +68,16 @@ export default function Spiral3D({ items, sectionTitle = "Services" }: Spiral3DP
             className="relative flex items-center justify-center w-full h-full"
             style={{ transformStyle: "preserve-3d" }}
           >
-            {items.map((item, index) => {
-              return (
-                <SpiralCard
-                  key={item.title}
-                  item={item}
-                  index={index}
-                  total={items.length}
-                  progress={smoothProgress}
-                  shouldReduceMotion={!!shouldReduceMotion}
-                />
-              );
-            })}
+            {items.map((item, index) => (
+              <SpiralCard
+                key={item.title}
+                item={item}
+                index={index}
+                total={items.length}
+                progress={smoothProgress}
+                shouldReduceMotion={!!shouldReduceMotion}
+              />
+            ))}
           </div>
         </div>
 
@@ -128,52 +126,51 @@ function SpiralCard({
   progress,
   shouldReduceMotion,
 }: SpiralCardProps) {
-  // Map overall scroll progress [0, 1] to individual card focus window
-  // Each card peaks in the center at activeProgress = index / (total - 1)
+  // Continuous smooth window for each card [0, 1]
   const cardCenter = index / (total - 1 || 1);
-  const cardStart = Math.max(0, cardCenter - 0.35);
-  const cardEnd = Math.min(1, cardCenter + 0.35);
+  const start = Math.max(0, cardCenter - 0.28);
+  const end = Math.min(1, cardCenter + 0.28);
 
-  // Transform calculations driven continuously by scroll progress
+  // Constrain rotateY within safe -22deg to +22deg to NEVER flip text or show mirrored backfaces
   const rotateY = useTransform(
     progress,
-    [0, 1],
-    [(index - (total - 1) / 2) * -45 - 60, (index - (total - 1) / 2) * -45 + 60]
+    [start, cardCenter, end],
+    [-22, 0, 22]
   );
 
   const rotateZ = useTransform(
     progress,
-    [cardStart, cardCenter, cardEnd],
-    [-8, 0, 8]
+    [start, cardCenter, end],
+    [-4, 0, 4]
   );
 
   const translateX = useTransform(
     progress,
-    [cardStart, cardCenter, cardEnd],
-    [(index - (total - 1) / 2) * 220 - 180, (index - (total - 1) / 2) * 120, (index - (total - 1) / 2) * 220 + 180]
+    [start, cardCenter, end],
+    [(index - (total - 1) / 2) * 140 - 240, (index - (total - 1) / 2) * 90, (index - (total - 1) / 2) * 140 + 240]
   );
 
   const translateY = useTransform(
     progress,
-    [cardStart, cardCenter, cardEnd],
-    [(index - (total - 1) / 2) * 70 + 80, (index - (total - 1) / 2) * 35, (index - (total - 1) / 2) * 70 - 80]
+    [start, cardCenter, end],
+    [(index - (total - 1) / 2) * 40 + 50, (index - (total - 1) / 2) * 20, (index - (total - 1) / 2) * 40 - 50]
   );
 
   const translateZ = useTransform(
     progress,
-    [cardStart, cardCenter, cardEnd],
-    [-280, 120, -280]
+    [start, cardCenter, end],
+    [-250, 100, -250]
   );
 
   const scale = useTransform(
     progress,
-    [cardStart, cardCenter, cardEnd],
-    [0.82, 1.05, 0.82]
+    [start, cardCenter, end],
+    [0.85, 1.04, 0.85]
   );
 
   const opacity = useTransform(
     progress,
-    [cardStart, cardCenter, cardEnd],
+    [start, cardCenter, end],
     [0.35, 1, 0.35]
   );
 
@@ -191,6 +188,7 @@ function SpiralCard({
       style={{
         position: "absolute",
         transformStyle: "preserve-3d",
+        backfaceVisibility: "hidden",
         x: translateX,
         y: translateY,
         z: translateZ,
@@ -199,7 +197,7 @@ function SpiralCard({
         scale: scale,
         opacity: opacity,
       }}
-      className="w-[340px] p-7 rounded-2xl bg-card/90 backdrop-blur-md border border-border/30 shadow-2xl transition-colors duration-300 hover:border-primary/50 group"
+      className="w-[340px] p-7 rounded-2xl bg-card/95 backdrop-blur-xl border border-border/30 shadow-2xl transition-colors duration-300 hover:border-primary/50 group select-none"
     >
       <div className="flex items-center justify-between mb-4">
         <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
@@ -212,7 +210,7 @@ function SpiralCard({
         )}
       </div>
 
-      <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+      <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors text-foreground">
         {item.title}
       </h3>
 

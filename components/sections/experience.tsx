@@ -1,7 +1,13 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useReducedMotion,
+} from "framer-motion";
 import { Separator } from "@/components/ui/separator";
 
 export default function Experience() {
@@ -26,7 +32,11 @@ export default function Experience() {
   ];
 
   return (
-    <section id="experience" ref={containerRef} className="relative py-20 sm:py-24 lg:py-28 overflow-hidden">
+    <section
+      id="experience"
+      ref={containerRef}
+      className="relative py-20 sm:py-24 lg:py-28 overflow-hidden"
+    >
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-primary/5 via-transparent to-transparent" />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -55,7 +65,7 @@ export default function Experience() {
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: false }}
               transition={{ duration: 0.4 }}
-              className="absolute -left-[37px] sm:-left-[41px] top-1.5 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-background border-2 border-primary shadow-[0_0_15px_rgba(97,218,251,0.6)]"
+              className="absolute -left-[37px] sm:-left-[37px] top-1.5 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-background border-2 border-primary shadow-[0_0_15px_rgba(97,218,251,0.6)]"
             >
               <span className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
             </motion.div>
@@ -91,7 +101,9 @@ export default function Experience() {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     className="flex gap-3 items-start"
                   >
-                    <span className="mt-1 text-primary text-xs flex-shrink-0">▹</span>
+                    <span className="mt-1 text-primary text-xs flex-shrink-0">
+                      ▹
+                    </span>
                     <span className="leading-relaxed">{item}</span>
                   </motion.li>
                 ))}

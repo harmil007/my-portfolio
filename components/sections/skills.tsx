@@ -1,7 +1,13 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useReducedMotion,
+} from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
@@ -94,8 +100,6 @@ export default function Skills() {
             <motion.div
               key={category}
               variants={cardVariants}
-              whileHover={{ scale: 1.03, translateY: -6 }}
-              transition={{ duration: 0.3 }}
               className="
                 relative
                 rounded-[30%_50%_70%_30%/30%_30%_70%_70%]
@@ -111,9 +115,6 @@ export default function Skills() {
                 pb-10
                 pt-8
                 group
-                transition-all duration-300
-                hover:border-primary/40
-                hover:shadow-2xl
               "
             >
               {/* Glow gradient */}
