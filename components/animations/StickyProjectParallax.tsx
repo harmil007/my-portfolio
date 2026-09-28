@@ -29,7 +29,7 @@ export default function StickyProjectParallax({ projects }: StickyProjectParalla
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 space-y-16 md:space-y-24 py-8">
+    <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6">
       {projects.map((project, index) => (
         <FullScreenParallaxCard
           key={project.title}
@@ -56,72 +56,71 @@ function FullScreenParallaxCard({
   total,
   shouldReduceMotion,
 }: FullScreenParallaxCardProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Track scroll position for this specific full-screen project card
+  // Track scroll progress for this project's dedicated sticky section [0, 1]
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
+    target: sectionRef,
+    offset: ["start start", "end end"],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 90,
-    damping: 22,
+    damping: 24,
     restDelta: 0.001,
   });
 
-  // Layer 1: Ambient Glow Parallax (Speed 1)
-  const bgY = useTransform(smoothProgress, [0, 1], [-60, 60]);
+  // Step 1: Image scale & opacity entrance while sticky at top
+  const imageScale = useTransform(smoothProgress, [0.0, 0.25, 0.78, 1.0], [0.95, 1.0, 1.0, 0.95]);
+  const imageOpacity = useTransform(smoothProgress, [0.0, 0.15, 0.85, 1.0], [0.5, 1.0, 1.0, 0.2]);
 
-  // Layer 2: Main Full-Screen Web App Image Parallax (Speed 2)
-  const imageY = useTransform(smoothProgress, [0, 0.5, 1], [60, 0, -50]);
-  const imageScale = useTransform(smoothProgress, [0, 0.5, 1], [0.94, 1.02, 0.96]);
-  const imageRotateX = useTransform(smoothProgress, [0, 0.5, 1], [6, 0, -4]);
-
-  // Layer 3: Details Panel Parallax (Speed 3 - Faster reveal over image)
-  const detailsY = useTransform(smoothProgress, [0, 0.5, 1], [100, 0, -80]);
+  // Step 2: Details panel rises up cleanly over sticky 16:9 image as user scrolls further
+  const detailsY = useTransform(
+    smoothProgress,
+    [0.0, 0.3, 0.6, 0.82, 1.0],
+    [90, 60, 0, 0, -20]
+  );
   const detailsOpacity = useTransform(
     smoothProgress,
-    [0.1, 0.4, 0.75, 0.95],
-    [0.3, 1, 1, 0.4]
+    [0.0, 0.3, 0.5, 0.82, 1.0],
+    [0, 0.3, 1, 1, 0.2]
   );
 
-  // Stacked depth effect as card sticks near top
-  const cardScale = useTransform(smoothProgress, [0.6, 1], [1, 0.94 - index * 0.02]);
-  const cardOpacity = useTransform(smoothProgress, [0.8, 1], [1, 0.7]);
+  // Step 3 & 4: Entire combined unit smoothly translates UP out of view (0.82 -> 1.0)
+  const exitY = useTransform(smoothProgress, [0.82, 1.0], ["0vh", "-100vh"]);
+  const exitScale = useTransform(smoothProgress, [0.82, 1.0], [1.0, 0.94]);
+  const exitOpacity = useTransform(smoothProgress, [0.85, 1.0], [1.0, 0.0]);
 
   if (shouldReduceMotion) {
     return (
-      <div className="w-full rounded-3xl bg-card border border-border/20 p-6 md:p-10 shadow-inset-md">
-        <div className="grid md:grid-cols-12 gap-8 items-center">
-          <div className="md:col-span-7 relative aspect-video rounded-2xl overflow-hidden border border-border/20 shadow-2xl">
-            <Image fill src={project.img} alt={project.title} className="object-cover" />
+      <div className="w-full space-y-6 py-12">
+        <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-border/20 shadow-2xl">
+          <Image fill src={project.img} alt={project.title} className="object-cover" />
+        </div>
+        <div className="rounded-3xl bg-card border border-border/20 p-6 md:p-8 space-y-4 shadow-xl">
+          <span className="text-xs font-mono font-bold text-primary">0{index + 1} / 0{total}</span>
+          <h3 className="text-2xl font-bold">{project.title}</h3>
+          <p className="text-muted-foreground">{project.description}</p>
+          <ul className="space-y-1 text-sm text-muted-foreground">
+            {project.highlights.map((h) => (
+              <li key={h} className="flex items-center gap-2">
+                <span className="text-primary">▹</span>
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="flex flex-wrap gap-2 pt-2">
+            {project.tech.map((t) => (
+              <Badge key={t} variant="outline">{t}</Badge>
+            ))}
           </div>
-          <div className="md:col-span-5 space-y-4">
-            <span className="text-xs font-mono font-bold text-primary">0{index + 1} / 0{total}</span>
-            <h3 className="text-2xl font-bold">{project.title}</h3>
-            <p className="text-muted-foreground">{project.description}</p>
-            <ul className="space-y-1 text-sm text-muted-foreground">
-              {project.highlights.map((h) => (
-                <li key={h} className="flex items-center gap-2">
-                  <span className="text-primary">▹</span>
-                  <span>{h}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="flex flex-wrap gap-2 pt-2">
-              {project.tech.map((t) => (
-                <Badge key={t} variant="outline">{t}</Badge>
-              ))}
-            </div>
-            {project.projectLink && (
-              <Button asChild className="btn-neumorphic-primary font-terminal text-xs">
-                <a href={project.projectLink} target="_blank" rel="noopener noreferrer">
-                  Visit Project ↗
-                </a>
-              </Button>
-            )}
-          </div>
+          {project.projectLink && (
+            <Button asChild className="btn-neumorphic-primary font-terminal text-xs">
+              <a href={project.projectLink} target="_blank" rel="noopener noreferrer">
+                Visit Project ↗
+              </a>
+            </Button>
+          )}
         </div>
       </div>
     );
@@ -129,138 +128,134 @@ function FullScreenParallaxCard({
 
   return (
     <div
-      ref={containerRef}
-      className="sticky top-20 md:top-24 w-full min-h-[80vh] md:min-h-[85vh] flex items-center justify-center"
+      ref={sectionRef}
+      className="relative w-full h-[220vh] bg-transparent"
     >
-      <motion.div
-        style={{
-          scale: cardScale,
-          opacity: cardOpacity,
-        }}
-        className="relative w-full rounded-3xl bg-card/90 backdrop-blur-xl border border-border/30 shadow-2xl overflow-hidden p-6 sm:p-8 md:p-10 transition-colors duration-300 hover:border-primary/40 group"
-      >
-        {/* Layer 1: Ambient Glow Background */}
+      {/* Sticky Viewport Frame - Pinned Sticky AT THE TOP of the screen directly under navbar */}
+      <div className="sticky top-16 sm:top-20 z-10 w-full flex flex-col items-center justify-start px-2 sm:px-4 pt-2">
+        
+        {/* Combined Unit */}
         <motion.div
-          style={{ y: bgY }}
-          className="pointer-events-none absolute -top-32 -right-32 h-[450px] w-[450px] rounded-full bg-primary/10 blur-[130px] group-hover:bg-primary/20 transition-colors"
-        />
-
-        <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-center z-10 relative">
-          
-          {/* Layer 2: Main Full-Screen Web App Image Frame (7 cols) */}
+          style={{
+            y: shouldReduceMotion ? 0 : exitY,
+            scale: shouldReduceMotion ? 1 : exitScale,
+            opacity: shouldReduceMotion ? 1 : exitOpacity,
+          }}
+          className="relative w-full max-w-5xl flex flex-col items-center justify-start"
+        >
+          {/* 1. Sticky 16:9 Aspect Ratio Web App Frame Display at Top */}
           <motion.div
             style={{
-              y: imageY,
-              scale: imageScale,
-              rotateX: imageRotateX,
-              perspective: 1000,
+              scale: shouldReduceMotion ? 1 : imageScale,
+              opacity: shouldReduceMotion ? 1 : imageOpacity,
             }}
-            className="md:col-span-7 relative w-full h-[240px] sm:h-[320px] md:h-[380px] lg:h-[440px] rounded-2xl overflow-hidden shadow-2xl border border-white/10 group-hover:border-primary/30 transition-all duration-500"
+            className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-card/90 backdrop-blur-2xl border border-border/30 shadow-2xl group flex flex-col"
           >
-            {/* Top Browser Bar Deco */}
-            <div className="absolute top-0 inset-x-0 h-7 bg-background/80 backdrop-blur-md z-20 flex items-center px-3 gap-1.5 border-b border-white/10">
+            {/* Top Browser Header Bar */}
+            <div className="h-8 sm:h-9 bg-background/90 backdrop-blur-md flex items-center px-4 gap-2 border-b border-border/20 z-20 shrink-0">
               <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
               <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
               <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-              <span className="ml-2 text-[10px] font-mono text-muted-foreground/70 truncate">
+              <div className="ml-4 px-3 py-0.5 rounded-md bg-secondary/50 text-[10px] font-mono text-muted-foreground truncate max-w-xs sm:max-w-md">
                 https://{project.title.toLowerCase()}.com
-              </span>
+              </div>
             </div>
 
-            {/* Full Widescreen Web App Image */}
-            <div className="relative w-full h-full pt-7">
+            {/* Strict 16:9 Aspect Ratio Image Visual Container */}
+            <div className="relative w-full aspect-video overflow-hidden">
               <Image
                 src={project.img}
                 alt={project.title}
                 fill
                 className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 60vw"
+                sizes="(max-width: 1200px) 100vw, 1200px"
                 priority={index === 0}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-40 group-hover:opacity-20 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-85" />
             </div>
           </motion.div>
 
-          {/* Layer 3: Project Details Panel (5 cols) */}
+          {/* 2. Rising Details Panel (Floats up over sticky 16:9 image as user scrolls) */}
           <motion.div
             style={{
-              y: detailsY,
-              opacity: detailsOpacity,
+              y: shouldReduceMotion ? 0 : detailsY,
+              opacity: shouldReduceMotion ? 1 : detailsOpacity,
             }}
-            className="md:col-span-5 flex flex-col justify-center space-y-4 lg:space-y-5"
+            className="relative z-30 w-full max-w-3xl -mt-24 sm:-mt-32 md:-mt-40 px-2 sm:px-4"
           >
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-bold text-primary px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20">
-                  Featured 0{index + 1}
-                </span>
-                <span className="text-xs font-mono text-muted-foreground">
-                  0{index + 1} / 0{total}
-                </span>
+            <div className="rounded-3xl bg-card/95 backdrop-blur-2xl border border-border/40 p-5 sm:p-7 md:p-8 shadow-2xl space-y-3.5 transition-colors duration-300 hover:border-primary/40">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-mono font-bold text-primary px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20">
+                    Featured Project 0{index + 1}
+                  </span>
+                  <span className="text-[11px] font-mono text-muted-foreground">
+                    0{index + 1} / 0{total}
+                  </span>
+                </div>
+                {project.projectLink && (
+                  <Button
+                    asChild
+                    className="btn-neumorphic-primary text-xs px-4 py-2 h-auto font-terminal tracking-wider"
+                  >
+                    <a
+                      href={project.projectLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5"
+                    >
+                      Visit Project
+                      <svg
+                        className="w-3.5 h-3.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                    </a>
+                  </Button>
+                )}
               </div>
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-foreground tracking-tight group-hover:text-primary transition-colors">
+
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-foreground tracking-tight">
                 {project.title}
               </h3>
-            </div>
 
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-              {project.description}
-            </p>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                {project.description}
+              </p>
 
-            <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
-              {project.highlights.map((item) => (
-                <li key={item} className="flex items-start gap-2.5">
-                  <span className="text-primary mt-1 text-xs">▹</span>
-                  <span className="leading-snug">{item}</span>
-                </li>
-              ))}
-            </ul>
+              <ul className="space-y-1.5 text-xs text-muted-foreground border-t border-border/20 pt-3">
+                {project.highlights.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="text-primary mt-0.5 text-xs">▹</span>
+                    <span className="leading-snug">{item}</span>
+                  </li>
+                ))}
+              </ul>
 
-            <div className="flex flex-wrap gap-2 pt-2">
-              {project.tech.map((t) => (
-                <Badge
-                  key={t}
-                  variant="secondary"
-                  className="text-xs px-2.5 py-1 bg-secondary/60 hover:bg-primary/20 transition-colors"
-                >
-                  {t}
-                </Badge>
-              ))}
-            </div>
-
-            {project.projectLink && (
-              <div className="pt-3">
-                <Button
-                  asChild
-                  className="btn-neumorphic-primary text-xs sm:text-sm px-6 py-5 h-auto font-terminal tracking-wider"
-                >
-                  <a
-                    href={project.projectLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2"
+              <div className="flex flex-wrap gap-1.5 pt-1 border-t border-border/20">
+                {project.tech.map((t) => (
+                  <Badge
+                    key={t}
+                    variant="secondary"
+                    className="text-[11px] px-2 py-0.5 bg-secondary/60"
                   >
-                    Visit Project
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
-                  </a>
-                </Button>
+                    {t}
+                  </Badge>
+                ))}
               </div>
-            )}
+            </div>
           </motion.div>
-        </div>
-      </motion.div>
+
+        </motion.div>
+      </div>
     </div>
   );
 }

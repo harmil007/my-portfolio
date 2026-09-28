@@ -111,7 +111,7 @@ const additionalProjects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-20 sm:py-24 relative overflow-hidden">
+    <section id="projects" className="py-20 sm:py-24 relative overflow-x-clip">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-primary/5 via-transparent to-primary/5" />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
