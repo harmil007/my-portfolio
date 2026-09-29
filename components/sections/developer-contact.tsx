@@ -61,9 +61,8 @@ export default function DeveloperContact() {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ translateY: -4 }}
               >
-                <Card className="bg-card border border-border/10 shadow-inset-md transition-all duration-300 ease-out hover:border-primary/30 hover:shadow-xl h-full">
+                <Card className="bg-card border border-border/10 shadow-inset-md transition-all duration-300 ease-out hover:border-primary/30 h-full">
                   <CardContent className="p-6 flex items-start gap-4 h-full">
                     <div className="p-3 rounded-lg bg-secondary/50 border border-border/10 text-primary">
                       <Icon className="size-5" />

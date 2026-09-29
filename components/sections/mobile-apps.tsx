@@ -1,7 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -98,7 +103,12 @@ export default function MobileApps() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {apps.map((app, index) => (
-            <MobileAppCard key={app.title} app={app} index={index} shouldReduceMotion={!!shouldReduceMotion} />
+            <MobileAppCard
+              key={app.title}
+              app={app}
+              index={index}
+              shouldReduceMotion={!!shouldReduceMotion}
+            />
           ))}
         </div>
       </div>
@@ -129,10 +139,13 @@ function MobileAppCard({
       initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 35, scale: 0.96 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: false }}
-      transition={{ duration: 0.6, delay: index * 0.12, ease: [0.25, 1, 0.5, 1] as const }}
-      whileHover={{ translateY: -6 }}
+      transition={{
+        duration: 0.6,
+        delay: index * 0.12,
+        ease: [0.25, 1, 0.5, 1] as const,
+      }}
     >
-      <Card className="bg-card border border-border/10 shadow-inset-md transition-all duration-300 ease-out hover:border-primary/30 hover:shadow-2xl h-full flex flex-col group">
+      <Card className="bg-card border border-border/10 shadow-inset-md transition-all duration-300 ease-out hover:border-primary/30 h-full flex flex-col group">
         <CardContent className="p-6 flex flex-col justify-between h-full space-y-6">
           <div className="space-y-4">
             {app.img && (
@@ -204,7 +217,10 @@ function MobileAppCard({
 
           <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 pt-2 mt-auto">
             {app.googlePlayUrl ? (
-              <Button asChild className="shadow-none flex-1 font-terminal text-xs">
+              <Button
+                asChild
+                className="shadow-none flex-1 font-terminal text-xs"
+              >
                 <a
                   href={app.googlePlayUrl}
                   target="_blank"
@@ -214,7 +230,10 @@ function MobileAppCard({
                 </a>
               </Button>
             ) : (
-              <Button disabled className="shadow-none opacity-60 flex-1 font-terminal text-xs">
+              <Button
+                disabled
+                className="shadow-none opacity-60 flex-1 font-terminal text-xs"
+              >
                 Listing Pending
               </Button>
             )}

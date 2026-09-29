@@ -24,13 +24,26 @@ export default function Contact() {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <Button size="lg" asChild className="btn-neumorphic-primary font-terminal">
-              <a href="mailto:harmilgoti0@gmail.com" target="_blank" rel="noopener noreferrer">
-                Email Me ✉
+            <Button
+              size="lg"
+              asChild
+              className="btn-neumorphic-primary font-terminal"
+            >
+              <a
+                href="mailto:harmilgoti0@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Email Me
               </a>
             </Button>
 
-            <Button size="lg" variant="outline" asChild className="btn-neumorphic font-terminal">
+            <Button
+              size="lg"
+              variant="outline"
+              asChild
+              className="btn-neumorphic font-terminal"
+            >
               <a
                 href="https://github.com/harmil007"
                 target="_blank"

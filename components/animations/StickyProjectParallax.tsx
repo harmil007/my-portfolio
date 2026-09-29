@@ -65,31 +65,31 @@ function FullScreenParallaxCard({
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 24,
+    stiffness: 50,
+    damping: 22,
     restDelta: 0.001,
   });
 
   // Step 1: Image scale & opacity entrance while sticky at top
-  const imageScale = useTransform(smoothProgress, [0.0, 0.25, 0.78, 1.0], [0.95, 1.0, 1.0, 0.95]);
-  const imageOpacity = useTransform(smoothProgress, [0.0, 0.15, 0.85, 1.0], [0.5, 1.0, 1.0, 0.2]);
+  const imageScale = useTransform(smoothProgress, [0.0, 0.15, 0.80, 1.0], [0.96, 1.0, 1.0, 0.96]);
+  const imageOpacity = useTransform(smoothProgress, [0.0, 0.12, 1.0], [0.0, 1.0, 1.0]);
 
-  // Step 2: Details panel rises up cleanly over sticky 16:9 image as user scrolls further
-  const detailsY = useTransform(
+  // Step 2: Details drawer slides in quickly (0.15 -> 0.38) and STAYS fully open & readable
+  const detailsX = useTransform(
     smoothProgress,
-    [0.0, 0.3, 0.6, 0.82, 1.0],
-    [90, 60, 0, 0, -20]
+    [0.0, 0.15, 0.38, 1.0],
+    ["100%", "100%", "0%", "0%"]
   );
   const detailsOpacity = useTransform(
     smoothProgress,
-    [0.0, 0.3, 0.5, 0.82, 1.0],
-    [0, 0.3, 1, 1, 0.2]
+    [0.0, 0.15, 0.32, 1.0],
+    [0, 0, 1.0, 1.0]
   );
 
-  // Step 3 & 4: Entire combined unit smoothly translates UP out of view (0.82 -> 1.0)
-  const exitY = useTransform(smoothProgress, [0.82, 1.0], ["0vh", "-100vh"]);
-  const exitScale = useTransform(smoothProgress, [0.82, 1.0], [1.0, 0.94]);
-  const exitOpacity = useTransform(smoothProgress, [0.85, 1.0], [1.0, 0.0]);
+  // Step 3: Lazy & Slow Exit - Card stays resting from 0.38 to 0.80, then glides out SLOWLY from 0.80 to 1.0
+  const exitY = useTransform(smoothProgress, [0.80, 1.0], ["0vh", "-100vh"]);
+  const exitScale = useTransform(smoothProgress, [0.80, 1.0], [1.0, 0.96]);
+  const exitOpacity = useTransform(smoothProgress, [0.88, 1.0], [1.0, 0.0]);
 
   if (shouldReduceMotion) {
     return (
@@ -129,10 +129,10 @@ function FullScreenParallaxCard({
   return (
     <div
       ref={sectionRef}
-      className="relative w-full h-[220vh] bg-transparent"
+      className="relative w-full h-[170vh] bg-transparent"
     >
-      {/* Sticky Viewport Frame - Pinned Sticky AT THE TOP of the screen directly under navbar */}
-      <div className="sticky top-16 sm:top-20 z-10 w-full flex flex-col items-center justify-start px-2 sm:px-4 pt-2">
+      {/* Sticky Viewport Frame - Pinned Sticky AT THE TOP of the screen with clear gap below main site navbar */}
+      <div className="sticky top-20 sm:top-24 z-10 w-full flex flex-col items-center justify-start px-2 sm:px-4 pt-2">
         
         {/* Combined Unit */}
         <motion.div
@@ -151,8 +151,8 @@ function FullScreenParallaxCard({
             }}
             className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-card/90 backdrop-blur-2xl border border-border/30 shadow-2xl group flex flex-col"
           >
-            {/* Top Browser Header Bar */}
-            <div className="h-8 sm:h-9 bg-background/90 backdrop-blur-md flex items-center px-4 gap-2 border-b border-border/20 z-20 shrink-0">
+            {/* Computer Window Browser Header Bar */}
+            <div className="h-8 sm:h-9 bg-background/95 backdrop-blur-md flex items-center px-4 gap-2 border-b border-border/20 z-20 shrink-0">
               <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
               <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
               <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
@@ -161,8 +161,8 @@ function FullScreenParallaxCard({
               </div>
             </div>
 
-            {/* Strict 16:9 Aspect Ratio Image Visual Container */}
-            <div className="relative w-full aspect-video overflow-hidden">
+            {/* Strict 16:9 Aspect Ratio Image Visual Container with Right-Side Drawer */}
+            <div className="relative w-full aspect-video overflow-hidden bg-black/40">
               <Image
                 src={project.img}
                 alt={project.title}
@@ -171,86 +171,87 @@ function FullScreenParallaxCard({
                 sizes="(max-width: 1200px) 100vw, 1200px"
                 priority={index === 0}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-85" />
-            </div>
-          </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/10 to-background/60 pointer-events-none" />
 
-          {/* 2. Rising Details Panel (Floats up over sticky 16:9 image as user scrolls) */}
-          <motion.div
-            style={{
-              y: shouldReduceMotion ? 0 : detailsY,
-              opacity: shouldReduceMotion ? 1 : detailsOpacity,
-            }}
-            className="relative z-30 w-full max-w-3xl -mt-24 sm:-mt-32 md:-mt-40 px-2 sm:px-4"
-          >
-            <div className="rounded-3xl bg-card/95 backdrop-blur-2xl border border-border/40 p-5 sm:p-7 md:p-8 shadow-2xl space-y-3.5 transition-colors duration-300 hover:border-primary/40">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-mono font-bold text-primary px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20">
-                    Featured Project 0{index + 1}
-                  </span>
-                  <span className="text-[11px] font-mono text-muted-foreground">
-                    0{index + 1} / 0{total}
-                  </span>
-                </div>
-                {project.projectLink && (
-                  <Button
-                    asChild
-                    className="btn-neumorphic-primary text-xs px-4 py-2 h-auto font-terminal tracking-wider"
-                  >
-                    <a
-                      href={project.projectLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5"
-                    >
-                      Visit Project
-                      <svg
-                        className="w-3.5 h-3.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
+              {/* 2. Attached Right-Side Drawer Panel (Slides in AFTER image fades in, attached flush to top/right/bottom) */}
+              <motion.div
+                style={{
+                  x: shouldReduceMotion ? 0 : detailsX,
+                  opacity: shouldReduceMotion ? 1 : detailsOpacity,
+                }}
+                className="absolute top-0 bottom-0 right-0 z-30 w-[95%] sm:w-[380px] md:w-[420px] lg:w-[460px] flex flex-col"
+              >
+                <div className="h-full w-full bg-card/95 backdrop-blur-2xl border-l border-border/50 p-4 sm:p-5 md:p-6 shadow-2xl flex flex-col justify-between space-y-2.5 overflow-y-auto custom-scrollbar">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] sm:text-[11px] font-mono font-bold text-primary px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20">
+                        Featured 0{index + 1}
+                      </span>
+                      <span className="text-[10px] sm:text-[11px] font-mono text-muted-foreground">
+                        0{index + 1} / 0{total}
+                      </span>
+                    </div>
+                    {project.projectLink && (
+                      <Button
+                        asChild
+                        className="btn-neumorphic-primary text-xs px-3 py-1.5 h-auto font-terminal tracking-wider"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                        />
-                      </svg>
-                    </a>
-                  </Button>
-                )}
-              </div>
+                        <a
+                          href={project.projectLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1"
+                        >
+                          Visit Project
+                          <svg
+                            className="w-3.5 h-3.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                            />
+                          </svg>
+                        </a>
+                      </Button>
+                    )}
+                  </div>
 
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-foreground tracking-tight">
-                {project.title}
-              </h3>
+                  <div>
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-extrabold text-foreground tracking-tight">
+                      {project.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mt-1">
+                      {project.description}
+                    </p>
+                  </div>
 
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                {project.description}
-              </p>
+                  <ul className="space-y-1 sm:space-y-1.5 text-xs text-muted-foreground border-t border-border/20 pt-2 sm:pt-3">
+                    {project.highlights.map((item) => (
+                      <li key={item} className="flex items-start gap-1.5">
+                        <span className="text-primary mt-0.5 text-xs">▹</span>
+                        <span className="leading-snug">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-              <ul className="space-y-1.5 text-xs text-muted-foreground border-t border-border/20 pt-3">
-                {project.highlights.map((item) => (
-                  <li key={item} className="flex items-start gap-2">
-                    <span className="text-primary mt-0.5 text-xs">▹</span>
-                    <span className="leading-snug">{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="flex flex-wrap gap-1.5 pt-1 border-t border-border/20">
-                {project.tech.map((t) => (
-                  <Badge
-                    key={t}
-                    variant="secondary"
-                    className="text-[11px] px-2 py-0.5 bg-secondary/60"
-                  >
-                    {t}
-                  </Badge>
-                ))}
-              </div>
+                  <div className="flex flex-wrap gap-1 pt-1 border-t border-border/20">
+                    {project.tech.map((t) => (
+                      <Badge
+                        key={t}
+                        variant="secondary"
+                        className="text-[10px] sm:text-[11px] px-2 py-0.5 bg-secondary/60"
+                      >
+                        {t}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
 
