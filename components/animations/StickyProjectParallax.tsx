@@ -25,7 +25,9 @@ interface StickyProjectParallaxProps {
   projects: ProjectItem[];
 }
 
-export default function StickyProjectParallax({ projects }: StickyProjectParallaxProps) {
+export default function StickyProjectParallax({
+  projects,
+}: StickyProjectParallaxProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -71,34 +73,49 @@ function FullScreenParallaxCard({
   });
 
   // Step 1: Image scale & opacity entrance while sticky at top
-  const imageScale = useTransform(smoothProgress, [0.0, 0.15, 0.80, 1.0], [0.96, 1.0, 1.0, 0.96]);
-  const imageOpacity = useTransform(smoothProgress, [0.0, 0.12, 1.0], [0.0, 1.0, 1.0]);
+  const imageScale = useTransform(
+    smoothProgress,
+    [0.0, 0.15, 0.8, 1.0],
+    [0.96, 1.0, 1.0, 0.96],
+  );
+  const imageOpacity = useTransform(
+    smoothProgress,
+    [0.0, 0.12, 1.0],
+    [0.0, 1.0, 1.0],
+  );
 
   // Step 2: Details drawer slides in quickly (0.15 -> 0.38) and STAYS fully open & readable
   const detailsX = useTransform(
     smoothProgress,
     [0.0, 0.15, 0.38, 1.0],
-    ["100%", "100%", "0%", "0%"]
+    ["100%", "100%", "0%", "0%"],
   );
   const detailsOpacity = useTransform(
     smoothProgress,
     [0.0, 0.15, 0.32, 1.0],
-    [0, 0, 1.0, 1.0]
+    [0, 0, 1.0, 1.0],
   );
 
   // Step 3: Lazy & Slow Exit - Card stays resting from 0.38 to 0.80, then glides out SLOWLY from 0.80 to 1.0
-  const exitY = useTransform(smoothProgress, [0.80, 1.0], ["0vh", "-100vh"]);
-  const exitScale = useTransform(smoothProgress, [0.80, 1.0], [1.0, 0.96]);
+  const exitY = useTransform(smoothProgress, [0.8, 1.0], ["0vh", "-100vh"]);
+  const exitScale = useTransform(smoothProgress, [0.8, 1.0], [1.0, 0.96]);
   const exitOpacity = useTransform(smoothProgress, [0.88, 1.0], [1.0, 0.0]);
 
   if (shouldReduceMotion) {
     return (
       <div className="w-full space-y-6 py-12">
         <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-border/20 shadow-2xl">
-          <Image fill src={project.img} alt={project.title} className="object-cover" />
+          <Image
+            fill
+            src={project.img}
+            alt={project.title}
+            className="object-cover"
+          />
         </div>
         <div className="rounded-3xl bg-card border border-border/20 p-6 md:p-8 space-y-4 shadow-xl">
-          <span className="text-xs font-mono font-bold text-primary">0{index + 1} / 0{total}</span>
+          <span className="text-xs font-mono font-bold text-primary">
+            0{index + 1} / 0{total}
+          </span>
           <h3 className="text-2xl font-bold">{project.title}</h3>
           <p className="text-muted-foreground">{project.description}</p>
           <ul className="space-y-1 text-sm text-muted-foreground">
@@ -111,12 +128,21 @@ function FullScreenParallaxCard({
           </ul>
           <div className="flex flex-wrap gap-2 pt-2">
             {project.tech.map((t) => (
-              <Badge key={t} variant="outline">{t}</Badge>
+              <Badge key={t} variant="outline">
+                {t}
+              </Badge>
             ))}
           </div>
           {project.projectLink && (
-            <Button asChild className="btn-neumorphic-primary font-terminal text-xs">
-              <a href={project.projectLink} target="_blank" rel="noopener noreferrer">
+            <Button
+              asChild
+              className="btn-neumorphic-primary font-terminal text-xs"
+            >
+              <a
+                href={project.projectLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Visit Project ↗
               </a>
             </Button>
@@ -127,13 +153,9 @@ function FullScreenParallaxCard({
   }
 
   return (
-    <div
-      ref={sectionRef}
-      className="relative w-full h-[170vh] bg-transparent"
-    >
+    <div ref={sectionRef} className="relative w-full h-[170vh] bg-transparent">
       {/* Sticky Viewport Frame - Pinned Sticky AT THE TOP of the screen with clear gap below main site navbar */}
       <div className="sticky top-20 sm:top-24 z-10 w-full flex flex-col items-center justify-start px-2 sm:px-4 pt-2">
-        
         {/* Combined Unit */}
         <motion.div
           style={{
@@ -167,7 +189,7 @@ function FullScreenParallaxCard({
                 src={project.img}
                 alt={project.title}
                 fill
-                className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                className="object-cover object-top transition-transform duration-700 ease-out"
                 sizes="(max-width: 1200px) 100vw, 1200px"
                 priority={index === 0}
               />
@@ -181,7 +203,7 @@ function FullScreenParallaxCard({
                 }}
                 className="absolute top-0 bottom-0 right-0 z-30 w-[95%] sm:w-[380px] md:w-[420px] lg:w-[460px] flex flex-col"
               >
-                <div className="h-full w-full bg-card/95 backdrop-blur-2xl border-l border-border/50 p-4 sm:p-5 md:p-6 shadow-2xl flex flex-col justify-between space-y-2.5 overflow-y-auto custom-scrollbar">
+                <div className="h-full w-full backdrop-blur-sm border-l border-border/50 p-4 sm:p-5 md:p-6 shadow-2xl flex flex-col justify-between space-y-2.5 overflow-y-auto custom-scrollbar">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] sm:text-[11px] font-mono font-bold text-primary px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20">
@@ -254,7 +276,6 @@ function FullScreenParallaxCard({
               </motion.div>
             </div>
           </motion.div>
-
         </motion.div>
       </div>
     </div>

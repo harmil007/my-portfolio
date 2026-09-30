@@ -12,7 +12,13 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 const skills = {
-  Frontend: ["React.js", "Next.js", "JavaScript (ES6+)", "TypeScript"],
+  Frontend: [
+    "React.js",
+    "Next.js",
+    "JavaScript (ES6+)",
+    "TypeScript",
+    "React Native",
+  ],
   "UI & Styling": [
     "HTML5",
     "CSS3",
@@ -29,6 +35,15 @@ const skills = {
     "Responsive Design",
     "Performance Optimization",
     "Remote Collaboration",
+  ],
+  "Secondary skill": [
+    "React Native",
+    "Electron.js",
+    "Node",
+    "MongoDB",
+    "Jest",
+    "Cypress",
+    "React Testing Library",
   ],
 };
 
@@ -162,7 +177,6 @@ export default function Skills() {
                         hover:bg-primary
                         hover:text-primary-foreground
                         hover:scale-105
-                        hover:shadow-md
                       "
                     >
                       {skill}

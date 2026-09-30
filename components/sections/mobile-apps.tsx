@@ -1,12 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -74,12 +68,10 @@ const apps = [
 ];
 
 export default function MobileApps() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section
       id="apps"
-      className="relative py-20 sm:py-24 lg:py-28 overflow-clip"
+      className="relative py-20 sm:py-24 lg:py-28 overflow-hidden"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-transparent to-primary/5" />
 
@@ -89,7 +81,7 @@ export default function MobileApps() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 0.6 }}
-          className="mb-8 sm:mb-10"
+          className="mb-10 sm:mb-12"
         >
           <h2 className="text-3xl font-bold tracking-tight mb-4">
             Mobile Apps
@@ -101,161 +93,133 @@ export default function MobileApps() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Neumorphic Grid Layout */}
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
           {apps.map((app, index) => (
-            <MobileAppCard
+            <motion.div
               key={app.title}
-              app={app}
-              index={index}
-              shouldReduceMotion={!!shouldReduceMotion}
-            />
+              initial={{ opacity: 0, y: 35, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+                ease: [0.25, 1, 0.5, 1] as const,
+              }}
+            >
+              <Card className="bg-card border border-border/10 inset-shadow-xl transition-all duration-300 rounded-2xl h-full flex flex-col group overflow-hidden">
+                <CardContent className="p-6 flex flex-col justify-between h-full space-y-6">
+                  <div className="space-y-4">
+                    {/* Inset Neumorphic Image Frame */}
+                    {app.img && (
+                      <div className="relative aspect-video rounded-xl overflow-hidden shadow-inset-md border border-border/10 bg-secondary/30">
+                        <Image
+                          loading="lazy"
+                          fill
+                          src={app.img}
+                          alt={app.title}
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                        {app.title}
+                      </h3>
+                      <Badge
+                        variant="outline"
+                        className="border-primary/30 text-primary font-mono text-xs shrink-0 bg-primary/5"
+                      >
+                        {app.platform}
+                      </Badge>
+                    </div>
+
+                    <p className="text-muted-foreground leading-relaxed text-sm">
+                      {app.description}
+                    </p>
+
+                    <div className="space-y-2">
+                      <h4 className="text-xs font-semibold text-foreground/70 uppercase tracking-wider">
+                        Key Features
+                      </h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {app.features.map((feature) => (
+                          <Badge
+                            key={feature}
+                            variant="secondary"
+                            className="text-xs bg-secondary/60 text-muted-foreground px-2 py-0.5 border border-border/10 shadow-inset-sm"
+                          >
+                            {feature}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <h4 className="text-xs font-semibold text-foreground/70 uppercase tracking-wider">
+                        Tech Stack
+                      </h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {app.tech.map((tech) => (
+                          <Badge
+                            key={tech}
+                            variant="outline"
+                            className="text-xs border-primary/20 text-foreground/80 px-2 py-0.5"
+                          >
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Neumorphic Pill CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 pt-2 mt-auto">
+                    {app.googlePlayUrl ? (
+                      <Button
+                        asChild
+                        className="btn-neumorphic-primary font-terminal text-xs flex-1 py-2 h-auto"
+                      >
+                        <a
+                          href={app.googlePlayUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Get it on Google Play ↗
+                        </a>
+                      </Button>
+                    ) : (
+                      <Button
+                        disabled
+                        className="opacity-60 font-terminal text-xs flex-1 py-2 h-auto"
+                      >
+                        Listing Pending
+                      </Button>
+                    )}
+
+                    {app.privacyPolicyUrl && (
+                      <Button
+                        variant="outline"
+                        asChild
+                        className="btn-neumorphic font-terminal text-xs flex-1 py-2 h-auto"
+                      >
+                        <a
+                          href={app.privacyPolicyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Privacy Policy
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
     </section>
-  );
-}
-
-function MobileAppCard({
-  app,
-  index,
-  shouldReduceMotion,
-}: {
-  app: (typeof apps)[0];
-  index: number;
-  shouldReduceMotion: boolean;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"],
-  });
-
-  const imageY = useTransform(scrollYProgress, [0, 1], [15, -15]);
-
-  return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 35, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: false }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.12,
-        ease: [0.25, 1, 0.5, 1] as const,
-      }}
-    >
-      <Card className="bg-card border border-border/10 shadow-inset-md transition-all duration-300 ease-out hover:border-primary/30 h-full flex flex-col group">
-        <CardContent className="p-6 flex flex-col justify-between h-full space-y-6">
-          <div className="space-y-4">
-            {app.img && (
-              <div className="relative aspect-video rounded-xl overflow-hidden border border-border/10">
-                <motion.div
-                  style={{ y: shouldReduceMotion ? 0 : imageY }}
-                  className="relative w-full h-full"
-                >
-                  <Image
-                    loading="lazy"
-                    fill
-                    src={app.img}
-                    alt={app.title}
-                    className="object-cover shadow-inset-sm transition-transform duration-500 group-hover:scale-105"
-                  />
-                </motion.div>
-              </div>
-            )}
-            <div className="flex items-center justify-between gap-4">
-              <h3 className="text-xl font-bold tracking-tight text-foreground/90 group-hover:text-primary transition-colors">
-                {app.title}
-              </h3>
-              <Badge
-                variant="outline"
-                className="border-primary/30 text-primary font-mono text-xs"
-              >
-                {app.platform}
-              </Badge>
-            </div>
-
-            <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
-              {app.description}
-            </p>
-
-            <div className="space-y-2">
-              <h4 className="text-xs font-semibold text-foreground/70 uppercase tracking-wider">
-                Key Features
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {app.features.map((feature) => (
-                  <Badge
-                    key={feature}
-                    variant="secondary"
-                    className="text-xs bg-secondary/50 text-muted-foreground px-2 py-0.5 border border-border/5"
-                  >
-                    {feature}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-xs font-semibold text-foreground/70 uppercase tracking-wider">
-                Tech Stack
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {app.tech.map((tech) => (
-                  <Badge
-                    key={tech}
-                    variant="outline"
-                    className="text-xs border-primary/20 text-foreground/80 px-2 py-0.5"
-                  >
-                    {tech}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 pt-2 mt-auto">
-            {app.googlePlayUrl ? (
-              <Button
-                asChild
-                className="shadow-none flex-1 font-terminal text-xs"
-              >
-                <a
-                  href={app.googlePlayUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Get it on Google Play ↗
-                </a>
-              </Button>
-            ) : (
-              <Button
-                disabled
-                className="shadow-none opacity-60 flex-1 font-terminal text-xs"
-              >
-                Listing Pending
-              </Button>
-            )}
-
-            {app.privacyPolicyUrl && (
-              <Button
-                variant="outline"
-                asChild
-                className="shadow-none flex-1 font-terminal text-xs"
-              >
-                <a
-                  href={app.privacyPolicyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Privacy Policy
-                </a>
-              </Button>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
   );
 }
