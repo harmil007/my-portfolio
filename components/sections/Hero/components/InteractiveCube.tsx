@@ -128,26 +128,7 @@ export function InteractiveCube() {
     },
   ];
 
-  // Set initial brand color on mount and trigger first timer
-  useEffect(() => {
-    document.documentElement.style.setProperty("--glow-color", skills[0].color);
-    resetAutoSlide();
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, []);
-
-  // Schedules the next automatic slide event (drift-free conflict resolution)
-  const resetAutoSlide = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-    timerRef.current = setTimeout(() => {
-      triggerSlide();
-    }, 4500); // 4.5 seconds of floating active rest
-  };
-
-  const triggerSlide = () => {
+  function triggerSlide() {
     if (isTransitioning) return;
     setIsTransitioning(true);
 
@@ -221,7 +202,26 @@ export function InteractiveCube() {
       }, 350);
 
     }, 500);
-  };
+  }
+
+  function resetAutoSlide() {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      triggerSlide();
+    }, 4500); // 4.5 seconds of floating active rest
+  }
+
+  // Set initial brand color on mount and trigger first timer
+  useEffect(() => {
+    document.documentElement.style.setProperty("--glow-color", skills[0].color);
+    resetAutoSlide();
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Handles click to manual slide immediately
   const handleCardClick = () => {

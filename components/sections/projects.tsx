@@ -1,8 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "../ui/button";
-import Image from "next/image";
+import StickyProjectParallax from "@/components/animations/StickyProjectParallax";
 
 const projects = [
   {
@@ -110,73 +111,49 @@ const additionalProjects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-24 relative">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-primary/5 to-transparent" />
+    <section id="projects" className="py-20 sm:py-24 relative overflow-x-clip">
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-primary/5 via-transparent to-primary/5" />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="text-3xl font-bold mb-4">Projects</h2>
-        <Separator className="mb-8" />
-        <div className="grid md:grid-cols-2 gap-10">
-          {projects.map((project) => (
-            <Card key={project.title} className="shadow-inset-md">
-              <CardContent className="p-6 space-y-4 h-full flex flex-col">
-                {project.img && (
-                  <div className="relative aspect-video">
-                    <Image
-                      loading="lazy"
-                      fill
-                      src={project.img}
-                      alt="banner"
-                      className="aspect-auto shadow-inset-sm"
-                    />
-                  </div>
-                )}
-                <h3 className="text-xl font-semibold">{project.title}</h3>
-
-                <p className="text-muted-foreground">{project.description}</p>
-
-                <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
-                  {project.highlights.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-
-                <div className="flex flex-wrap gap-3 pt-2">
-                  {project.tech.map((tech) => (
-                    <Badge key={tech} variant="outline">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-                {project?.projectLink && (
-                  <Button className="mt-auto w-max shadow-none">
-                    <a
-                      href={project?.projectLink}
-                      target="_blank"
-                      className="text-primary-foreground"
-                    >
-                      Visit the project
-                    </a>
-                  </Button>
-                )}
-              </CardContent>
-            </Card>
-          ))}
+        <div className="mb-8 sm:mb-12">
+          <h2 className="text-3xl font-bold tracking-tight mb-4">Featured Projects</h2>
+          <p className="text-muted-foreground text-sm sm:text-base">
+            Scroll to experience project stories with layered Mountain Parallax depth
+          </p>
+          <Separator className="mt-4" />
         </div>
+      </div>
 
-        <div className="mt-24">
+      {/* Sticky Parallax Container for Featured Projects */}
+      <StickyProjectParallax projects={projects} />
+
+      {/* Additional Projects Section */}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 mt-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.5 }}
+          className="mb-8 sm:mb-10"
+        >
           <h2 className="text-3xl font-bold mb-4">
             Additional Projects & Contributions
           </h2>
           <Separator className="mb-8" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {additionalProjects.map((project, i) => (
-              <Card
-                key={i}
-                className="bg-secondary/40 border border-border/10 shadow-inset-md transition-all duration-300 ease-out hover:border-accent/30"
-              >
-                <CardContent className="p-5 flex flex-col justify-center h-full">
-                  <h3 className="font-semibold text-lg mb-2 text-foreground/90">
+        </motion.div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {additionalProjects.map((project, i) => (
+            <motion.div
+              key={project.title}
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+            >
+              <Card className="bg-secondary/30 border border-border/10 shadow-inset-md transition-all duration-300 ease-out hover:border-primary/30 hover:-translate-y-1 h-full">
+                <CardContent className="p-6 flex flex-col justify-center h-full space-y-2">
+                  <h3 className="font-semibold text-lg text-foreground/90">
                     {project.title}
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
@@ -184,8 +161,8 @@ export default function Projects() {
                   </p>
                 </CardContent>
               </Card>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
