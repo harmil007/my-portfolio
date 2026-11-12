@@ -8,63 +8,69 @@ import StickyProjectParallax from "@/components/animations/StickyProjectParallax
 const projects = [
   {
     title: "Rukkorverse",
+    subtitle: "Real-Time Collaborative Workspace",
     img: "/images/rukkor_ss.png",
     description:
-      "A collaborative workspace platform inspired by Slack, Infinity, google meet, and WhatsApp, featuring real-time communication and AI assistance.",
+      "A collaborative workspace platform inspired by Slack and Google Meet, featuring low-latency real-time audio/video communication and AI-assisted workflows.",
     highlights: [
-      "Hybrid REST + WebSocket communication for real-time updates",
-      "Implimentation of LiveKit for real-time video and audio calls",
-      "Complex UI workflows with Ant Design & LESS",
+      "Hybrid REST + WebSocket communication for sub-second real-time sync",
+      "LiveKit integration powering low-latency multi-party video & audio rooms",
+      "Complex reactive UI workflows engineered with Ant Design and LESS",
+      "Full internationalization (i18n) and cross-platform accessibility",
     ],
     tech: [
       "React",
-      "node",
-      "typescript",
+      "Node.js",
+      "TypeScript",
       "Redux Toolkit",
       "WebSockets",
+      "LiveKit",
       "Ant Design",
       "LESS",
       "i18n",
-      "LiveKit",
       "GitHub",
     ],
     projectLink: "https://app.rukkor.com",
+    liveUrl: "app.rukkor.com",
   },
   {
     title: "Geometra",
+    subtitle: "Construction Cost Estimation & Takeoff",
     img: "/images/geometra_ss.webp",
     description:
-      "Construction management platform focused on cost estimation, project tracking, and takeoff measurements.",
+      "An enterprise construction management and quantity takeoff platform focused on precision blueprint measurements, estimation calculations, and project tracking.",
     highlights: [
-      "Enhanced UI for 2D/PDF & 3D/BIM takeoff workflows",
-      "Improved usability for construction professionals",
-      "Calculate estimation of cost of construction from PDF",
-      "Impliment the tools from PDF tron",
+      "High-precision 2D/PDF and 3D/BIM takeoff measurement workflows",
+      "Automated construction cost estimation calculated directly from drawings",
+      "Integrated PDFTron SDK for high-performance architectural tooling",
+      "Optimized rendering pipelines for complex multi-page architectural blueprints",
     ],
     tech: [
       "React",
       "JavaScript",
-      "UI Optimization",
+      "PDFTron SDK",
       "Ant Design",
-      "reflux",
+      "Reflux",
       "i18n",
       "GitHub",
     ],
     projectLink: "https://geometra.rukkor.com",
+    liveUrl: "geometra.rukkor.com",
   },
   {
     title: "TailwindThemeMaker",
+    subtitle: "Visual CSS Theme Generator & Exporter",
     img: "/images/newtailwindthememaker_ss.png",
     description:
-      "Developed Tailwind Theme Maker, a web app that helps developers and designers create, preview, and export custom Tailwind CSS theme variables quickly. It simplifies theme generation by offering real-time visual updates, making design decisions faster and more consistent before starting development.",
+      "A web app empowering developers and designers to visually create, preview, and export custom Tailwind CSS themes with real-time feedback and AI-driven palette extraction.",
     highlights: [
-      "CSS theme generation, preview and export the code",
-      "Generate your custom palettes from image using AI",
-      "Generate dark mode variables from light mode variables",
+      "Real-time CSS variable generation with instant visual preview and code export",
+      "AI-assisted color palette extraction from uploaded user images",
+      "Automatic dark mode variable derivation with accessible WCAG contrast",
     ],
     tech: [
       "Next.js",
-      "supabase",
+      "Supabase",
       "Tailwind CSS",
       "TypeScript",
       "shadcn/ui",
@@ -72,6 +78,7 @@ const projects = [
       "GitHub",
     ],
     projectLink: "https://tailwindthememaker.com",
+    liveUrl: "tailwindthememaker.com",
   },
 ];
 
@@ -116,9 +123,9 @@ export default function Projects() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-8 sm:mb-12">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">Featured Projects</h2>
+          <h2 className="text-3xl font-bold tracking-tight mb-3">Featured Projects</h2>
           <p className="text-muted-foreground text-sm sm:text-base">
-            Scroll to experience project stories with layered Mountain Parallax depth
+            Selected web applications, collaborative platforms, and interactive developer tools
           </p>
           <Separator className="mt-4" />
         </div>

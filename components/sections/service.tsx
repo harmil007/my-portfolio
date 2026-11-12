@@ -1,10 +1,12 @@
 "use client";
 
-import Spiral3D, { SpiralItem } from "@/components/animations/Spiral3D";
+import StickyServicesParallax, {
+  ServiceItem,
+} from "@/components/animations/StickyServicesParallax";
 import { servicesData } from "@/data/serviceData";
 
 export default function Services() {
-  const items: SpiralItem[] = [
+  const items: ServiceItem[] = [
     ...servicesData.map((s, idx) => ({
       title: s.title,
       description: s.description,
@@ -18,5 +20,11 @@ export default function Services() {
     },
   ];
 
-  return <Spiral3D items={items} sectionTitle="Services & Capabilities" />;
+  return (
+    <StickyServicesParallax
+      items={items}
+      sectionTitle="Services & Capabilities"
+    />
+  );
 }
+
