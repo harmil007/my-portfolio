@@ -103,8 +103,8 @@ function FullScreenParallaxCard({
         <div className="rounded-3xl bg-card/95 border border-border/20 shadow-2xl overflow-hidden p-6 sm:p-8">
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             {/* Browser Mockup Image */}
-            <div className="lg:col-span-7 rounded-2xl overflow-hidden bg-background/80 border border-border/30 shadow-lg">
-              <div className="h-9 bg-secondary/50 flex items-center justify-between px-3.5 border-b border-border/20">
+            <div className="lg:col-span-7 rounded-2xl overflow-hidden bg-background/80 border border-border/30 shadow-lg isolate [transform:translateZ(0)]">
+              <div className="h-9 bg-secondary/50 rounded-t-2xl flex items-center justify-between px-3.5 border-b border-border/20">
                 <div className="flex items-center gap-1.5">
                   <div className="size-3 rounded-full bg-[#ff5f56]" />
                   <div className="size-3 rounded-full bg-[#ffbd2e]" />
@@ -116,12 +116,12 @@ function FullScreenParallaxCard({
                 </div>
                 <div className="w-10" />
               </div>
-              <div className="relative w-full aspect-[16/10] overflow-hidden bg-black/20">
+              <div className="relative w-full aspect-[16/10] overflow-hidden rounded-b-2xl bg-black/20">
                 <Image
                   fill
                   src={project.img}
                   alt={project.title}
-                  className="object-cover object-top"
+                  className="object-cover object-top rounded-b-2xl"
                 />
               </div>
             </div>
@@ -187,9 +187,9 @@ function FullScreenParallaxCard({
           <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center">
             {/* 1. Left Side: Clean Mac Browser Window Frame with Unobstructed Full Screenshot */}
             <div className="lg:col-span-7 flex flex-col">
-              <div className="relative w-full rounded-2xl overflow-hidden bg-background/80 border border-border/30 shadow-xl group/browser transition-all duration-300 hover:border-primary/40">
+              <div className="relative w-full rounded-2xl overflow-hidden bg-background/80 border border-border/30 shadow-xl group/browser transition-all duration-300 hover:border-primary/40 isolate [transform:translateZ(0)]">
                 {/* Browser Window Header Chrome */}
-                <div className="h-8 sm:h-9 bg-secondary/50 backdrop-blur-md flex items-center justify-between px-3.5 border-b border-border/20 select-none">
+                <div className="h-8 sm:h-9 bg-secondary/50 backdrop-blur-md rounded-t-2xl flex items-center justify-between px-3.5 border-b border-border/20 select-none">
                   {/* macOS traffic light window dots */}
                   <div className="flex items-center gap-1.5">
                     <div className="size-2.5 sm:size-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40 shadow-xs" />
@@ -215,16 +215,16 @@ function FullScreenParallaxCard({
                 </div>
 
                 {/* Unobstructed High-Resolution Screenshot Visual */}
-                <div className="relative w-full aspect-[16/10] sm:aspect-video overflow-hidden bg-black/20">
+                <div className="relative w-full aspect-[16/10] sm:aspect-video overflow-hidden rounded-b-2xl bg-black/20">
                   <motion.div
                     style={{ y: imageY }}
-                    className="relative w-full h-full"
+                    className="relative w-full h-full rounded-b-2xl overflow-hidden"
                   >
                     <Image
                       src={project.img}
                       alt={project.title}
                       fill
-                      className="object-cover object-top transition-transform duration-700 ease-out group-hover/browser:scale-105"
+                      className="object-cover object-top rounded-b-2xl transition-transform duration-700 ease-out group-hover/browser:scale-105"
                       sizes="(max-width: 1024px) 100vw, 650px"
                       priority={index === 0}
                     />
