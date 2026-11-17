@@ -138,25 +138,40 @@ function HoverDrawerAppCard({
         className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-card border border-border/20 shadow-neo-raised group flex flex-col cursor-pointer select-none"
       >
         {/* Top Window Header Bar */}
-        <div className="h-8 sm:h-9 bg-background/95 backdrop-blur-md flex items-center justify-between px-4 border-b border-border/20 z-20 shrink-0">
+        <div className="h-8 sm:h-9 bg-background/95 backdrop-blur-md flex items-center justify-between px-3 sm:px-4 border-b border-border/20 z-20 shrink-0">
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
             <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
             <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-            <div className="ml-3 px-3 py-0.5 rounded-md bg-secondary/50 text-[10px] font-mono text-muted-foreground truncate max-w-xs sm:max-w-md">
+            <div className="ml-2 sm:ml-3 px-2 sm:px-3 py-0.5 rounded-md bg-secondary/50 text-[10px] font-mono text-muted-foreground truncate max-w-[150px] sm:max-w-xs">
               OcenSoft • {app.title}
             </div>
           </div>
-          <Badge
-            variant="outline"
-            className="border-primary/30 text-primary font-mono text-[10px] px-2 py-0 bg-primary/5"
-          >
-            {app.platform}
-          </Badge>
+          <div className="flex items-center gap-2">
+            <span className="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+              <span className="size-1.5 rounded-full bg-primary" />
+              Designed & Developed by Harmil Goti
+            </span>
+            <Badge
+              variant="outline"
+              className="border-primary/30 text-primary font-mono text-[10px] px-2 py-0 bg-primary/5"
+            >
+              {app.platform}
+            </Badge>
+          </div>
         </div>
 
         {/* 16:9 Image Visual Container with Hover-Slide Details Drawer */}
         <div className="relative w-full aspect-video overflow-hidden bg-black/40">
+          {/* Prominent floating authorship badge (always visible on every game card) */}
+          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-background/90 backdrop-blur-md border border-border/40 text-foreground shadow-lg transition-transform duration-300 group-hover:scale-105 pointer-events-none">
+            <span className="size-2 rounded-full bg-primary animate-pulse shrink-0" />
+            <span className="text-[10px] sm:text-xs font-semibold tracking-tight">
+              Designed & Developed by{" "}
+              <span className="text-primary font-bold">Harmil Goti</span>
+            </span>
+          </div>
+
           <Image
             loading="lazy"
             fill
@@ -184,9 +199,15 @@ function HoverDrawerAppCard({
                     0{index + 1} / 0{total}
                   </span>
                 </div>
+                <span className="text-[10px] font-mono text-muted-foreground">
+                  Published by OcenSoft
+                </span>
               </div>
 
               <div>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 mb-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] sm:text-[11px] font-medium font-mono">
+                  <span>Design & Developed by Harmil Goti</span>
+                </div>
                 <h3 className="text-lg sm:text-xl lg:text-2xl font-extrabold text-foreground tracking-tight">
                   {app.title}
                 </h3>
