@@ -75,21 +75,35 @@ function FullScreenParallaxCard({
     restDelta: 0.001,
   });
 
+  const isFirst = index === 0;
+
   // Entrance scaling and opacity
+  // For the first project, start at full opacity and scale so it is immediately visible
+  // upon arriving at Featured Projects without any empty blank screen.
   const cardScale = useTransform(
     smoothProgress,
-    [0.0, 0.16, 0.82, 1.0],
-    [0.94, 1.0, 1.0, 0.95]
+    isFirst ? [0.0, 0.82, 1.0] : [0.0, 0.12, 0.82, 1.0],
+    isFirst ? [1.0, 1.0, 0.95] : [0.94, 1.0, 1.0, 0.95]
   );
+
   const cardOpacity = useTransform(
     smoothProgress,
-    [0.0, 0.12, 0.88, 1.0],
-    [0.0, 1.0, 1.0, 0.0]
+    isFirst ? [0.0, 0.88, 1.0] : [0.0, 0.08, 0.88, 1.0],
+    isFirst ? [1.0, 1.0, 0.0] : [0.0, 1.0, 1.0, 0.0]
   );
 
   // Info panel subtle entrance
-  const infoX = useTransform(smoothProgress, [0.06, 0.22], [24, 0]);
-  const infoOpacity = useTransform(smoothProgress, [0.06, 0.2], [0, 1]);
+  const infoX = useTransform(
+    smoothProgress,
+    isFirst ? [0.0, 1.0] : [0.02, 0.12],
+    isFirst ? [0, 0] : [20, 0]
+  );
+
+  const infoOpacity = useTransform(
+    smoothProgress,
+    isFirst ? [0.0, 1.0] : [0.02, 0.1],
+    isFirst ? [1, 1] : [0, 1]
+  );
 
   // Subtle image parallax shift inside frame
   const imageY = useTransform(smoothProgress, [0.1, 0.85], [10, -10]);
