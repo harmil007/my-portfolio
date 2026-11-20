@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
+import { RESUME_URL } from "@/lib/constants";
 
 const navItems = [
   { label: "Home", href: "#home", id: "home" },
@@ -77,7 +78,7 @@ export function Navbar() {
             className="cursor-pointer font-medium"
           >
             <a
-              href="/Harmil_Goti_Resume.pdf"
+              href={RESUME_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2"

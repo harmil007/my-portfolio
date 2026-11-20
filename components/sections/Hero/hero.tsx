@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { InteractiveCube } from "@/components/sections/Hero";
+import { RESUME_URL } from "@/lib/constants";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -175,8 +176,9 @@ export default function Hero() {
               className="btn-neumorphic px-8 py-6 text-sm md:text-base tracking-wider h-auto font-terminal"
             >
               <a
-                href="/Harmil_Goti_Resume.pdf"
+                href={RESUME_URL}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2"
               >
                 {/* Elegant File Icon */}
